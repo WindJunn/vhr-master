@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.sang.mapper.StudentMapper">
+    <select id="getAllNations" resultType="org.sang.bean.Nation">
+        select * from nation;
+    </select>
+    <!--<select id="getAllPolitics" resultType="org.sang.bean.PoliticsStatus">
+        select * from politicsstatus;
+    </select>-->
+    <insert id="addStudent" parameterType="org.sang.bean.Student">
+            insert into student (name, gender,
+      birthday, idCard, wedlock, nationId,
+      nativePlace,phone, address, departmentId, workID
+      )
+    values (#{name,jdbcType=VARCHAR}, #{gender,jdbcType=CHAR},
+      #{birthday,jdbcType=DATE}, #{idCard,jdbcType=CHAR}, #{wedlock,jdbcType=CHAR}, #{nationId,jdbcType=INTEGER},
+      #{nativePlace,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR},
+      #{departmentId,jdbcType=INTEGER},#{workID,jdbcType=BIGINT}
+      )
+    </insert>
+    <select id="getMaxWorkID" resultType="Long">
+        SELECT workID from student where id=(select max(id) from student)
+    </select>
+    <resultMap id="BaseResultMap" type="org.sang.bean.Student">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="gender" property="gender"/>
+        <result column="birthday" property="birthday"/>
+        <result column="idCard" property="idCard"/>
+        <result column="wedlock" property="wedlock"/>
+        <result column="nationId" property="nationId"/>
+        <result column="nativePlace" property="nativePlace"/>
+        <result column="phone" property="phone"/>
+        <result column="address" property="address"/>
+        <result column="departmentId" property="departmentId"/>
+        <result column="workID" property="workID"/>
+        <association property="department" javaType="org.sang.bean.Department">
+            <id property="id" column="did"/>
+            <result property="name" column="dname"/>
+        </association>
+        <association property="nation" javaType="org.sang.bean.Nation">
+            <id property="id" column="nid"/>
+            <result property="name" column="nname"/>
+        </association>
+    </resultMap>
+    <select id="getStudentByPage" resultMap="BaseResultMap">
+        select e.*,d.`id` as did,d.`name` as
+        dname,n.`id` as nid,n.`name` as nname from
+        student e,department d,nation n where
+         e.`departmentId`=d.id and e.`nationId`=n.`id` and e.`name`
+        like concat('%',#{keywords},'%')
+
+        <if test="nationId!=null and nationId!=''">
+            AND e.nationId=#{nationId}
+        </if>
+
+        <if test="departmentId!=null and departmentId!=''">
+            AND e.departmentId=#{departmentId}
+        </if>
+        <if test="start!=null and size!=null">
+            order by e.id limit #{start},#{size}
+        </if>
+    </select>
+    <select id="getCountByKeywords" resultType="Long">
+        SELECT count(*) FROM student e WHERE e.name LIKE concat('%',#{keywords},'%')
+
+        <if test="nationId!=null and nationId!=''">
+            AND e.nationId=#{nationId}
+        </if>
+        <if test="departmentId!=null and departmentId!=''">
+            AND e.departmentId=#{departmentId}
+        </if>
+    </select>
+    <update id="updateStudent">
+        update student
+        <set>
+            <if test="emp.name != null">
+                name = #{emp.name,jdbcType=VARCHAR},
+            </if>
+            <if test="emp.gender != null">
+                gender = #{emp.gender,jdbcType=CHAR},
+            </if>
+            <if test="emp.birthday != null">
+                birthday = #{emp.birthday,jdbcType=DATE},
+            </if>
+            <if test="emp.idCard != null">
+                idCard = #{emp.idCard,jdbcType=CHAR},
+            </if>
+            <if test="emp.wedlock != null">
+                wedlock = #{emp.wedlock,jdbcType=CHAR},
+            </if>
+            <if test="emp.nationId != null">
+                nationId = #{emp.nationId,jdbcType=INTEGER},
+            </if>
+            <if test="emp.nativePlace != null">
+                nativePlace = #{emp.nativePlace,jdbcType=VARCHAR},
+            </if>
+            <if test="emp.phone != null">
+                phone = #{emp.phone,jdbcType=VARCHAR},
+            </if>
+            <if test="emp.address != null">
+                address = #{emp.address,jdbcType=VARCHAR},
+            </if>
+            <if test="emp.departmentId != null">
+                departmentId = #{emp.departmentId,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{emp.id,jdbcType=BIGINT}
+    </update>
+    <delete id="deleteStudentById">
+        DELETE FROM student WHERE id IN
+        <foreach collection="ids" separator="," open="(" close=")" item="id">
+            #{id}
+        </foreach>
+    </delete>
+    <insert id="addStudents">
+        insert into student (name, gender,
+        birthday, idCard, wedlock, nationId,
+        nativePlace,phone, address, departmentId,workID
+        )
+        values
+        <foreach collection="emps" item="emp" separator=",">
+            (#{emp.name,jdbcType=VARCHAR}, #{emp.gender,jdbcType=CHAR},
+            #{emp.birthday,jdbcType=DATE}, #{emp.idCard,jdbcType=CHAR}, #{emp.wedlock,jdbcType=CHAR},
+            #{emp.nationId,jdbcType=BIGINT},
+            #{emp.nativePlace,jdbcType=VARCHAR},
+            #{emp.phone,jdbcType=VARCHAR}, #{emp.address,jdbcType=VARCHAR}, #{emp.departmentId,jdbcType=BIGINT},
+            #{emp.workID,jdbcType=BIGINT}
+            )
+        </foreach>
+    </insert>
+<!--    <select id="getStudentByPageShort" resultMap="BaseResultMap">
+select e.*,d.`id` as did,d.`name` as dname,s.`id` as sid,s.`accumulationFundBase`,s.`accumulationFundPer`,s.`allSalary`,s.`basicSalary`,s.`bonus`,s.`createDate`,s.`lunchSalary`,s.`medicalBase`,s.`medicalPer`,s.`name` as sname,s.`pensionBase`,s.`pensionPer`,s.`trafficSalary` from employee e left join department d on e.`departmentId`=d.id left join empsalary es on es.`eid`=e.`id` left join salary s on s.`id`=es.`sid` ORDER BY e.id limit #{start},#{size}
+    </select>-->
+</mapper>
