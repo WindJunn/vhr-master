@@ -1,20 +1,18 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : MyCon
-Source Server Version : 50717
+Source Server         : local
+Source Server Version : 50725
 Source Host           : localhost:3306
 Source Database       : vhr
 
 Target Server Type    : MYSQL
-Target Server Version : 50717
+Target Server Version : 50725
 File Encoding         : 65001
 
-Date: 2018-02-05 11:25:15
+Date: 2019-05-15 18:18:09
 */
-CREATE DATABASE `vhr` DEFAULT CHARACTER SET utf8;
 
-USE `vhr`;
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
@@ -70,12 +68,12 @@ CREATE TABLE `department` (
   `enabled` tinyint(1) DEFAULT '1',
   `isParent` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=93 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=117 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of department
 -- ----------------------------
-INSERT INTO `department` VALUES ('1', '股东会', '-1', '.1', '1', '1');
+INSERT INTO `department` VALUES ('1', '固原市', '-1', '.1', '1', '1');
 INSERT INTO `department` VALUES ('4', '董事会', '1', '.1.4', '1', '1');
 INSERT INTO `department` VALUES ('5', '总办', '4', '.1.4.5', '1', '1');
 INSERT INTO `department` VALUES ('8', '财务部', '5', '.1.4.5.8', '1', '0');
@@ -88,6 +86,29 @@ INSERT INTO `department` VALUES ('87', '西安市场', '86', '.1.4.5.78.86.87', 
 INSERT INTO `department` VALUES ('89', '莲湖区市场', '87', '.1.4.5.78.86.87.89', '1', '0');
 INSERT INTO `department` VALUES ('91', '技术部', '5', '.1.4.5.91', '1', '0');
 INSERT INTO `department` VALUES ('92', '运维部', '5', '.1.4.5.92', '1', '0');
+INSERT INTO `department` VALUES ('94', '原州区', '1', '.1.94', '1', '1');
+INSERT INTO `department` VALUES ('95', '泾源县', '1', '.1.95', '1', '0');
+INSERT INTO `department` VALUES ('96', '彭阳县', '1', '.1.96', '1', '0');
+INSERT INTO `department` VALUES ('97', '西吉县', '1', '.1.97', '1', '0');
+INSERT INTO `department` VALUES ('98', '隆德县', '1', '.1.98', '1', '0');
+INSERT INTO `department` VALUES ('99', '三营镇', '94', '.1.94.99', '1', '1');
+INSERT INTO `department` VALUES ('100', '头营镇', '94', '.1.94.100', '1', '0');
+INSERT INTO `department` VALUES ('101', '官厅镇', '94', '.1.94.101', '1', '0');
+INSERT INTO `department` VALUES ('102', '张易镇', '94', '.1.94.102', '1', '0');
+INSERT INTO `department` VALUES ('103', '开城镇', '94', '.1.94.103', '1', '0');
+INSERT INTO `department` VALUES ('104', '彭堡镇', '94', '.1.94.104', '1', '0');
+INSERT INTO `department` VALUES ('105', '黄铎堡镇', '94', '.1.94.105', '1', '0');
+INSERT INTO `department` VALUES ('106', '寨科乡', '94', '.1.94.106', '1', '0');
+INSERT INTO `department` VALUES ('107', '炭山乡', '94', '.1.94.107', '1', '0');
+INSERT INTO `department` VALUES ('108', '中河乡', '94', '.1.94.108', '1', '0');
+INSERT INTO `department` VALUES ('109', '河川乡', '94', '.1.94.109', '1', '0');
+INSERT INTO `department` VALUES ('110', '南关街道', '94', '.1.94.110', '1', '0');
+INSERT INTO `department` VALUES ('111', '古雁街道', '94', '.1.94.111', '1', '0');
+INSERT INTO `department` VALUES ('112', '北塬街道', '94', '.1.94.112', '1', '0');
+INSERT INTO `department` VALUES ('113', '第一居委会', '99', '.1.94.99.113', '1', '0');
+INSERT INTO `department` VALUES ('114', '第二居委会', '99', '.1.94.99.114', '1', '0');
+INSERT INTO `department` VALUES ('115', '东塬村', '99', '.1.94.99.115', '1', '0');
+INSERT INTO `department` VALUES ('116', '西台村', '99', '.1.94.99.116', '1', '0');
 
 -- ----------------------------
 -- Table structure for employee
@@ -134,7 +155,7 @@ CREATE TABLE `employee` (
   CONSTRAINT `employee_ibfk_3` FOREIGN KEY (`posId`) REFERENCES `position` (`id`),
   CONSTRAINT `employee_ibfk_4` FOREIGN KEY (`nationId`) REFERENCES `nation` (`id`),
   CONSTRAINT `employee_ibfk_5` FOREIGN KEY (`politicId`) REFERENCES `politicsstatus` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1519 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1521 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of employee
@@ -334,7 +355,7 @@ INSERT INTO `employee` VALUES ('1514', '1', '男', '2018-01-01', '61012219990909
 INSERT INTO `employee` VALUES ('1515', '1', '男', '2018-01-01', '610122199909099999', '已婚', '1', '1', '1', '584991843@qq.com', '1', '1', '87', '9', '29', '劳动合同', '大专', '1', '1', '2018-01-01', '在职', '00000044', '0', null, null, '2018-01-01', '2018-01-31', null);
 INSERT INTO `employee` VALUES ('1516', '1', '男', '2018-01-01', '610122199909099999', '已婚', '1', '1', '1', '584991843@qq.com', '1', '1', '78', '9', '29', '劳动合同', '大专', '1', '1', '2018-01-01', '在职', '00000045', '0', null, null, '2018-01-01', '2018-01-31', null);
 INSERT INTO `employee` VALUES ('1517', '林伯渠', '男', '2018-01-01', '610122199909099999', '未婚', '1', '1', '1', '584991843@qq.com', '1', '1', '8', '9', '29', '劳动合同', '大专', '1', '1', '2018-01-31', '在职', '00000046', '0', null, null, '2018-01-31', '2018-01-31', null);
-INSERT INTO `employee` VALUES ('1518', '1', '男', '2018-01-01', '610122199909091234', '已婚', '1', '1', '1', '584991843@qq.com', '1', '1', '8', '9', '29', '劳动合同', '大专', '1', '1', '2018-01-31', '在职', '00000047', '0', null, null, '2018-01-31', '2018-01-31', null);
+INSERT INTO `employee` VALUES ('1520', '陈静', '女', '1989-02-01', '421288198902011234', '已婚', '1', '海南', '1', 'chenjing@qq.com', '18795556693', '海南省海口市美兰区', '8', '12', '30', '劳动合同', '高中', '市场营销', '武汉大学', '2015-06-09', '在职', '00000002', '3', null, null, '2015-06-09', '2018-06-08', null);
 
 -- ----------------------------
 -- Table structure for employeeec
@@ -527,39 +548,40 @@ CREATE TABLE `menu` (
   PRIMARY KEY (`id`),
   KEY `parentId` (`parentId`),
   CONSTRAINT `menu_ibfk_1` FOREIGN KEY (`parentId`) REFERENCES `menu` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of menu
 -- ----------------------------
 INSERT INTO `menu` VALUES ('1', '/', null, null, '所有', null, null, null, null, '1');
-INSERT INTO `menu` VALUES ('2', '/', '/home', 'Home', '员工资料', 'fa fa-user-circle-o', null, '1', '1', '1');
-INSERT INTO `menu` VALUES ('3', '/', '/home', 'Home', '人事管理', 'fa fa-address-card-o', null, '1', '1', '1');
-INSERT INTO `menu` VALUES ('4', '/', '/home', 'Home', '薪资管理', 'fa fa-money', null, '1', '1', '1');
-INSERT INTO `menu` VALUES ('5', '/', '/home', 'Home', '统计管理', 'fa fa-bar-chart', null, '1', '1', '1');
+INSERT INTO `menu` VALUES ('2', '/', '/home', 'Home', '学员资料', 'fa fa-user-circle-o', null, '1', '1', '1');
+INSERT INTO `menu` VALUES ('3', '/', '/home', 'Home', '学习资料', 'fa fa-address-card-o', null, '1', '1', '1');
+INSERT INTO `menu` VALUES ('4', '/', '/home', 'Home', '薪资管理', 'fa fa-money', null, '1', '1', '0');
+INSERT INTO `menu` VALUES ('5', '/', '/home', 'Home', '统计管理', 'fa fa-bar-chart', null, '1', '1', '0');
 INSERT INTO `menu` VALUES ('6', '/', '/home', 'Home', '系统管理', 'fa fa-windows', null, '1', '1', '1');
 INSERT INTO `menu` VALUES ('7', '/employee/basic/**', '/emp/basic', 'EmpBasic', '基本资料', null, null, '1', '2', '1');
-INSERT INTO `menu` VALUES ('8', '/employee/advanced/**', '/emp/adv', 'EmpAdv', '高级资料', null, null, '1', '2', '0');
-INSERT INTO `menu` VALUES ('9', '/personnel/emp/**', '/per/emp', 'PerEmp', '员工资料', null, null, '1', '3', '0');
-INSERT INTO `menu` VALUES ('10', '/personnel/ec/**', '/per/ec', 'PerEc', '员工奖惩', null, null, '1', '3', '1');
-INSERT INTO `menu` VALUES ('11', '/personnel/train/**', '/per/train', 'PerTrain', '员工培训', null, null, '1', '3', '1');
-INSERT INTO `menu` VALUES ('12', '/personnel/salary/**', '/per/salary', 'PerSalary', '员工调薪', null, null, '1', '3', '1');
-INSERT INTO `menu` VALUES ('13', '/personnel/remove/**', '/per/mv', 'PerMv', '员工调动', null, null, '1', '3', '1');
-INSERT INTO `menu` VALUES ('14', '/salary/sob/**', '/sal/sob', 'SalSob', '工资账套管理', null, null, '1', '4', '1');
-INSERT INTO `menu` VALUES ('15', '/salary/sobcfg/**', '/sal/sobcfg', 'SalSobCfg', '员工账套设置', null, null, '1', '4', '1');
-INSERT INTO `menu` VALUES ('16', '/salary/table/**', '/sal/table', 'SalTable', '工资表管理', null, null, '1', '4', '1');
-INSERT INTO `menu` VALUES ('17', '/salary/month/**', '/sal/month', 'SalMonth', '月末处理', null, null, '1', '4', '1');
-INSERT INTO `menu` VALUES ('18', '/salary/search/**', '/sal/search', 'SalSearch', '工资表查询', null, null, '1', '4', '1');
-INSERT INTO `menu` VALUES ('19', '/statistics/all/**', '/sta/all', 'StaAll', '综合信息统计', null, null, '1', '5', '1');
-INSERT INTO `menu` VALUES ('20', '/statistics/score/**', '/sta/score', 'StaScore', '员工积分统计', null, null, '1', '5', '1');
-INSERT INTO `menu` VALUES ('21', '/statistics/personnel/**', '/sta/pers', 'StaPers', '人事信息统计', null, null, '1', '5', '1');
-INSERT INTO `menu` VALUES ('22', '/statistics/recored/**', '/sta/record', 'StaRecord', '人事记录统计', null, null, '1', '5', '1');
+INSERT INTO `menu` VALUES ('8', '/employee/advanced/**', '/emp/adv', 'EmpAdv', '高级资料', null, null, '1', '2', '1');
+INSERT INTO `menu` VALUES ('9', '/personnel/emp/**', '/per/emp', 'PerEmp', '员工资料', null, null, '1', '3', '1');
+INSERT INTO `menu` VALUES ('10', '/personnel/ec/**', '/per/ec', 'PerEc', '文章管理', null, null, '1', '3', '1');
+INSERT INTO `menu` VALUES ('11', '/personnel/train/**', '/per/train', 'PerTrain', '文章发布', null, null, '1', '3', '1');
+INSERT INTO `menu` VALUES ('12', '/personnel/salary/**', '/per/salary', 'PerSalary', '员工调薪', null, null, '1', '3', '0');
+INSERT INTO `menu` VALUES ('13', '/personnel/remove/**', '/per/mv', 'PerMv', '员工调动', null, null, '1', '3', '0');
+INSERT INTO `menu` VALUES ('14', '/salary/sob/**', '/sal/sob', 'SalSob', '工资账套管理', null, null, '1', '4', '0');
+INSERT INTO `menu` VALUES ('15', '/salary/sobcfg/**', '/sal/sobcfg', 'SalSobCfg', '员工账套设置', null, null, '1', '4', '0');
+INSERT INTO `menu` VALUES ('16', '/salary/table/**', '/sal/table', 'SalTable', '工资表管理', null, null, '1', '4', '0');
+INSERT INTO `menu` VALUES ('17', '/salary/month/**', '/sal/month', 'SalMonth', '月末处理', null, null, '1', '4', '0');
+INSERT INTO `menu` VALUES ('18', '/salary/search/**', '/sal/search', 'SalSearch', '工资表查询', null, null, '1', '4', '0');
+INSERT INTO `menu` VALUES ('19', '/statistics/all/**', '/sta/all', 'StaAll', '综合信息统计', null, null, '1', '5', '0');
+INSERT INTO `menu` VALUES ('20', '/statistics/score/**', '/sta/score', 'StaScore', '员工积分统计', null, null, '1', '5', '0');
+INSERT INTO `menu` VALUES ('21', '/statistics/personnel/**', '/sta/pers', 'StaPers', '人事信息统计', null, null, '1', '5', '0');
+INSERT INTO `menu` VALUES ('22', '/statistics/recored/**', '/sta/record', 'StaRecord', '人事记录统计', null, null, '1', '5', '0');
 INSERT INTO `menu` VALUES ('23', '/system/basic/**', '/sys/basic', 'SysBasic', '基础信息设置', null, null, '1', '6', '1');
 INSERT INTO `menu` VALUES ('24', '/system/cfg/**', '/sys/cfg', 'SysCfg', '系统管理', null, null, '1', '6', '1');
 INSERT INTO `menu` VALUES ('25', '/system/log/**', '/sys/log', 'SysLog', '操作日志管理', null, null, '1', '6', '1');
 INSERT INTO `menu` VALUES ('26', '/system/hr/**', '/sys/hr', 'SysHr', '操作员管理', null, null, '1', '6', '1');
 INSERT INTO `menu` VALUES ('27', '/system/data/**', '/sys/data', 'SysData', '备份恢复数据库', null, null, '1', '6', '1');
 INSERT INTO `menu` VALUES ('28', '/system/init/**', '/sys/init', 'SysInit', '初始化数据库', null, null, '1', '6', '1');
+INSERT INTO `menu` VALUES ('29', '/employee/basic/**', '/emp/basic', 'EmpBasic', '学员信息', null, null, '1', '2', '1');
 
 -- ----------------------------
 -- Table structure for menu_role
@@ -574,7 +596,7 @@ CREATE TABLE `menu_role` (
   KEY `rid` (`rid`),
   CONSTRAINT `menu_role_ibfk_1` FOREIGN KEY (`mid`) REFERENCES `menu` (`id`),
   CONSTRAINT `menu_role_ibfk_2` FOREIGN KEY (`rid`) REFERENCES `role` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=278 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=280 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of menu_role
@@ -632,6 +654,8 @@ INSERT INTO `menu_role` VALUES ('274', '25', '1');
 INSERT INTO `menu_role` VALUES ('275', '26', '1');
 INSERT INTO `menu_role` VALUES ('276', '27', '1');
 INSERT INTO `menu_role` VALUES ('277', '28', '1');
+INSERT INTO `menu_role` VALUES ('278', '29', '1');
+INSERT INTO `menu_role` VALUES ('279', '29', '6');
 
 -- ----------------------------
 -- Table structure for msgcontent
@@ -806,11 +830,11 @@ CREATE TABLE `role` (
 -- ----------------------------
 -- Records of role
 -- ----------------------------
-INSERT INTO `role` VALUES ('1', 'ROLE_manager', '部门经理');
-INSERT INTO `role` VALUES ('2', 'ROLE_personnel', '人事专员');
-INSERT INTO `role` VALUES ('3', 'ROLE_recruiter', '招聘主管');
-INSERT INTO `role` VALUES ('4', 'ROLE_train', '培训主管');
-INSERT INTO `role` VALUES ('5', 'ROLE_performance', '薪酬绩效主管');
+INSERT INTO `role` VALUES ('1', 'ROLE_CITY', '市管理员');
+INSERT INTO `role` VALUES ('2', 'ROLE_COUNTY', '县管理员');
+INSERT INTO `role` VALUES ('3', 'ROLE_TOWN', '镇管理员');
+INSERT INTO `role` VALUES ('4', 'ROLE_VILLAGE', '村管理员');
+INSERT INTO `role` VALUES ('5', 'ROLE_TEACHER', '教员');
 INSERT INTO `role` VALUES ('6', 'ROLE_admin', '系统管理员');
 INSERT INTO `role` VALUES ('13', 'ROLE_test2', '测试角色2');
 INSERT INTO `role` VALUES ('14', 'ROLE_test1', '测试角色1');
@@ -843,6 +867,38 @@ CREATE TABLE `salary` (
 INSERT INTO `salary` VALUES ('9', '9000', '4000', '800', '500', null, '2000', '0.07', '2018-01-24 00:00:00', '2000', '0.07', '2000', '0.07', '市场部工资账套');
 INSERT INTO `salary` VALUES ('10', '2000', '2000', '400', '1000', null, '2000', '0.07', '2018-01-01 00:00:00', '2000', '0.07', '2000', '0.07', '人事部工资账套');
 INSERT INTO `salary` VALUES ('13', '10000', '3000', '500', '500', null, '4000', '0.07', '2018-01-25 00:00:00', '4000', '0.07', '4000', '0.07', '运维部工资账套');
+
+-- ----------------------------
+-- Table structure for student
+-- ----------------------------
+DROP TABLE IF EXISTS `student`;
+CREATE TABLE `student` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '员工编号',
+  `name` varchar(20) DEFAULT NULL COMMENT '员工姓名',
+  `gender` char(4) DEFAULT NULL COMMENT '性别',
+  `birthday` date DEFAULT NULL COMMENT '出生日期',
+  `idCard` char(18) DEFAULT NULL COMMENT '身份证号',
+  `wedlock` enum('已婚','未婚','离异') DEFAULT NULL COMMENT '婚姻状况',
+  `nationId` int(8) DEFAULT NULL COMMENT '民族',
+  `nativePlace` varchar(20) DEFAULT NULL COMMENT '籍贯',
+  `phone` varchar(11) DEFAULT NULL COMMENT '电话号码',
+  `address` varchar(255) DEFAULT NULL COMMENT '联系地址',
+  `departmentId` int(11) DEFAULT NULL COMMENT '所属部门',
+  `workID` char(11) DEFAULT NULL COMMENT '工号',
+  PRIMARY KEY (`id`),
+  KEY `departmentId` (`departmentId`),
+  KEY `nationId` (`nationId`),
+  KEY `workID` (`workID`),
+  CONSTRAINT `student_ibfk_1` FOREIGN KEY (`departmentId`) REFERENCES `department` (`id`),
+  CONSTRAINT `student_ibfk_2` FOREIGN KEY (`nationId`) REFERENCES `nation` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of student
+-- ----------------------------
+INSERT INTO `student` VALUES ('1', '吴语', '男', '2019-05-06', '612328199412129999', '未婚', '1', '陕西', '18829345027', '广东省广州市天河区冼村路', '115', '00000000001');
+INSERT INTO `student` VALUES ('2', '赵旭', '女', '2019-05-14', '612328199412123625', '未婚', '1', '北京', '18829346049', '陕西西安', '1', '00000000002');
+INSERT INTO `student` VALUES ('3', '尚胡', '男', '2019-05-01', '612328199412120316', '已婚', '3', '固原', '18829345012', '固原市原州区', '95', '00000003');
 
 -- ----------------------------
 -- Table structure for sysmsg
@@ -885,7 +941,7 @@ INSERT INTO `sysmsg` VALUES ('74', '17', '0', '10', '1');
 INSERT INTO `sysmsg` VALUES ('75', '17', '0', '11', '0');
 INSERT INTO `sysmsg` VALUES ('76', '17', '0', '12', '0');
 INSERT INTO `sysmsg` VALUES ('77', '18', '0', '3', '1');
-INSERT INTO `sysmsg` VALUES ('78', '18', '0', '5', '0');
+INSERT INTO `sysmsg` VALUES ('78', '18', '0', '5', '1');
 INSERT INTO `sysmsg` VALUES ('79', '18', '0', '10', '0');
 INSERT INTO `sysmsg` VALUES ('80', '18', '0', '11', '0');
 INSERT INTO `sysmsg` VALUES ('81', '18', '0', '12', '0');
@@ -933,4 +989,3 @@ begin
 end
 ;;
 DELIMITER ;
-SET FOREIGN_KEY_CHECKS=1;

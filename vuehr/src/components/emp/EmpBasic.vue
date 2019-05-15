@@ -175,7 +175,7 @@
                            size="mini">编辑
                 </el-button>
                 <el-button style="padding: 3px 4px 3px 4px;margin: 2px" type="primary"
-                           size="mini">查看考勤
+                           size="mini" @click="s">查看考勤
                 </el-button>
                 <el-button type="danger" style="padding: 3px 4px 3px 4px;margin: 2px" size="mini"
                            @click="deleteEmp(scope.row)">删除
