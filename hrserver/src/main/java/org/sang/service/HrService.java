@@ -3,6 +3,7 @@ package org.sang.service;
 import org.sang.bean.Hr;
 import org.sang.common.HrUtils;
 import org.sang.mapper.HrMapper;
+import org.sang.mapper.RoleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,6 +23,9 @@ public class HrService implements UserDetailsService {
 
     @Autowired
     HrMapper hrMapper;
+
+    @Autowired
+    RoleMapper roleMapper;
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
