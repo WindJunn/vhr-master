@@ -3,7 +3,6 @@ package org.sang.controller.emp;
 import org.sang.bean.Employee;
 import org.sang.bean.Position;
 import org.sang.bean.RespBean;
-import org.sang.common.EmailRunnable;
 import org.sang.common.poi.PoiUtils;
 import org.sang.service.DepartmentService;
 import org.sang.service.EmpService;
@@ -11,7 +10,6 @@ import org.sang.service.JobLevelService;
 import org.sang.service.PositionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.TemplateEngine;
@@ -39,8 +37,8 @@ public class EmpBasicController {
     ExecutorService executorService;
     @Autowired
     TemplateEngine templateEngine;
-    @Autowired
-    JavaMailSender javaMailSender;
+//    @Autowired
+//    JavaMailSender javaMailSender;
 
     @RequestMapping(value = "/basicdata", method = RequestMethod.GET)
     public Map<String, Object> getAllNations() {
@@ -68,8 +66,8 @@ public class EmpBasicController {
                     employee.setPosName(allPo.getName());
                 }
             }
-            executorService.execute(new EmailRunnable(employee,
-                    javaMailSender, templateEngine));
+            /*executorService.execute(new EmailRunnable(employee,
+                    javaMailSender, templateEngine));*/
             return RespBean.ok("添加成功!");
         }
         return RespBean.error("添加失败!");

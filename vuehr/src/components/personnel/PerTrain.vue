@@ -34,6 +34,7 @@
         <mavon-editor style="height: 100%;width: 100%;" ref=md @imgAdd="imgAdd"
                       @imgDel="imgDel" v-model="article.mdContent"></mavon-editor>
       </div>
+      
       <div style="display: flex;align-items: center;margin-top: 15px;justify-content: flex-end">
         <el-button @click="cancelEdit" v-if="from!=undefined">放弃修改</el-button>
         <template v-if="from==undefined || from=='draft'">

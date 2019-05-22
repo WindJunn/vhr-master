@@ -22,6 +22,16 @@ public class Student {
     private Department department;
     private Nation nation;
 
+    public Long getPoints() {
+        return points;
+    }
+
+    public void setPoints(Long points) {
+        this.points = points;
+    }
+
+    private Long points;
+
     public Department getDepartment() {
         return department;
     }

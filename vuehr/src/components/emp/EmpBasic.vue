@@ -39,7 +39,7 @@
           </el-button>
           <el-button type="primary" size="mini" icon="el-icon-plus"
                      @click="showAddEmpView">
-            添加员工
+            添加学员
           </el-button>
         </div>
       </el-header>
@@ -139,7 +139,7 @@
               label="婚姻状况">
             </el-table-column>
             <el-table-column
-              width="50"
+              width="60"
               prop="nation.name"
               label="民族">
             </el-table-column>
@@ -165,6 +165,12 @@
               align="left"
               width="100"
               label="所属部门">
+            </el-table-column>
+            <el-table-column
+              prop="points"
+              align="left"
+              width="70"
+              label="积分">
             </el-table-column>
             <el-table-column
               fixed="right"
@@ -621,6 +627,7 @@
             _this.joblevels = data.joblevels;
             _this.emp.workID = data.workID;
           }
+          console.log(resp.data)
         })
       },
       showEditEmpView(row){
