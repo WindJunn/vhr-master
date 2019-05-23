@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50725
 File Encoding         : 65001
 
-Date: 2019-05-22 17:47:36
+Date: 2019-05-23 18:17:13
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -842,18 +842,18 @@ DROP TABLE IF EXISTS `schedules`;
 CREATE TABLE `schedules` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `userId` int(11) DEFAULT NULL,
-  `name` varchar(255) DEFAULT NULL,
   `time` datetime DEFAULT NULL,
   `departmentId` int(11) DEFAULT NULL COMMENT '授课地点',
   `theme` varchar(255) DEFAULT NULL,
   `state` int(1) DEFAULT '1' COMMENT '授课状态 1.未授课 2.已授课',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of schedules
 -- ----------------------------
-INSERT INTO `schedules` VALUES ('1', '5', '李虎', '2019-05-28 17:00:00', '1', '水稻防害', '1');
+INSERT INTO `schedules` VALUES ('1', '5', '2019-05-28 17:00:00', '1', '水稻防害', '1');
+INSERT INTO `schedules` VALUES ('2', '5', '2019-05-13 00:00:00', '1', '111', '1');
 
 -- ----------------------------
 -- Table structure for student
@@ -885,7 +885,6 @@ CREATE TABLE `student` (
 -- Records of student
 -- ----------------------------
 INSERT INTO `student` VALUES ('1', '吴语', '男', '2019-05-06', '612328199412129999', '未婚', '1', '陕西', '18829345027', '广东省广州市天河区冼村路', '115', '0000000001', '1');
-INSERT INTO `student` VALUES ('2', '赵旭', '女', '2019-05-14', '612328199412123625', '未婚', '1', '北京', '18829346049', '陕西西安', '1', '0000000002', '10');
 INSERT INTO `student` VALUES ('3', '尚胡', '男', '2019-05-01', '612328199412120316', '已婚', '3', '固原', '18829345012', '固原市原州区', '95', '0000000003', '15');
 INSERT INTO `student` VALUES ('4', '尚玉', '男', '2019-04-29', '612328199412120316', '已婚', '2', '固原', '18829345012', '固原市原州区', '5', '0000000004', '20');
 

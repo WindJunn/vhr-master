@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.sang.mapper.SchedulesMapper">
+    <resultMap id="BaseResultMap" type="org.sang.bean.Schedules">
+        <id column="id" property="id"/>
+        <result column="userId" property="userId"/>
+        <result column="time" property="time"/>
+        <result column="state" property="state"/>
+        <result column="theme" property="theme"/>
+        <result column="phone" property="phone"/>
+        <result column="departmentId" property="departmentId"/>
+        <association property="department" javaType="org.sang.bean.Department">
+            <id property="id" column="did"/>
+            <result property="name" column="dname"/>
+        </association>
+        <association property="hr" javaType="org.sang.bean.Hr">
+            <id property="id" column="hid"/>
+            <result property="name" column="hname"/>
+            <result property="telephone" column="htelephone"/>
+        </association>
+    </resultMap>
+    <select id="getSchedulesByPage" resultMap="BaseResultMap">
+        select s.*,d.`id` as did,d.`name` as
+        dname,h.`id` as hid,h.`name` as hname,h.telephone as htelephone from
+        schedules s,department d,hr h where
+        s.`departmentId`=d.id and s.`userId`=h.`id` and h.`name`
+        like concat('%',#{keywords},'%')
+
+        <if test="userId!=null and userId!=''">
+            AND s.userId=#{userId}
+        </if>
+
+        <if test="departmentId!=null and departmentId!=''">
+            AND s.departmentId=#{departmentId}
+        </if>
+        <if test="start!=null and size!=null">
+            order by s.id limit #{start},#{size}
+        </if>
+    </select>
+
+    <select id="getCountByKeywords" resultType="Long">
+        SELECT count(*) FROM schedules s WHERE s.name LIKE concat('%',#{keywords},'%')
+
+        <if test="userId!=null and userId!=''">
+            AND s.userId=#{userId}
+        </if>
+        <if test="departmentId!=null and departmentId!=''">
+            AND s.departmentId=#{departmentId}
+        </if>
+    </select>
+
+
+    <insert id="addSchedules" parameterType="org.sang.bean.Schedules">
+            insert into schedules (userId, time, state, theme, departmentId)
+    values (#{userId,jdbcType=INTEGER}, #{time,jdbcType=DATE},
+      #{state,jdbcType=INTEGER}, #{theme,jdbcType=VARCHAR}, #{departmentId,jdbcType=INTEGER}
+      )
+    </insert>
+
+    <update id="updateSchedules" parameterType="org.sang.bean.Schedules">
+        UPDATE schedules SET
+        userId=#{userId},time=#{time},theme=#{theme},departmentId=#{departmentId},state=#{state}
+        WHERE id=#{id}
+    </update>
+
+    <delete id="deleteSchedulesById">
+        DELETE FROM schedules WHERE id IN
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{ids}
+        </foreach>
+    </delete>
+</mapper>

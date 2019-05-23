@@ -21,7 +21,7 @@ public class Student {
     private String workID;
     private Department department;
     private Nation nation;
-
+    private Long points;
     public Long getPoints() {
         return points;
     }
@@ -30,7 +30,7 @@ public class Student {
         this.points = points;
     }
 
-    private Long points;
+
 
     public Department getDepartment() {
         return department;
