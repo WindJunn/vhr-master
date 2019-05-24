@@ -24,6 +24,26 @@ public class Hr implements UserDetails {
     private String remark;
     private List<Role> roles;
     private String userface;
+    private Long departmentId;
+    private Department department;
+    @JsonIgnore
+    public Long getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(Long departmentId) {
+        this.departmentId = departmentId;
+    }
+
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
     @Override
     public boolean isEnabled() {
         return enabled;

@@ -14,6 +14,7 @@
         <result column="password" property="password"/>
         <result column="userface" property="userface"/>
         <result column="remark" property="remark"/>
+        <result column="departmentId" property="departmentId"/>
     </resultMap>
     <resultMap id="lazyLoadRoles" type="org.sang.bean.Hr" extends="BaseResultMap">
         <collection property="roles" ofType="org.sang.bean.Role" select="org.sang.mapper.HrMapper.getRolesByHrId"
@@ -24,6 +25,14 @@
             <id property="id" column="rid"/>
             <result property="name" column="rname"/>
             <result property="nameZh" column="rnameZh"/>
+        </collection>
+        <collection property="department" ofType="org.sang.bean.Department">
+            <id property="id" column="did"/>
+            <result property="name" column="dname"/>
+            <result property="parentId" column="dparentId"/>
+            <result property="depPath" column="ddepPath"/>
+            <result property="enabled" column="denabled"/>
+            <result property="isParent" column="disParent"/>
         </collection>
     </resultMap>
     <select id="loadUserByUsername" resultMap="lazyLoadRoles">
@@ -45,8 +54,10 @@
         order by h.`id` limit 10
     </select>
     <select id="getHrById" resultMap="eagerLoadRoles">
-        select h.*,`r`.`id` AS `rid`,`r`.`name` AS `rname`,`r`.`nameZh` AS `rnameZh` from ((`hr` `h` left join `hr_role`
-        `h_r` on ((`h`.`id` = `h_r`.`hrid`))) left join `role` `r` on ((`h_r`.`rid` = `r`.`id`))) where h.`id`=#{hrId}
+        select h.*, d.name as dname,`r`.`id` AS `rid`,`r`.`name` AS `rname`,`r`.`nameZh` AS `rnameZh` from
+        `hr` `h` left join `hr_role` `h_r` on (`h`.`id` = `h_r`.`hrid`)
+        left join `role` `r` on (`h_r`.`rid` = `r`.`id`) LEFT JOIN department d ON h.departmentId = d.id
+        where h.`id`=#{hrId}
     </select>
     <update id="updateHr" parameterType="org.sang.bean.Hr">
         update hr

@@ -55,7 +55,7 @@
           </el-upload>
           <el-button type="success" size="mini" @click="exportEmps">
             <i class="fa fa-lg fa-level-down" style="margin-right: 5px"></i>导出数据
-          </el-button> -->
+          </el-button>-->
           <el-button type="primary" size="mini" icon="el-icon-plus" @click="showAddEmpView">添加排班</el-button>
         </div>
       </el-header>
@@ -142,7 +142,7 @@
                   style="padding: 3px 4px 3px 4px;margin: 2px"
                   size="mini"
                 >编辑</el-button>
-               
+
                 <el-button
                   type="danger"
                   style="padding: 3px 4px 3px 4px;margin: 2px"
@@ -173,24 +173,30 @@
       </el-main>
     </el-container>
 
-        <el-form :model="emp" :rules="rules" ref="addEmpForm" style="margin: 0px;padding: 0px;">
+    <el-form :model="emp" :rules="rules" ref="addEmpForm" style="margin: 0px;padding: 0px;">
       <div style="text-align: left">
         <el-dialog
           :title="dialogTitle"
           style="padding: 0px;"
           :close-on-click-modal="false"
           :visible.sync="dialogVisible"
-          width="77%">
+          width="77%"
+        >
           <el-row>
             <el-col :span="6">
               <div>
                 <el-form-item label="姓名:" prop="name">
-                  <el-input prefix-icon="el-icon-edit" v-model="emp.name" size="mini" style="width: 150px"
-                            placeholder="请输入教员姓名"></el-input>
+                  <el-input
+                    prefix-icon="el-icon-edit"
+                    v-model="emp.name"
+                    size="mini"
+                    style="width: 150px"
+                    placeholder="请输入教员姓名"
+                  ></el-input>
                 </el-form-item>
               </div>
             </el-col>
-         
+
             <el-col :span="6">
               <div>
                 <el-form-item label="授课日期:" prop="time">
@@ -200,19 +206,23 @@
                     value-format="yyyy-MM-dd HH:mm:ss"
                     style="width: 150px"
                     type="date"
-                    placeholder="授课日期">
-                  </el-date-picker>
+                    placeholder="授课日期"
+                  ></el-date-picker>
                 </el-form-item>
               </div>
             </el-col>
-            
           </el-row>
           <el-row>
             <el-col :span="7">
               <div>
                 <el-form-item label="授课状态:" prop="state">
-                  <el-input prefix-icon="el-icon-edit" v-model="emp.state" size="mini" style="width: 200px"
-                            placeholder="授课状态..."></el-input>
+                  <el-input
+                    prefix-icon="el-icon-edit"
+                    v-model="emp.state"
+                    size="mini"
+                    style="width: 200px"
+                    placeholder="授课状态..."
+                  ></el-input>
                 </el-form-item>
               </div>
             </el-col>
@@ -220,17 +230,19 @@
             <el-col :span="6">
               <div>
                 <el-form-item label="联系地址:" prop="departmentId">
-                  <el-input prefix-icon="el-icon-edit" v-model="emp.departmentId" size="mini" style="width: 200px"
-                            placeholder="联系地址..."></el-input>
+                  <el-input
+                    prefix-icon="el-icon-edit"
+                    v-model="emp.departmentId"
+                    size="mini"
+                    style="width: 200px"
+                    placeholder="联系地址..."
+                  ></el-input>
                 </el-form-item>
               </div>
             </el-col>
           </el-row>
 
-            
-          
           <el-row>
-           
             <el-col :span="6">
               <div>
                 <el-form-item label="所属部门:" prop="departmentId">
@@ -238,13 +250,21 @@
                     v-model="showOrHidePop"
                     placement="right"
                     title="请选择部门"
-                    trigger="manual">
-                    <el-tree :data="deps" :default-expand-all="true" :props="defaultProps" :expand-on-click-node="false"
-                             @node-click="handleNodeClick"></el-tree>
-                    <div slot="reference"
-                         style="width: 150px;height: 26px;display: inline-flex;font-size:13px;border: 1px;border-radius: 5px;border-style: solid;padding-left: 13px;box-sizing:border-box;border-color: #dcdfe6;cursor: pointer;align-items: center"
-                         @click.left="showDepTree" v-bind:style="{color: depTextColor}">{{emp.departmentName}}
-                    </div>
+                    trigger="manual"
+                  >
+                    <el-tree
+                      :data="deps"
+                      :default-expand-all="true"
+                      :props="defaultProps"
+                      :expand-on-click-node="false"
+                      @node-click="handleNodeClick"
+                    ></el-tree>
+                    <div
+                      slot="reference"
+                      style="width: 150px;height: 26px;display: inline-flex;font-size:13px;border: 1px;border-radius: 5px;border-style: solid;padding-left: 13px;box-sizing:border-box;border-color: #dcdfe6;cursor: pointer;align-items: center"
+                      @click.left="showDepTree"
+                      v-bind:style="{color: depTextColor}"
+                    >{{emp.departmentName}}</div>
                   </el-popover>
                 </el-form-item>
               </div>
@@ -252,8 +272,13 @@
             <el-col :span="7">
               <div>
                 <el-form-item label="电话号码:" prop="telephone">
-                  <el-input prefix-icon="el-icon-phone" v-model="emp.telephone" size="mini" style="width: 200px"
-                            placeholder="电话号码..."></el-input>
+                  <el-input
+                    prefix-icon="el-icon-phone"
+                    v-model="emp.telephone"
+                    size="mini"
+                    style="width: 200px"
+                    placeholder="电话号码..."
+                  ></el-input>
                 </el-form-item>
               </div>
             </el-col>
@@ -262,20 +287,154 @@
             <el-col :span="6">
               <div>
                 <el-form-item label="授课主题:" prop="theme">
-                  <el-input v-model="emp.theme"  size="mini" style="width: 300px"
-                            placeholder="授课主题..."></el-input>
+                  <el-input
+                    v-model="emp.theme"
+                    size="mini"
+                    style="width: 300px"
+                    placeholder="授课主题..."
+                  ></el-input>
                 </el-form-item>
               </div>
             </el-col>
-            
-            
           </el-row>
-          
-         
+
           <span slot="footer" class="dialog-footer">
-    <el-button size="mini" @click="cancelEidt">取 消</el-button>
-    <el-button size="mini" type="primary" @click="addEmp('addEmpForm')">确 定</el-button>
-  </span>
+            <el-button size="mini" @click="cancelEidt">取 消</el-button>
+            <el-button size="mini" type="primary" @click="addEmp('addEmpForm')">确 定</el-button>
+          </span>
+        </el-dialog>
+      </div>
+    </el-form>
+
+    <el-form :model="schedules" :rules="rules" ref="addEmpForm1" style="margin: 0px;padding: 0px;">
+      <div style="text-align: left">
+        <el-dialog
+          :title="dialogTitle"
+          style="padding: 0px;"
+          :close-on-click-modal="false"
+          :visible.sync="dialogVisible"
+          width="77%"
+        >
+          <el-row>
+            <el-col :span="6">
+              <div>
+                <el-form-item label="姓名:" prop="name">
+                  <el-input
+                    prefix-icon="el-icon-edit"
+                    v-model="emp.name"
+                    size="mini"
+                    style="width: 150px"
+                    placeholder="请输入教员姓名"
+                  ></el-input>
+                </el-form-item>
+              </div>
+            </el-col>
+
+            <el-col :span="6">
+              <div>
+                <el-form-item label="授课日期:" prop="time">
+                  <el-date-picker
+                    v-model="emp.time"
+                    size="mini"
+                    value-format="yyyy-MM-dd HH:mm:ss"
+                    style="width: 150px"
+                    type="date"
+                    placeholder="授课日期"
+                  ></el-date-picker>
+                </el-form-item>
+              </div>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="7">
+              <div>
+                <el-form-item label="授课状态:" prop="state">
+                  <el-input
+                    prefix-icon="el-icon-edit"
+                    v-model="emp.state"
+                    size="mini"
+                    style="width: 200px"
+                    placeholder="授课状态..."
+                  ></el-input>
+                </el-form-item>
+              </div>
+            </el-col>
+
+            <el-col :span="6">
+              <div>
+                <el-form-item label="联系地址:" prop="departmentId">
+                  <el-input
+                    prefix-icon="el-icon-edit"
+                    v-model="emp.departmentId"
+                    size="mini"
+                    style="width: 200px"
+                    placeholder="联系地址..."
+                  ></el-input>
+                </el-form-item>
+              </div>
+            </el-col>
+          </el-row>
+
+          <el-row>
+            <el-col :span="6">
+              <div>
+                <el-form-item label="所属部门:" prop="departmentId">
+                  <el-popover
+                    v-model="showOrHidePop"
+                    placement="right"
+                    title="请选择部门"
+                    trigger="manual"
+                  >
+                    <el-tree
+                      :data="deps"
+                      :default-expand-all="true"
+                      :props="defaultProps"
+                      :expand-on-click-node="false"
+                      @node-click="handleNodeClick"
+                    ></el-tree>
+                    <div
+                      slot="reference"
+                      style="width: 150px;height: 26px;display: inline-flex;font-size:13px;border: 1px;border-radius: 5px;border-style: solid;padding-left: 13px;box-sizing:border-box;border-color: #dcdfe6;cursor: pointer;align-items: center"
+                      @click.left="showDepTree"
+                      v-bind:style="{color: depTextColor}"
+                    >{{emp.departmentName}}</div>
+                  </el-popover>
+                </el-form-item>
+              </div>
+            </el-col>
+            <el-col :span="7">
+              <div>
+                <el-form-item label="电话号码:" prop="telephone">
+                  <el-input
+                    prefix-icon="el-icon-phone"
+                    v-model="emp.telephone"
+                    size="mini"
+                    style="width: 200px"
+                    placeholder="电话号码..."
+                  ></el-input>
+                </el-form-item>
+              </div>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="6">
+              <div>
+                <el-form-item label="授课主题:" prop="theme">
+                  <el-input
+                    v-model="emp.theme"
+                    size="mini"
+                    style="width: 300px"
+                    placeholder="授课主题..."
+                  ></el-input>
+                </el-form-item>
+              </div>
+            </el-col>
+          </el-row>
+
+          <span slot="footer" class="dialog-footer">
+            <el-button size="mini" @click="cancelEidt">取 消</el-button>
+            <el-button size="mini" type="primary" @click="addEmp('addEmpForm')">确 定</el-button>
+          </span>
         </el-dialog>
       </div>
     </el-form>
@@ -355,12 +514,11 @@ export default {
         workAge: ""
       },
       schedules: {
-        userId:"",
+        userId: "",
         departmentId: "",
         time: "",
         state: "",
-        theme:""
-
+        theme: ""
       },
       rules: {
         name: [{ required: true, message: "必填:姓名", trigger: "blur" }],
@@ -380,9 +538,7 @@ export default {
             trigger: "blur"
           }
         ],
-        wedlock: [
-          { required: true, message: "必填:婚姻状况", trigger: "blur" }
-        ],
+
         nationId: [{ required: true, message: "必填:民族", trigger: "change" }],
         nativePlace: [
           { required: true, message: "必填:籍贯", trigger: "blur" }
@@ -390,14 +546,7 @@ export default {
         politicId: [
           { required: true, message: "必填:政治面貌", trigger: "blur" }
         ],
-        email: [
-          { required: true, message: "必填:电子邮箱", trigger: "blur" },
-          {
-            type: "email",
-            message: "邮箱格式不正确",
-            trigger: "blur"
-          }
-        ],
+
         phone: [{ required: true, message: "必填:电话号码", trigger: "blur" }],
         address: [
           { required: true, message: "必填:联系地址", trigger: "blur" }
@@ -408,29 +557,7 @@ export default {
         jobLevelId: [
           { required: true, message: "必填:职称", trigger: "change" }
         ],
-        posId: [{ required: true, message: "必填:职位", trigger: "change" }],
-        engageForm: [
-          { required: true, message: "必填:聘用形式", trigger: "blur" }
-        ],
-        tiptopDegree: [
-          { required: true, message: "必填:最高学历", trigger: "change" }
-        ],
-        specialty: [{ required: true, message: "必填:专业", trigger: "blur" }],
-        workID: [{ required: true, message: "必填:工号", trigger: "blur" }],
-        school: [{ required: true, message: "必填:毕业院校", trigger: "blur" }],
-        beginDate: [
-          { required: true, message: "必填:入职日期", trigger: "blur" }
-        ],
-        conversionTime: [
-          { required: true, message: "必填:转正日期", trigger: "blur" }
-        ],
-        beginContract: [
-          { required: true, message: "必填:合同起始日期", trigger: "blur" }
-        ],
-        endContract: [
-          { required: true, message: "必填:合同终止日期", trigger: "blur" }
-        ],
-        workAge: [{ required: true, message: "必填:工龄", trigger: "blur" }]
+        posId: [{ required: true, message: "必填:职位", trigger: "change" }]
       }
     };
   },
@@ -507,7 +634,7 @@ export default {
     doDelete(ids) {
       this.tableLoading = true;
       var _this = this;
-      this.deleteRequest("/student/basic/emp/" + ids).then(resp => {
+      this.deleteRequest("/schedules/sch/" + ids).then(resp => {
         _this.tableLoading = false;
         if (resp && resp.status == 200) {
           var data = resp.data;
@@ -548,13 +675,14 @@ export default {
           _this.totalCount = data.count;
           //            _this.emptyEmpData();
         }
-        console.log(_this.emps)
+        console.log(_this.emps);
       });
     },
     addEmp(formName) {
       var _this = this;
       this.$refs[formName].validate(valid => {
         if (valid) {
+          // debugger;
           if (this.emp.id) {
             //更新
             this.tableLoading = true;
@@ -597,12 +725,14 @@ export default {
       this.showOrHidePop2 = !this.showOrHidePop2;
     },
     handleNodeClick(data) {
+      debugger;
       this.emp.departmentName = data.name;
       this.emp.departmentId = data.id;
       this.showOrHidePop = false;
       this.depTextColor = "#606266";
     },
     handleNodeClick2(data) {
+      debugger;
       this.emp.departmentName = data.name;
       this.emp.departmentId = data.id;
       this.showOrHidePop2 = false;
@@ -627,13 +757,13 @@ export default {
       console.log(row);
       this.dialogTitle = "编辑员工";
       this.emp = row;
-      this.emp.birthday = this.formatDate(row.birthday);
-     
-      this.emp.nationId = row.nation.id;
-      // this.emp.politicId = row.politicsStatus.id;
+      this.emp.birthday = this.formatDate(row.time);
+
+      this.emp.userId = row.hr.id;
+      this.emp.name = row.hr.name;
       this.emp.departmentId = row.department.id;
       this.emp.departmentName = row.department.name;
-     
+      this.emp.telephone = row.hr.telephone;
       this.dialogVisible = true;
     },
     showAddEmpView() {
