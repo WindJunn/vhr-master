@@ -21,7 +21,7 @@ public interface StudentMapper {
 
     Long getCountByKeywords(@Param("keywords") String keywords,  @Param("nationId") Long nationId, @Param("departmentId") Long departmentId);
 
-    int updateStudent(@Param("student") Student student);
+    int updateStudent(@Param("emp") Student student);
 
     int deleteStudentById(@Param("ids") String[] ids);
 

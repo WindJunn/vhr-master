@@ -16,4 +16,6 @@ public interface DepartmentMapper {
     List<Department> getDepByPid(Long pid);
 
     List<Department> getAllDeps();
+
+    int updateDep(@Param("dep") Department department);
 }

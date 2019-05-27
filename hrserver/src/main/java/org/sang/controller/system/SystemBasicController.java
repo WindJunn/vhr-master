@@ -83,6 +83,14 @@ public class SystemBasicController {
         return map;
     }
 
+    @RequestMapping(value = "/dep", method = RequestMethod.PUT)
+    public RespBean updateDep(Department department) {
+        if (departmentService.updateDep(department) == 1) {
+            return RespBean.ok("修改成功!");
+        }
+        return RespBean.error("修改失败!");
+    }
+
     @RequestMapping(value = "/dep/{did}", method = RequestMethod.DELETE)
     public RespBean deleteDep(@PathVariable Long did) {
         if (departmentService.deleteDep(did) == 1) {

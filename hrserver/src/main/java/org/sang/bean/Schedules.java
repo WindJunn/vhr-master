@@ -1,5 +1,7 @@
 package org.sang.bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Date;
 
 public class Schedules {
@@ -42,6 +44,7 @@ public class Schedules {
         this.id = id;
     }
 
+    @JsonIgnore
     public Long getUserId() {
         return userId;
     }
@@ -58,6 +61,7 @@ public class Schedules {
         this.time = time;
     }
 
+    @JsonIgnore
     public Long getDepartmentId() {
         return departmentId;
     }

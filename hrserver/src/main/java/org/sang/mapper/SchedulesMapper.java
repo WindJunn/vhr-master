@@ -21,9 +21,9 @@ public interface SchedulesMapper {
 
     Schedules getSchedulesById(Long id);
 
-    int addSchedules(Schedules schedules);
+    int addSchedules(@Param("schedule") Schedules schedule);
 
-    int updateSchedules(@Param("schedules") Schedules schedules);
+    int updateSchedules(@Param("schedule") Schedules schedule);
 
     int deleteSchedulesById(@Param("ids") String[] ids);
 

@@ -59,10 +59,28 @@
       )
     </insert>
 
-    <update id="updateSchedules" parameterType="org.sang.bean.Schedules">
-        UPDATE schedules SET
-        userId=#{userId},time=#{time},theme=#{theme},departmentId=#{departmentId},state=#{state}
-        WHERE id=#{id}
+
+
+    <update id="updateSchedules">
+        update schedules
+        <set>
+            <if test="schedule.userId != null">
+                userId = #{schedule.userId,jdbcType=INTEGER},
+            </if>
+            <if test="schedule.time != null">
+                time = #{schedule.time,jdbcType=DATE},
+            </if>
+            <if test="schedule.departmentId != null">
+                departmentId = #{schedule.departmentId,jdbcType=INTEGER},
+            </if>
+            <if test="schedule.theme != null">
+                theme = #{schedule.theme,jdbcType=VARCHAR},
+            </if>
+            <if test="schedule.state != null">
+                state = #{schedule.state,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{schedule.id,jdbcType=BIGINT}
     </update>
 
     <delete id="deleteSchedulesById">

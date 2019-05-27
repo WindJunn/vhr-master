@@ -318,6 +318,14 @@
                 </el-form-item>
               </div>
             </el-col>
+             <el-col :span="7">
+              <div>
+                <el-form-item label="积分:" prop="points">
+                  <el-input v-model="emp.points"  size="mini" style="width: 150px"
+                            placeholder="积分..."></el-input>
+                </el-form-item>
+              </div>
+            </el-col>
             
             
           </el-row>
@@ -372,10 +380,7 @@
         joblevels: [],
         totalCount: -1,
         currentPage: 1,
-        degrees: [{id: 4, name: '大专'}, {id: 5, name: '本科'}, {id: 6, name: '硕士'}, {id: 7, name: '博士'}, {
-          id: 3,
-          name: '高中'
-        }, {id: 2, name: '初中'}, {id: 1, name: '小学'}, {id: 8, name: '其他'}],
+     
         deps: [],
         defaultProps: {
           label: 'name',
@@ -395,27 +400,14 @@
           wedlock: '',
           nationId: '',
           nativePlace: '',
-          politicId: '',
-          email: '',
           phone: '',
           address: '',
           departmentId: '',
           departmentName: '所属部门...',
-          jobLevelId: '',
           posId: '',
-          engageForm: '',
-          tiptopDegree: '',
-          specialty: '',
-          school: '',
-          beginDate: '',
-          workState: '',
           workID: '',
-          contractTerm: '',
-          conversionTime: '',
-          notWorkDate: '',
-          beginContract: '',
-          endContract: '',
-          workAge: ''
+          points: 0
+      
         },
         rules: {
           name: [{required: true, message: '必填:姓名', trigger: 'blur'}],
@@ -433,27 +425,12 @@
           wedlock: [{required: true, message: '必填:婚姻状况', trigger: 'blur'}],
           nationId: [{required: true, message: '必填:民族', trigger: 'change'}],
           nativePlace: [{required: true, message: '必填:籍贯', trigger: 'blur'}],
-          politicId: [{required: true, message: '必填:政治面貌', trigger: 'blur'}],
-          email: [{required: true, message: '必填:电子邮箱', trigger: 'blur'}, {
-            type: 'email',
-            message: '邮箱格式不正确',
-            trigger: 'blur'
-          }],
           phone: [{required: true, message: '必填:电话号码', trigger: 'blur'}],
           address: [{required: true, message: '必填:联系地址', trigger: 'blur'}],
           departmentId: [{required: true, message: '必填:部门', trigger: 'change'}],
-          jobLevelId: [{required: true, message: '必填:职称', trigger: 'change'}],
           posId: [{required: true, message: '必填:职位', trigger: 'change'}],
-          engageForm: [{required: true, message: '必填:聘用形式', trigger: 'blur'}],
-          tiptopDegree: [{required: true, message: '必填:最高学历', trigger: 'change'}],
-          specialty: [{required: true, message: '必填:专业', trigger: 'blur'}],
-          workID: [{required: true, message: '必填:工号', trigger: 'blur'}],
-          school: [{required: true, message: '必填:毕业院校', trigger: 'blur'}],
-          beginDate: [{required: true, message: '必填:入职日期', trigger: 'blur'}],
-          conversionTime: [{required: true, message: '必填:转正日期', trigger: 'blur'}],
-          beginContract: [{required: true, message: '必填:合同起始日期', trigger: 'blur'}],
-          endContract: [{required: true, message: '必填:合同终止日期', trigger: 'blur'}],
-          workAge: [{required: true, message: '必填:工龄', trigger: 'blur'}]
+          workID: [{required: true, message: '必填:学号', trigger: 'blur'}],
+          points:[{required:true,message:'积分',trigger:'change'}]
         }
       };
     },
@@ -673,8 +650,6 @@
           wedlock: '',
           nationId: '',
           nativePlace: '',
-          politicId: '',
-          email: '',
           phone: '',
           address: '',
           departmentId: '',
@@ -682,18 +657,9 @@
           jobLevelId: '',
           posId: '',
           engageForm: '',
-          tiptopDegree: '',
-          specialty: '',
-          school: '',
-          beginDate: '',
-          workState: '',
+         
           workID: '',
-          contractTerm: '',
-          conversionTime: '',
-          notWorkDate: '',
-          beginContract: '',
-          endContract: '',
-          workAge: ''
+          
         }
       }
     }

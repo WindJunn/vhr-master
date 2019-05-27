@@ -23,4 +23,8 @@
     <select id="getAllDeps" resultType="org.sang.bean.Department">
         select * from department WHERE enabled=true;
     </select>
+
+    <update id="updateDep">
+        UPDATE department SET name=#{dep.name} WHERE id=#{dep.id};
+    </update>
 </mapper>

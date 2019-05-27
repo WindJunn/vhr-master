@@ -108,7 +108,7 @@
                 departmentId = #{emp.departmentId,jdbcType=INTEGER},
             </if>
             <if test="emp.points != null">
-                departmentId = #{emp.points,jdbcType=INTEGER},
+                points = #{emp.points,jdbcType=INTEGER},
             </if>
         </set>
         where id = #{emp.id,jdbcType=BIGINT}
