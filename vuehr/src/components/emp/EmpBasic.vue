@@ -484,7 +484,7 @@
             </el-col>
           </el-row>
           <el-row>
-            <el-col :span="3">
+            <el-col :span="4">
               <div>
                 <el-form-item label="考勤记录（次）：">
                 </el-form-item>
@@ -520,8 +520,7 @@
               </div>
             </el-col>
           </el-row>
-      
-         
+
           <span slot="footer" class="dialog-footer">
             <el-button size="mini" @click="cancelEidt">取 消</el-button>
             <el-button size="mini" type="primary" @click="a('attendance')">确 定</el-button>
@@ -591,7 +590,7 @@ export default {
       rules1: {
         name: [
           { required: true, message: "请输入整数积分", trigger: "blur" },
-          { min: 1, max: 3, message: "长度在 1 到 3 个字符", trigger: "blur" }
+          { min: 1, max: 4, message: "长度在 1 到 3 个字符", trigger: "blur" }
         ],
         region: [
           { required: true, message: "请选择积分项目", trigger: "change" }

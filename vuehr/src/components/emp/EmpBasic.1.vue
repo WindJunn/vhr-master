@@ -894,6 +894,7 @@
 //        delete this.emp.politicsStatus;
         delete this.emp.workAge;
         delete this.emp.notWorkDate;
+        delete this.emp.salary;
         this.dialogVisible = true;
       },
       showAddEmpView(){

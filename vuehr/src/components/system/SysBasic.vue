@@ -7,9 +7,9 @@
       <el-tab-pane label="职位管理" name="positionMana">
         <pos-mana state="position"></pos-mana>
       </el-tab-pane>
-      <el-tab-pane label="职称管理" name="jobTitleMana">
+      <!-- <el-tab-pane label="职称管理" name="jobTitleMana">
         <pos-mana state="jobtitle"></pos-mana>
-      </el-tab-pane>
+      </el-tab-pane> -->
       <!-- <el-tab-pane label="奖惩规则" name="ecCfg">
         <ec-mana></ec-mana>
       </el-tab-pane> -->
