@@ -1,7 +1,5 @@
 package org.sang.bean;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.util.Date;
 
 public class Schedules {
@@ -15,7 +13,7 @@ public class Schedules {
 
     private Hr hr;
     private String name;
-    private String telephone;
+    private String phone;
 
     private Department department;
     private String departmentName;
@@ -44,7 +42,7 @@ public class Schedules {
         this.id = id;
     }
 
-    @JsonIgnore
+
     public Long getUserId() {
         return userId;
     }
@@ -61,7 +59,7 @@ public class Schedules {
         this.time = time;
     }
 
-    @JsonIgnore
+
     public Long getDepartmentId() {
         return departmentId;
     }
@@ -89,7 +87,6 @@ public class Schedules {
     public Hr getHr() {
         return hr;
     }
-
     public void setHr(Hr hr) {
         this.hr = hr;
     }
@@ -102,11 +99,11 @@ public class Schedules {
         this.name = name;
     }
 
-    public String getTelephone() {
-        return telephone;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

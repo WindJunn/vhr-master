@@ -18,12 +18,12 @@
         <association property="hr" javaType="org.sang.bean.Hr">
             <id property="id" column="hid"/>
             <result property="name" column="hname"/>
-            <result property="telephone" column="htelephone"/>
+            <result property="phone" column="hphone"/>
         </association>
     </resultMap>
     <select id="getSchedulesByPage" resultMap="BaseResultMap">
         select s.*,d.`id` as did,d.`name` as
-        dname,h.`id` as hid,h.`name` as hname,h.telephone as htelephone from
+        dname,h.`id` as hid,h.`name` as hname,h.phone as hphone from
         schedules s,department d,hr h where
         s.`departmentId`=d.id and s.`userId`=h.`id` and h.`name`
         like concat('%',#{keywords},'%')

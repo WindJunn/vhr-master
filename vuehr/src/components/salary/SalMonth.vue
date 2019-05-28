@@ -115,7 +115,7 @@
             </el-table-column>
             <el-table-column prop="department.name" label="授课地点" width="200" align="left"></el-table-column>
             <el-table-column prop="state" label="授课状态" width="70" align="left"></el-table-column>
-            <el-table-column prop="hr.telephone" width="120" label="联系电话"></el-table-column>
+            <el-table-column prop="hr.phone" width="120" label="联系电话"></el-table-column>
             <el-table-column prop="department.name" align="left" width="100" label="所属部门"></el-table-column>
             <el-table-column fixed="right" label="操作" width="195">
               <template slot-scope="scope">
@@ -138,7 +138,7 @@
             <el-button
               type="danger"
               size="mini"
-              v-if="emps.length>0"
+              v-if="schedules.length>0"
               :disabled="multipleSelection.length==0"
               @click="deleteManyEmps"
             >批量删除</el-button>
@@ -253,10 +253,10 @@
             </el-col>
             <el-col :span="7">
               <div>
-                <el-form-item label="电话号码:" prop="telephone">
+                <el-form-item label="电话号码:" prop="phone">
                   <el-input
                     prefix-icon="el-icon-phone"
-                    v-model="schedule.telephone"
+                    v-model="schedule.phone"
                     size="mini"
                     style="width: 200px"
                     placeholder="电话号码..."
@@ -310,7 +310,7 @@ export default {
       hr: {
         id:"",
         name:"",
-        telephone:"",
+        phone:"",
         
       },
       deps: [],
@@ -332,7 +332,7 @@ export default {
         time: "",
         state: "",
         address: "",
-        telephone: "",
+        phone: "",
         theme: ""
         
       },
@@ -344,7 +344,6 @@ export default {
         time: "",
         state: "",
         // address: "",
-        // telephone: "",
         theme: ""
       },
       rules: {
@@ -406,7 +405,7 @@ export default {
         .catch(() => {});
     },
     deleteEmp(row) {
-      this.$confirm("此操作将永久删除[" + row.name + "], 是否继续?", "提示", {
+      this.$confirm("此操作将永久删除[" + row.hr.name + "], 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
@@ -547,7 +546,7 @@ export default {
       this.schedule.name = row.hr.name;
       this.schedule.departmentId = row.department.id;
       this.schedule.departmentName = row.department.name;
-      this.schedule.telephone = row.hr.telephone;
+      this.schedule.phone = row.hr.phone;
       this.dialogVisible = true;
     },
     showAddEmpView() {
@@ -564,12 +563,10 @@ export default {
       this.schedule = {
         name: "",
         time: "",
-        telephone: "",
+        phone: "",
         address: "",
         departmentId: "",
         departmentName: "所属部门...",
-        posId: "",
-        workID: "",
         theme:""
       
       };
