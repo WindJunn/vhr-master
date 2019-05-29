@@ -44,13 +44,13 @@ public class StudentController {
         Map<String, Object> map = new HashMap<>();
         map.put("nations", studentService.getAllNations());
         map.put("deps", departmentService.getDepByPid(-1L));
-        map.put("workID", String.format("%10d", studentService.getMaxWorkID() + 1));
+        map.put("workID", String.format("%010d", studentService.getMaxWorkID() + 1));
         return map;
     }
 
     @RequestMapping("/maxWorkID")
     public String maxWorkID() {
-        return String.format("%08d", studentService.getMaxWorkID() + 1);
+        return String.format("%010d", studentService.getMaxWorkID() + 1);
     }
 
     @RequestMapping(value = "/emp", method = RequestMethod.POST)

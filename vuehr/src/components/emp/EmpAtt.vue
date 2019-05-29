@@ -117,7 +117,7 @@
             </div>
           </transition>
           <el-table
-            :data="emps"
+            :data="atts"
             v-loading="tableLoading"
             border
             stripe
@@ -126,19 +126,18 @@
             style="width: 100%"
           >
             <el-table-column type="selection" align="left" width="30"></el-table-column>
-            <el-table-column prop="name" align="left" fixed label="姓名" width="90"></el-table-column>
-            <el-table-column prop="workID" width="95" align="left" label="学号"></el-table-column>
-            <el-table-column prop="gender" label="性别" width="50"></el-table-column>
+            <el-table-column prop="student.name" align="left" fixed label="姓名" width="90"></el-table-column>
+            <el-table-column prop="student.workID" width="95" align="left" label="学号"></el-table-column>
+            <el-table-column prop="student.gender" label="性别" width="50"></el-table-column>
             
-            <el-table-column prop="idCard" width="150" align="left" label="身份证号码"></el-table-column>
-            <el-table-column width="60" prop="nation.name" label="民族"></el-table-column>
+            <el-table-column prop="student.idCard" width="150" align="left" label="身份证号码"></el-table-column>
 
-            <el-table-column prop="phone" width="100" label="电话号码"></el-table-column>
+            <el-table-column prop="student.phone" width="100" label="电话号码"></el-table-column>
             <el-table-column prop="department.name" align="left" width="100" label="所属部门"></el-table-column>
-            <el-table-column prop="birthday" width="100" label="考勤时间">
-               <template slot-scope="scope">{{ scope.row.birthday | formatDate}}</template>
+            <el-table-column prop="atime" width="100" label="考勤时间">
+               <template slot-scope="scope">{{ scope.row.atime | formatDate}}</template>
             </el-table-column>
-            <el-table-column prop="state" width="100" label="考勤状态"></el-table-column>
+            <el-table-column prop="attname.name" width="100" label="考勤状态"></el-table-column>
 
             <el-table-column fixed="right" label="操作" width="250">
               <template slot-scope="scope">
@@ -167,7 +166,7 @@
             <el-button
               type="danger"
               size="mini"
-              v-if="emps.length>0"
+              v-if="atts.length>0"
               :disabled="multipleSelection.length==0"
               @click="deleteManyEmps"
             >批量删除</el-button>
@@ -183,7 +182,7 @@
         </div>
       </el-main>
     </el-container>
-    <el-form :model="emp" :rules="rules" ref="addEmpForm" style="margin: 0px;padding: 0px;">
+    <el-form :model="att" :rules="rules" ref="addEmpForm" style="margin: 0px;padding: 0px;">
       <div style="text-align: left">
         <el-dialog
           :title="dialogTitle"
@@ -198,7 +197,7 @@
                 <el-form-item label="姓名:" prop="name">
                   <el-input
                     prefix-icon="el-icon-edit"
-                    v-model="emp.name"
+                    v-model="att.name"
                     size="mini"
                     style="width: 150px"
                     placeholder="请输入学员姓名"
@@ -206,38 +205,11 @@
                 </el-form-item>
               </div>
             </el-col>
-            <el-col :span="5">
-              <div>
-                <el-form-item label="性别:" prop="gender">
-                  <el-radio-group v-model="emp.gender">
-                    <el-radio label="男">男</el-radio>
-                    <el-radio style="margin-left: 15px" label="女">女</el-radio>
-                  </el-radio-group>
-                </el-form-item>
-              </div>
-            </el-col>
+           
             
           </el-row>
           <el-row>
-            <el-col :span="6">
-              <div>
-                <el-form-item label="民族:" prop="nationId">
-                  <el-select
-                    v-model="emp.nationId"
-                    style="width: 150px"
-                    size="mini"
-                    placeholder="请选择民族"
-                  >
-                    <el-option
-                      v-for="item in nations"
-                      :key="item.id"
-                      :label="item.name"
-                      :value="item.id"
-                    ></el-option>
-                  </el-select>
-                </el-form-item>
-              </div>
-            </el-col>
+            
          
 
             <el-col :span="7">
@@ -295,22 +267,7 @@
               </div>
             </el-col>
           </el-row>
-          <el-row>
-            <el-col :span="6">
-              <div>
-                <el-form-item label="工号:" prop="workID">
-                  <el-input
-                    v-model="emp.workID"
-                    disabled
-                    size="mini"
-                    style="width: 150px"
-                    placeholder="员工工号..."
-                  ></el-input>
-                </el-form-item>
-              </div>
-            </el-col>
-            
-          </el-row>
+         
           <el-row>
             <el-col :span="8">
               <div>
@@ -326,17 +283,7 @@
               </div>
             </el-col>
 
-            <el-col :span="8">
-              <div>
-                <el-form-item label="婚姻状况:" prop="wedlock">
-                  <el-radio-group v-model="emp.wedlock">
-                    <el-radio label="已婚">已婚</el-radio>
-                    <el-radio style="margin-left: 15px" label="未婚">未婚</el-radio>
-                    <el-radio style="margin-left: 15px" label="离异">离异</el-radio>
-                  </el-radio-group>
-                </el-form-item>
-              </div>
-            </el-col>
+           
           </el-row>
           <span slot="footer" class="dialog-footer">
             <el-button size="mini" @click="cancelEidt">取 消</el-button>
@@ -437,6 +384,7 @@ export default {
   data() {
     return {
       emps: [],
+      atts: [],
       keywords: "",
       fileUploadBtnText: "导入数据",
       beginDateScope: "",
@@ -478,9 +426,30 @@ export default {
         departmentName: "所属部门...",
         posId: "",
         workID: "",
-        points: 0
+        points: 0,
+        atime:"",
+        aname:"",
+        stateId:"",
+        sid:""
       },
-      
+      att: {
+        name: "",
+        gender: "",
+        birthday: "",
+        idCard: "",
+        wedlock: "",
+        nationId: "",
+        nativePlace: "",
+        phone: "",
+        address: "",
+        departmentId: "",
+        departmentName: "所属部门...",
+        workID: "",
+        atime:"",
+        aname:"",
+        stateId:"",
+        sid:""
+      },
 
       
 
@@ -516,7 +485,6 @@ export default {
         departmentId: [
           { required: true, message: "必填:部门", trigger: "change" }
         ],
-        posId: [{ required: true, message: "必填:职位", trigger: "change" }],
         workID: [{ required: true, message: "必填:学号", trigger: "blur" }],
         points: [{ required: true, message: "积分", trigger: "change" }]
       }
@@ -622,19 +590,23 @@ export default {
       var _this = this;
       this.tableLoading = true;
       this.getRequest(
-        "/student/basic/emp?page=" +
+        "/attendance/att?page=" +
           this.currentPage +
           "&size=10&keywords=" +
           this.keywords +
-          "&nationId=" +
-          this.emp.nationId +
+          "&atime=" +
+          this.emp.atime +
+          "&stateId=" +
+          this.emp.stateId +
+          "&sid=" +
+          this.emp.sid +
           "&departmentId=" +
           this.emp.departmentId
       ).then(resp => {
         this.tableLoading = false;
         if (resp && resp.status == 200) {
           var data = resp.data;
-          _this.emps = data.emps;
+          _this.atts = data.atts;
           _this.totalCount = data.count;
           //            _this.emptyEmpData();
         }
@@ -715,14 +687,12 @@ export default {
     },
     showEditEmpView(row) {
       console.log(row);
-      this.dialogTitle = "编辑学员";
-      this.emp = row;
-      this.emp.birthday = this.formatDate(row.birthday);
+      this.dialogTitle = "编辑考勤";
+      this.att = row;
+      this.att.atime = this.formatDate(row.atime);
 
-      this.emp.nationId = row.nation.id;
-      this.emp.departmentId = row.department.id;
-      this.emp.departmentName = row.department.name;
-      // this.emp.posId = row.position.id;
+      this.att.departmentId = row.department.id;
+      this.att.departmentName = row.department.name;
       //        delete this.emp.department;
       this.dialogVisible = true;
     },

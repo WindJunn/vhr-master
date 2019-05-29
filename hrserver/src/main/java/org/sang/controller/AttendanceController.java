@@ -74,8 +74,8 @@ public class AttendanceController {
         Map<String, Object> map = new HashMap<>();
         List<Attendance> atts = attendanceService.getAttByPage(page, size,
                 keywords, atime, stateId, sid, departmentId);
-        Long count = attendanceService.getCountByKeywords(keywords, atime,
-                stateId, sid, departmentId);
+//        Long count = attendanceService.getCountByKeywords(keywords, atime,
+//                stateId, sid, departmentId);
         map.put("atts", atts);
 //        map.put("count", count);
         return map;

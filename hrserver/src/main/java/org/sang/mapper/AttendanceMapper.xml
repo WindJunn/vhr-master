@@ -31,24 +31,25 @@
             <result property="name" column="dname"/>
         </association>
         <association property="student" javaType="org.sang.bean.Student">
-            <id column="id" property="stid"/>
-            <result column="name" property="sname"/>
-            <result column="gender" property="gender"/>
-            <result column="birthday" property="birthday"/>
-            <result column="idCard" property="idCard"/>
-            <result column="wedlock" property="wedlock"/>
-            <result column="nationId" property="nationId"/>
-            <result column="nativePlace" property="nativePlace"/>
-            <result column="phone" property="phone"/>
-            <result column="address" property="address"/>
-            <result column="departmentId" property="departmentId"/>
-            <result column="workID" property="workID"/>
-            <result column="points" property="points"/>
+            <id property="id" column="stid"/>
+            <result property="name" column="sname"/>
+            <result property="gender" column="gender"/>
+            <result property="birthday" column="birthday"/>
+            <result property="idCard" column="idCard"/>
+            <result property="wedlock" column="wedlock"/>
+            <result property="nationId" column="nationId"/>
+            <result property="nativePlace" column="nativePlace"/>
+            <result property="phone" column="phone"/>
+            <result property="address" column="address"/>
+            <result property="departmentId" column="departmentId"/>
+            <result property="workID" column="workID"/>
+            <result property="points" column="points"/>
         </association>
     </resultMap>
+
     <select id="getAttByPage" resultMap="BaseResultMap">
         select a.*,an.id as aid,an.`name` as aname,
-        d.id as did,d.`name` as departmentName,
+        d.id as did,d.`name` as dname,
         s.id as stid,s.`name` as sname,s.gender as gender,s.birthday as birthday,s.idCard as idCard,
         s.wedlock as wedlock,s.nationId as nationId,s.nativePlace as nativePlace,s.phone as phone,
         s.address as address,s.departmentId as departmentId,s.workID as workID,s.points as points
