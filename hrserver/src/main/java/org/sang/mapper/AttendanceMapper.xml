@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.sang.mapper.AttendanceMapper">
+    <select id="getAllAttname" resultType="org.sang.bean.Attname">
+        select * from attname;
+    </select>
+
+    <insert id="addAtt" parameterType="org.sang.bean.Attendance">
+            insert into attendance (sid, stateId,atime, des
+      )
+    values (#{sid,jdbcType=INTEGER}, #{stateId,jdbcType=INTEGER},
+      #{atime,jdbcType=DATE}, #{des,jdbcType=VARCHAR}
+      )
+    </insert>
+
+    <resultMap id="BaseResultMap" type="org.sang.bean.Attendance">
+        <id column="id" property="id"/>
+        <result column="sid" property="sid"/>
+        <result column="stateId" property="stateId"/>
+        <result column="atime" property="atime"/>
+        <result column="des" property="des"/>
+
+        <association property="attname" javaType="org.sang.bean.Attname">
+            <id property="id" column="aid"/>
+            <result property="name" column="aname"/>
+        </association>
+        <association property="department" javaType="org.sang.bean.Department">
+            <id property="id" column="did"/>
+            <result property="name" column="dname"/>
+        </association>
+        <association property="student" javaType="org.sang.bean.Student">
+            <id column="id" property="stid"/>
+            <result column="name" property="sname"/>
+            <result column="gender" property="gender"/>
+            <result column="birthday" property="birthday"/>
+            <result column="idCard" property="idCard"/>
+            <result column="wedlock" property="wedlock"/>
+            <result column="nationId" property="nationId"/>
+            <result column="nativePlace" property="nativePlace"/>
+            <result column="phone" property="phone"/>
+            <result column="address" property="address"/>
+            <result column="departmentId" property="departmentId"/>
+            <result column="workID" property="workID"/>
+            <result column="points" property="points"/>
+        </association>
+    </resultMap>
+    <select id="getAttByPage" resultMap="BaseResultMap">
+        select a.*,an.id as aid,an.`name` as aname,
+        d.id as did,d.`name` as departmentName,
+        s.id as stid,s.`name` as sname,s.gender as gender,s.birthday as birthday,s.idCard as idCard,
+        s.wedlock as wedlock,s.nationId as nationId,s.nativePlace as nativePlace,s.phone as phone,
+        s.address as address,s.departmentId as departmentId,s.workID as workID,s.points as points
+         from
+        attendance a,attname an,student s,department d where a.`sid`=s.`id` and
+        a.`stateId`=an.`id` and s.departmentId = d.id and s.`name`
+        like concat('%',#{keywords},'%')
+
+        <if test="sid!=null and sid!=''">
+            AND a.sid=#{sid}
+        </if>
+        <if test="stateId!=null and stateId!=''">
+            AND a.stateId=#{stateId}
+        </if>
+        <if test="atime!=null and atime!=''">
+            AND a.atime=#{atime}
+        </if>
+        <if test="departmentId!=null and departmentId!=''">
+            AND s.departmentId=#{departmentId}
+        </if>
+
+        <if test="start!=null and size!=null">
+            order by a.id limit #{start},#{size}
+        </if>
+    </select>
+    <select id="getCountByKeywords" resultType="Long">
+        SELECT count(*) FROM attendance a, student s WHERE s.name LIKE concat('%',#{keywords},'%')
+
+        <if test="sid!=null and sid!=''">
+            AND a.sid=#{sid}
+        </if>
+        <if test="stateId!=null and stateId!=''">
+            AND a.stateId=#{stateId}
+        </if>
+    </select>
+    <update id="updateAtt">
+        update attendance
+        <set>
+            <if test="att.sid != null">
+                sid = #{att.sid,jdbcType=INTEGER},
+            </if>
+            <if test="att.stateId != null">
+                stateId = #{att.stateId,jdbcType=INTEGER},
+            </if>
+            <if test="att.atime != null">
+                atime = #{att.atime,jdbcType=DATE},
+            </if>
+            <if test="att.des != null">
+                des = #{att.des,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{att.id,jdbcType=BIGINT}
+    </update>
+    <delete id="deleteAttById">
+        DELETE FROM attendance WHERE id IN
+        <foreach collection="ids" separator="," open="(" close=")" item="id">
+            #{id}
+        </foreach>
+    </delete>
+    <insert id="addAtts">
+        insert into attendance (sid, stateId,atime, des
+        )
+        values
+        <foreach collection="atts" item="att" separator=",">
+
+            (#{att.sid,jdbcType=INTEGER}, #{att.stateId,jdbcType=INTEGER},
+            #{att.atime,jdbcType=DATE}, #{att.des,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <select id="getAttByPageShort" resultMap="BaseResultMap">
+ select a.*,an.`name` as
+        aname,s.`name` as sname,s.idCard as idCard,s.phone as phone,
+        d.`name` as departmentName  from
+        attendance a,attname an,student s,department d where a.`sid`=s.`id` and
+        a.`stateId`=an.`id`  and s.departmentId = d.id and s.`name`
+         like concat('%',#{keywords},'%')
+         </select>
+</mapper>

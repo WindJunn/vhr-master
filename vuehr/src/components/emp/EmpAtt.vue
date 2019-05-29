@@ -41,7 +41,7 @@
           <el-upload
             :show-file-list="false"
             accept="application/vnd.ms-excel"
-            action="/student/basic/importEmp"
+            action="/employee/basic/importEmp"
             :on-success="fileUploadSuccess"
             :on-error="fileUploadError"
             :disabled="fileUploadBtnText=='正在导入'"
@@ -56,7 +56,7 @@
           <el-button type="success" size="mini" @click="exportEmps">
             <i class="fa fa-lg fa-level-down" style="margin-right: 5px"></i>导出数据
           </el-button>
-          <el-button type="primary" size="mini" icon="el-icon-plus" @click="showAddEmpView">添加学员</el-button>
+          <el-button type="primary" size="mini" icon="el-icon-plus" @click="showAddEmpView">添加考勤</el-button>
         </div>
       </el-header>
       <el-main style="padding-left: 0px;padding-top: 0px">
@@ -129,29 +129,17 @@
             <el-table-column prop="name" align="left" fixed label="姓名" width="90"></el-table-column>
             <el-table-column prop="workID" width="95" align="left" label="学号"></el-table-column>
             <el-table-column prop="gender" label="性别" width="50"></el-table-column>
-            <el-table-column width="85" align="left" label="出生日期">
-              <template slot-scope="scope">{{ scope.row.birthday | formatDate}}</template>
-            </el-table-column>
+            
             <el-table-column prop="idCard" width="150" align="left" label="身份证号码"></el-table-column>
-            <el-table-column prop="wedlock" width="70" label="婚姻状况"></el-table-column>
             <el-table-column width="60" prop="nation.name" label="民族"></el-table-column>
-            <el-table-column prop="nativePlace" width="80" label="籍贯"></el-table-column>
 
             <el-table-column prop="phone" width="100" label="电话号码"></el-table-column>
-            <el-table-column prop="address" width="220" align="left" label="联系地址"></el-table-column>
             <el-table-column prop="department.name" align="left" width="100" label="所属部门"></el-table-column>
-            <el-table-column prop="points" align="left" width="70" label="积分">
-              <template slot-scope="scope">
-                <el-popover trigger="hover" placement="top">
-                  <p>积分记录：</p>
-                  <p>积分: {{ scope.row.name }}</p>
-                  <p>住址: {{ scope.row.address }}</p>
-                  <div slot="reference" class="name-wrapper">
-                    <el-tag size="medium">{{ scope.row.points }}</el-tag>
-                  </div>
-                </el-popover>
-              </template>
+            <el-table-column prop="birthday" width="100" label="考勤时间">
+               <template slot-scope="scope">{{ scope.row.birthday | formatDate}}</template>
             </el-table-column>
+            <el-table-column prop="state" width="100" label="考勤状态"></el-table-column>
+
             <el-table-column fixed="right" label="操作" width="250">
               <template slot-scope="scope">
                 <el-button
@@ -159,12 +147,7 @@
                   style="padding: 3px 4px 3px 4px;margin: 2px"
                   size="mini"
                 >编辑</el-button>
-                <el-button
-                  style="padding: 3px 4px 3px 4px;margin: 2px"
-                  type="primary"
-                  size="mini"
-                  @click="showEditPointView(scope.row)"
-                >积分详情</el-button>
+               
                 <el-button
                   style="padding: 3px 4px 3px 4px;margin: 2px"
                   type="primary"
@@ -233,20 +216,7 @@
                 </el-form-item>
               </div>
             </el-col>
-            <el-col :span="6">
-              <div>
-                <el-form-item label="出生日期:" prop="birthday">
-                  <el-date-picker
-                    v-model="emp.birthday"
-                    size="mini"
-                    value-format="yyyy-MM-dd HH:mm:ss"
-                    style="width: 150px"
-                    type="date"
-                    placeholder="出生日期"
-                  ></el-date-picker>
-                </el-form-item>
-              </div>
-            </el-col>
+            
           </el-row>
           <el-row>
             <el-col :span="6">
@@ -268,18 +238,7 @@
                 </el-form-item>
               </div>
             </el-col>
-            <el-col :span="5">
-              <div>
-                <el-form-item label="籍贯:" prop="nativePlace">
-                  <el-input
-                    v-model="emp.nativePlace"
-                    size="mini"
-                    style="width: 120px"
-                    placeholder="学员籍贯"
-                  ></el-input>
-                </el-form-item>
-              </div>
-            </el-col>
+         
 
             <el-col :span="7">
               <div>
@@ -339,28 +298,18 @@
           <el-row>
             <el-col :span="6">
               <div>
-                <el-form-item label="学号:" prop="workID">
+                <el-form-item label="工号:" prop="workID">
                   <el-input
                     v-model="emp.workID"
+                    disabled
                     size="mini"
                     style="width: 150px"
-                    placeholder="学员学号..."
+                    placeholder="员工工号..."
                   ></el-input>
                 </el-form-item>
               </div>
             </el-col>
-            <el-col :span="7">
-              <div>
-                <el-form-item label="积分:" prop="points">
-                  <el-input
-                    v-model="emp.points"
-                    size="mini"
-                    style="width: 150px"
-                    placeholder="积分..."
-                  ></el-input>
-                </el-form-item>
-              </div>
-            </el-col>
+            
           </el-row>
           <el-row>
             <el-col :span="8">
@@ -371,7 +320,7 @@
                     v-model="emp.idCard"
                     size="mini"
                     style="width: 180px"
-                    placeholder="请输入学员身份证号码..."
+                    placeholder="请输入员工身份证号码..."
                   ></el-input>
                 </el-form-item>
               </div>
@@ -393,53 +342,6 @@
             <el-button size="mini" @click="cancelEidt">取 消</el-button>
             <el-button size="mini" type="primary" @click="addEmp('addEmpForm')">确 定</el-button>
           </span>
-        </el-dialog>
-      </div>
-    </el-form>
-
-    <el-form
-      :model="ruleForm"
-      :rules="rules1"
-      ref="ruleForm"
-      class="demo-ruleForm"
-      label-width="100px"
-    >
-      <div style="text-align: left">
-        <el-dialog
-          :title="dialogTitle"
-          style="padding: 0px;"
-          :close-on-click-modal="false"
-          :visible.sync="dialogVisible1"
-          width="77%"
-        >
-          <el-form-item label="积分项目" prop="region">
-            <el-select v-model="ruleForm.region" placeholder="请选择积分项目">
-              <el-option label="好人好事" value="shanghai"></el-option>
-              <el-option label="卫生" value="beijing"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="积分分数" prop="name">
-            <el-input v-model="ruleForm.name" style="width: 150px"></el-input>
-          </el-form-item>
-          <el-form-item label="积分时间" required>
-            <el-col :span="11">
-              <el-form-item prop="date1">
-                <el-date-picker
-                  type="date"
-                  placeholder="选择日期"
-                  v-model="ruleForm.date1"
-                  style="width: 100%;"
-                ></el-date-picker>
-              </el-form-item>
-            </el-col>
-          </el-form-item>
-          <el-form-item label="积分描述" prop="desc">
-            <el-input type="textarea" v-model="ruleForm.desc"></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
-            <el-button @click="resetForm('ruleForm')">重置</el-button>
-          </el-form-item>
         </el-dialog>
       </div>
     </el-form>
@@ -483,7 +385,7 @@
             </el-col>
           </el-row>
           <el-row>
-            <el-col :span="4">
+            <el-col :span="3">
               <div>
                 <el-form-item label="考勤记录（次）：">
                 </el-form-item>
@@ -519,7 +421,8 @@
               </div>
             </el-col>
           </el-row>
-
+      
+         
           <span slot="footer" class="dialog-footer">
             <el-button size="mini" @click="cancelEidt">取 消</el-button>
             <el-button size="mini" type="primary" @click="a('attendance')">确 定</el-button>
@@ -577,37 +480,9 @@ export default {
         workID: "",
         points: 0
       },
-      ruleForm: {
-        name: "",
-        region: "",
-        date1: "",
-        type: [],
-        resource: "",
-        desc: ""
-      },
+      
 
-      rules1: {
-        name: [
-          { required: true, message: "请输入整数积分", trigger: "blur" },
-          { min: 1, max: 4, message: "长度在 1 到 3 个字符", trigger: "blur" }
-        ],
-        region: [
-          { required: true, message: "请选择积分项目", trigger: "change" }
-        ],
-        date1: [
-          {
-            type: "date",
-            required: true,
-            message: "请选择日期",
-            trigger: "change"
-          }
-        ],
-
-        resource: [
-          { required: true, message: "请选择活动资源", trigger: "change" }
-        ],
-        desc: [{ required: true, message: "请填写积分描述", trigger: "blur" }]
-      },
+      
 
       rules: {
         name: [{ required: true, message: "必填:姓名", trigger: "blur" }],
@@ -642,7 +517,7 @@ export default {
           { required: true, message: "必填:部门", trigger: "change" }
         ],
         posId: [{ required: true, message: "必填:职位", trigger: "change" }],
-        workID: [{ required: false, message: "必填:学号", trigger: "blur" }],
+        workID: [{ required: true, message: "必填:学号", trigger: "blur" }],
         points: [{ required: true, message: "积分", trigger: "change" }]
       }
     };
@@ -652,19 +527,7 @@ export default {
     this.loadEmps();
   },
   methods: {
-    submitForm(formName) {
-      this.$refs[formName].validate(valid => {
-        if (valid) {
-          alert("submit!");
-        } else {
-          console.log("error submit!!");
-          return false;
-        }
-      });
-    },
-    resetForm(formName) {
-      this.$refs[formName].resetFields();
-    },
+    
 
     fileUploadSuccess(response, file, fileList) {
       if (response) {
@@ -814,7 +677,6 @@ export default {
     },
     cancelEidt() {
       this.dialogVisible = false;
-      this.dialogVisible1 = false;
       this.dialogVisible2 = false;
       this.emptyEmpData();
     },
@@ -942,3 +804,4 @@ export default {
   opacity: 0;
 }
 </style>
+

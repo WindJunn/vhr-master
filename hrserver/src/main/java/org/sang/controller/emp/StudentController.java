@@ -2,12 +2,15 @@ package org.sang.controller.emp;
 
 import org.sang.bean.RespBean;
 import org.sang.bean.Student;
+import org.sang.common.poi.StudentPoiUtils;
 import org.sang.service.DepartmentService;
 import org.sang.service.JobLevelService;
 import org.sang.service.PositionService;
 import org.sang.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.TemplateEngine;
 
 import java.util.HashMap;
@@ -41,7 +44,7 @@ public class StudentController {
         Map<String, Object> map = new HashMap<>();
         map.put("nations", studentService.getAllNations());
         map.put("deps", departmentService.getDepByPid(-1L));
-        map.put("workID", String.format("%08d", studentService.getMaxWorkID() + 1));
+        map.put("workID", String.format("%10d", studentService.getMaxWorkID() + 1));
         return map;
     }
 
@@ -96,20 +99,18 @@ public class StudentController {
         return map;
     }
 
-/*    @RequestMapping(value = "/exportEmp", method = RequestMethod.GET)
+    @RequestMapping(value = "/exportEmp", method = RequestMethod.GET)
     public ResponseEntity<byte[]> exportEmp() {
-        return PoiUtils.exportEmp2Excel(studentService.getAllEmployees());
+        return StudentPoiUtils.exportEmp2Excel(studentService.getAllStudents());
     }
 
     @RequestMapping(value = "/importEmp", method = RequestMethod.POST)
     public RespBean importEmp(MultipartFile file) {
-        List<Employee> emps = PoiUtils.importEmp2List(file,
-                studentService.getAllNations(), studentService.getAllPolitics(),
-                departmentService.getAllDeps(), positionService.getAllPos(),
-                jobLevelService.getAllJobLevels());
+        List<Student> emps = StudentPoiUtils.importEmp2List(file,
+                studentService.getAllNations(), departmentService.getAllDeps());
         if (studentService.addStudents(emps) == emps.size()) {
             return RespBean.ok("导入成功!");
         }
         return RespBean.error("导入失败!");
-    }*/
+    }
 }

@@ -131,7 +131,7 @@
             #{emp.nationId,jdbcType=BIGINT},
             #{emp.nativePlace,jdbcType=VARCHAR},
             #{emp.phone,jdbcType=VARCHAR}, #{emp.address,jdbcType=VARCHAR}, #{emp.departmentId,jdbcType=BIGINT},
-            #{emp.workID,jdbcType=BIGINT},#{emp.workID,jdbcType=BIGINT}
+            #{emp.workID,jdbcType=BIGINT},#{emp.points,jdbcType=BIGINT}
             )
         </foreach>
     </insert>
