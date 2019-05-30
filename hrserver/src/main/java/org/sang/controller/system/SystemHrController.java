@@ -49,7 +49,7 @@ public class SystemHrController {
         return RespBean.error("更新失败!");
     }
 
-    @RequestMapping("/{keywords}")
+    @RequestMapping(value="/{keywords}")
     public List<Hr> getHrsByKeywords(@PathVariable(required = false) String keywords) {
         List<Hr> hrs = hrService.getHrsByKeywords(keywords);
         return hrs;

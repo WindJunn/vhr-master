@@ -41,7 +41,7 @@
           <el-upload
             :show-file-list="false"
             accept="application/vnd.ms-excel"
-            action="/employee/basic/importEmp"
+            action="/attendance/importEmp"
             :on-success="fileUploadSuccess"
             :on-error="fileUploadError"
             :disabled="fileUploadBtnText=='正在导入'"
@@ -129,13 +129,13 @@
             <el-table-column prop="student.name" align="left" fixed label="姓名" width="90"></el-table-column>
             <el-table-column prop="student.workID" width="95" align="left" label="学号"></el-table-column>
             <el-table-column prop="student.gender" label="性别" width="50"></el-table-column>
-            
+
             <el-table-column prop="student.idCard" width="150" align="left" label="身份证号码"></el-table-column>
 
             <el-table-column prop="student.phone" width="100" label="电话号码"></el-table-column>
             <el-table-column prop="department.name" align="left" width="100" label="所属部门"></el-table-column>
             <el-table-column prop="atime" width="100" label="考勤时间">
-               <template slot-scope="scope">{{ scope.row.atime | formatDate}}</template>
+              <template slot-scope="scope">{{ scope.row.atime | formatDate}}</template>
             </el-table-column>
             <el-table-column prop="attname.name" width="100" label="考勤状态"></el-table-column>
 
@@ -146,7 +146,7 @@
                   style="padding: 3px 4px 3px 4px;margin: 2px"
                   size="mini"
                 >编辑</el-button>
-               
+
                 <el-button
                   style="padding: 3px 4px 3px 4px;margin: 2px"
                   type="primary"
@@ -182,7 +182,7 @@
         </div>
       </el-main>
     </el-container>
-    <el-form :model="att" :rules="rules" ref="addEmpForm" style="margin: 0px;padding: 0px;">
+    <el-form :model="att" :rules="rules" ref="addAttForm" style="margin: 0px;padding: 0px;">
       <div style="text-align: left">
         <el-dialog
           :title="dialogTitle"
@@ -194,47 +194,27 @@
           <el-row>
             <el-col :span="6">
               <div>
-                <el-form-item label="姓名:" prop="name">
+                <el-form-item label="姓名:" prop="student.name">
                   <el-input
                     prefix-icon="el-icon-edit"
                     v-model="att.name"
                     size="mini"
                     style="width: 150px"
                     placeholder="请输入学员姓名"
+                    disabled
                   ></el-input>
                 </el-form-item>
               </div>
             </el-col>
-           
-            
-          </el-row>
-          <el-row>
-            
-         
-
-            <el-col :span="7">
-              <div>
-                <el-form-item label="联系地址:" prop="address">
-                  <el-input
-                    prefix-icon="el-icon-edit"
-                    v-model="emp.address"
-                    size="mini"
-                    style="width: 200px"
-                    placeholder="联系地址..."
-                  ></el-input>
-                </el-form-item>
-              </div>
-            </el-col>
-          </el-row>
-          <el-row>
             <el-col :span="6">
               <div>
-                <el-form-item label="所属部门:" prop="departmentId">
+                <el-form-item label="所属部门:" prop="department.departmentId">
                   <el-popover
                     v-model="showOrHidePop"
                     placement="right"
                     title="请选择部门"
                     trigger="manual"
+                    disabled
                   >
                     <el-tree
                       :data="deps"
@@ -248,52 +228,73 @@
                       style="width: 150px;height: 26px;display: inline-flex;font-size:13px;border: 1px;border-radius: 5px;border-style: solid;padding-left: 13px;box-sizing:border-box;border-color: #dcdfe6;cursor: pointer;align-items: center"
                       @click.left="showDepTree"
                       v-bind:style="{color: depTextColor}"
-                    >{{emp.departmentName}}</div>
+                    >{{att.departmentName}}</div>
                   </el-popover>
                 </el-form-item>
               </div>
             </el-col>
-            <el-col :span="7">
+
+            <el-col :span="8">
               <div>
-                <el-form-item label="电话号码:" prop="phone">
+                <el-form-item label="身份证号码:" prop="student.idCard">
                   <el-input
-                    prefix-icon="el-icon-phone"
-                    v-model="emp.phone"
+                    prefix-icon="el-icon-edit"
+                    v-model="att.idCard"
                     size="mini"
-                    style="width: 200px"
-                    placeholder="电话号码..."
+                    style="width: 180px"
+                    placeholder="请输入员工身份证号码..."
+                    disabled
                   ></el-input>
                 </el-form-item>
               </div>
             </el-col>
           </el-row>
-         
+
           <el-row>
-            <el-col :span="8">
+            <el-col :span="6">
               <div>
-                <el-form-item label="身份证号码:" prop="idCard">
-                  <el-input
-                    prefix-icon="el-icon-edit"
-                    v-model="emp.idCard"
+                <el-form-item label="考勤时间:" prop="atime">
+                  <el-date-picker
+                    v-model="attendance.atime"
                     size="mini"
-                    style="width: 180px"
-                    placeholder="请输入员工身份证号码..."
-                  ></el-input>
+                    value-format="yyyy-MM-dd"
+                    style="width: 150px"
+                    type="date"
+                    placeholder="请选择考勤时间"
+                  ></el-date-picker>
                 </el-form-item>
               </div>
             </el-col>
 
-           
+            <el-col :span="8">
+              <div>
+                <el-form-item label="考勤状态:" prop="attendance.aname">
+                  <el-select
+                    v-model="attendance.stateId"
+                    style="width: 130px"
+                    size="mini"
+                    placeholder="请选择考勤状态"
+                  >
+                    <el-option
+                      v-for="item in attname"
+                      :key="item.id"
+                      :label="item.name"
+                      :value="item.id"
+                    ></el-option>
+                  </el-select>
+                </el-form-item>
+              </div>
+            </el-col>
           </el-row>
           <span slot="footer" class="dialog-footer">
             <el-button size="mini" @click="cancelEidt">取 消</el-button>
-            <el-button size="mini" type="primary" @click="addEmp('addEmpForm')">确 定</el-button>
+            <el-button size="mini" type="primary" @click="addAtt('addAttForm')">确 定</el-button>
           </span>
         </el-dialog>
       </div>
     </el-form>
 
-    <el-form :model="emp" :rules="rules" ref="attendance" style="margin: 0px;padding: 0px;">
+    <el-form :model="att" :rules="rules" ref="attendance" style="margin: 0px;padding: 0px;">
       <div style="text-align: left">
         <el-dialog
           :title="dialogTitle"
@@ -305,71 +306,99 @@
           <el-row>
             <el-col :span="6">
               <div>
-                <el-form-item label="姓名:" prop="name">
+                <el-form-item label="姓名:" prop="student.name">
                   <el-input
                     prefix-icon="el-icon-edit"
-                    v-model="emp.name"
+                    v-model="att.name"
                     size="mini"
                     style="width: 150px"
+                    disabled
                   ></el-input>
                 </el-form-item>
               </div>
             </el-col>
-          
+
+            <el-col :span="8">
+              <div>
+                <el-form-item label="身份证号码:" prop="student.idCard">
+                  <el-input
+                    prefix-icon="el-icon-edit"
+                    v-model="att.idCard"
+                    size="mini"
+                    style="width: 180px"
+                    placeholder="请输入学员身份证号码..."
+                    disabled
+                  ></el-input>
+                </el-form-item>
+              </div>
+            </el-col>
+
             <el-col :span="6">
               <div>
-                <el-form-item label="考勤时间:" prop="birthday">
-                  <el-date-picker
-                    v-model="emp.birthday"
-                    size="mini"
-                    value-format="yyyy-MM-dd HH:mm:ss"
-                    style="width: 150px"
-                    type="date"
-                    placeholder="出生日期"
-                  ></el-date-picker>
+                <el-form-item label="所属部门:" prop="departmentId">
+                  <el-popover
+                    v-model="showOrHidePop"
+                    placement="right"
+                    title="请选择部门"
+                    trigger="manual"
+                    disabled
+                  >
+                    <el-tree
+                      :data="deps"
+                      :default-expand-all="true"
+                      :props="defaultProps"
+                      :expand-on-click-node="false"
+                      @node-click="handleNodeClick"
+                    ></el-tree>
+                    <div
+                      slot="reference"
+                      style="width: 150px;height: 26px;display: inline-flex;font-size:13px;border: 1px;border-radius: 5px;border-style: solid;padding-left: 13px;box-sizing:border-box;border-color: #dcdfe6;cursor: pointer;align-items: center"
+                      @click.left="showDepTree"
+                      v-bind:style="{color: depTextColor}"
+                    >{{att.departmentName}}</div>
+                  </el-popover>
                 </el-form-item>
               </div>
             </el-col>
           </el-row>
           <el-row>
-            <el-col :span="3">
+            <el-col :span="4">
               <div>
-                <el-form-item label="考勤记录（次）：">
-                </el-form-item>
+                <el-form-item label="考勤记录（次）："></el-form-item>
               </div>
             </el-col>
             <el-col :span="4">
               <div>
-                <el-form-item label="出勤:" prop="nativePlace">
-                  {{emp.points}}
-                </el-form-item>
+                <el-form-item label="出勤:" prop="nativePlace">1</el-form-item>
               </div>
             </el-col>
 
             <el-col :span="5">
               <div>
-                <el-form-item label="迟到:" prop="address">
-                  0
-                </el-form-item>
+                <el-form-item label="迟到:" prop="address">0</el-form-item>
               </div>
             </el-col>
             <el-col :span="5">
               <div>
-                <el-form-item label="早退:" prop="address">
-                  0
-                </el-form-item>
+                <el-form-item label="早退:" prop="address">0</el-form-item>
               </div>
             </el-col>
             <el-col :span="5">
               <div>
-                <el-form-item label="缺勤:" prop="address">
-                  2
-                </el-form-item>
+                <el-form-item label="缺勤:" prop="address">2</el-form-item>
               </div>
             </el-col>
           </el-row>
-      
-         
+
+          <el-calendar>
+            <!-- 这里使用的是 2.5 slot 语法，对于新项目请使用 2.6 slot 语法-->
+            <template slot="dateCell" slot-scope="{date, data}">
+              <p
+                :class="data.isSelected ? 'is-selected' : ''"
+              >{{ data.day.split('-').slice(1).join('-') }} {{ data.isSelected ? '✔️' : ''}}</p>
+            </template>
+          </el-calendar>
+
           <span slot="footer" class="dialog-footer">
             <el-button size="mini" @click="cancelEidt">取 消</el-button>
             <el-button size="mini" type="primary" @click="a('attendance')">确 定</el-button>
@@ -377,6 +406,7 @@
         </el-dialog>
       </div>
     </el-form>
+    
   </div>
 </template>
 <script>
@@ -385,6 +415,7 @@ export default {
     return {
       emps: [],
       atts: [],
+      attname: [],
       keywords: "",
       fileUploadBtnText: "导入数据",
       beginDateScope: "",
@@ -427,10 +458,10 @@ export default {
         posId: "",
         workID: "",
         points: 0,
-        atime:"",
-        aname:"",
-        stateId:"",
-        sid:""
+        atime: "",
+        aname: "",
+        stateId: "",
+        sid: ""
       },
       att: {
         name: "",
@@ -445,43 +476,27 @@ export default {
         departmentId: "",
         departmentName: "所属部门...",
         workID: "",
-        atime:"",
-        aname:"",
-        stateId:"",
-        sid:""
+        atime: "",
+        aname: "",
+        stateId: "",
+        sid: ""
       },
-
-      
+      attendance: {
+        id: "",
+        atime: "",
+        stateId: "",
+        sid: "",
+        des: ""
+      },
 
       rules: {
         name: [{ required: true, message: "必填:姓名", trigger: "blur" }],
         gender: [{ required: true, message: "必填:性别", trigger: "blur" }],
-        birthday: [
-          { required: true, message: "必填:出生日期", trigger: "blur" }
-        ],
-        idCard: [
-          {
-            required: true,
-            message: "必填:身份证号码",
-            trigger: "blur"
-          },
-          {
-            pattern: /(^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$)|(^[1-9]\d{5}\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{2}$)/,
-            message: "身份证号码格式不正确",
-            trigger: "blur"
-          }
-        ],
-        wedlock: [
-          { required: true, message: "必填:婚姻状况", trigger: "blur" }
-        ],
+
         nationId: [{ required: true, message: "必填:民族", trigger: "change" }],
-        nativePlace: [
-          { required: true, message: "必填:籍贯", trigger: "blur" }
-        ],
+
         phone: [{ required: true, message: "必填:电话号码", trigger: "blur" }],
-        address: [
-          { required: true, message: "必填:联系地址", trigger: "blur" }
-        ],
+
         departmentId: [
           { required: true, message: "必填:部门", trigger: "change" }
         ],
@@ -495,8 +510,6 @@ export default {
     this.loadEmps();
   },
   methods: {
-    
-
     fileUploadSuccess(response, file, fileList) {
       if (response) {
         this.$message({ type: response.status, message: response.msg });
@@ -512,7 +525,7 @@ export default {
       this.fileUploadBtnText = "正在导入";
     },
     exportEmps() {
-      window.open("/student/basic/exportEmp", "_parent");
+      window.open("/attendance/exportEmp", "_parent");
     },
     cancelSearch() {
       this.advanceSearchViewVisible = false;
@@ -552,11 +565,15 @@ export default {
         .catch(() => {});
     },
     deleteEmp(row) {
-      this.$confirm("此操作将永久删除[" + row.name + "], 是否继续?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      })
+      this.$confirm(
+        "此操作将永久删除[" + row.student.name + "], 是否继续?",
+        "提示",
+        {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        }
+      )
         .then(() => {
           this.doDelete(row.id);
         })
@@ -565,7 +582,7 @@ export default {
     doDelete(ids) {
       this.tableLoading = true;
       var _this = this;
-      this.deleteRequest("/student/basic/emp/" + ids).then(resp => {
+      this.deleteRequest("/attendance/att/" + ids).then(resp => {
         _this.tableLoading = false;
         if (resp && resp.status == 200) {
           var data = resp.data;
@@ -595,13 +612,13 @@ export default {
           "&size=10&keywords=" +
           this.keywords +
           "&atime=" +
-          this.emp.atime +
+          this.att.atime +
           "&stateId=" +
-          this.emp.stateId +
+          this.att.stateId +
           "&sid=" +
-          this.emp.sid +
+          this.att.sid +
           "&departmentId=" +
-          this.emp.departmentId
+          this.att.departmentId
       ).then(resp => {
         this.tableLoading = false;
         if (resp && resp.status == 200) {
@@ -612,14 +629,14 @@ export default {
         }
       });
     },
-    addEmp(formName) {
+    addAtt(formName) {
       var _this = this;
       this.$refs[formName].validate(valid => {
         if (valid) {
-          if (this.emp.id) {
+          if (this.att.id) {
             //更新
             this.tableLoading = true;
-            this.putRequest("/student/basic/emp", this.emp).then(resp => {
+            this.putRequest("/attendance/att", this.attendance).then(resp => {
               _this.tableLoading = false;
               if (resp && resp.status == 200) {
                 var data = resp.data;
@@ -631,7 +648,7 @@ export default {
           } else {
             //添加
             this.tableLoading = true;
-            this.postRequest("/student/basic/emp", this.emp).then(resp => {
+            this.postRequest("/attendance/att", this.att).then(resp => {
               _this.tableLoading = false;
               if (resp && resp.status == 200) {
                 var data = resp.data;
@@ -672,15 +689,14 @@ export default {
     },
     initData() {
       var _this = this;
-      this.getRequest("/student/basic/basicdata").then(resp => {
+      this.getRequest("/attendance/basicdata").then(resp => {
         if (resp && resp.status == 200) {
           var data = resp.data;
           _this.nations = data.nations;
+          _this.attname = data.attname;
           _this.politics = data.politics;
           _this.deps = data.deps;
           _this.positions = data.positions;
-          _this.joblevels = data.joblevels;
-          _this.emp.workID = data.workID;
         }
         console.log(resp.data);
       });
@@ -690,21 +706,25 @@ export default {
       this.dialogTitle = "编辑考勤";
       this.att = row;
       this.att.atime = this.formatDate(row.atime);
+      this.att.name = row.student.name;
+      this.att.idCard = row.student.idCard;
 
       this.att.departmentId = row.department.id;
       this.att.departmentName = row.department.name;
+      this.att.stateId = row.attname.id;
+      this.att.aname = row.attname.name;
       //        delete this.emp.department;
       this.dialogVisible = true;
+
+      this.attendance.id = row.id;
+      this.attendance.atime = this.att.atime;
+      this.attendance.aname = this.att.aname;
+      this.attendance.stateId = this.att.stateId;
     },
     showAddEmpView() {
-      this.dialogTitle = "添加学员";
+      this.dialogTitle = "添加考勤";
       this.dialogVisible = true;
       var _this = this;
-      this.getRequest("/student/basic/maxWorkID").then(resp => {
-        if (resp && resp.status == 200) {
-          _this.emp.workID = resp.data;
-        }
-      });
     },
     showEditPointView(row) {
       this.dialogTitle = "积分修改";
@@ -721,18 +741,21 @@ export default {
 
     showAttendanceView(row) {
       this.dialogTitle = "考勤详情";
-      this.emp = row;
-      this.emp.points = row.points;
-      // this.emp.conversionTime = this.formatDate(row.conversionTime);
+      this.att = row;
+      this.att.atime = this.formatDate(row.atime);
+      this.att.name = row.student.name;
+      this.att.idCard = row.student.idCard;
 
-      this.emp.nationId = row.nation.id;
-      this.emp.departmentId = row.department.id;
-      this.emp.departmentName = row.department.name;
+      this.att.departmentId = row.department.id;
+      this.att.departmentName = row.department.name;
+      this.att.stateId = row.attname.id;
+      this.att.aname = row.attname.name;
+      this.att.stateId = row.stateId.id;
 
       this.dialogVisible2 = true;
     },
     emptyEmpData() {
-      this.emp = {
+      this.att = {
         name: "",
         gender: "",
         birthday: "",
@@ -744,11 +767,10 @@ export default {
         address: "",
         departmentId: "",
         departmentName: "所属部门...",
-        jobLevelId: "",
-        posId: "",
-        engageForm: "",
-
-        workID: ""
+        atime: "",
+        aname: "",
+        stateId: "",
+        sid: ""
       };
     }
   }
@@ -772,6 +794,10 @@ export default {
 .slide-fade-leave-to {
   transform: translateX(10px);
   opacity: 0;
+}
+
+.is-selected {
+  color: #1989fa;
 }
 </style>
 

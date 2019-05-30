@@ -45,9 +45,10 @@
         INSERT INTO hr set username=#{username},password=#{password}
     </insert>
     <select id="getHrsByKeywords" resultMap="eagerLoadRoles">
-        select h.*,`r`.`id` AS `rid`,`r`.`name` AS `rname`,`r`.`nameZh` AS `rnameZh` from ((`hr` `h` left join `hr_role`
-        `h_r` on ((`h`.`id` = `h_r`.`hrid`))) left join `role` `r` on ((`h_r`.`rid` = `r`.`id`))) where h.`id` not
-        in(select h_r.`hrid` from hr_role h_r,role r where h_r.`rid`=r.`id` and r.`nameZh`='系统管理员')
+        select h.*,`r`.`id` AS `rid`,`r`.`name` AS `rname`,`r`.`nameZh` AS `rnameZh` ,d.id as did ,d.name as dname
+        from `hr` `h` left join `hr_role` `h_r` on (`h`.`id` = `h_r`.`hrid`) left join `role` `r` on (`h_r`.`rid` = `r`.`id`)
+        LEFT JOIN department d on h.departmentId = d.id
+        where h.`id` not in(select h_r.`hrid` from hr_role h_r,role r where h_r.`rid`=r.`id` and r.`nameZh`='系统管理员')
         <if test="keywords!='all' and keywords!=''">
             and h.`name` like concat('%',#{keywords},'%')
         </if>

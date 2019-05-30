@@ -18,7 +18,7 @@ public interface HrMapper {
 
     List<Hr> getHrsByKeywords(@Param("keywords") String keywords);
 
-    int updateHr(Hr hr);
+    int updateHr(@Param("hr") Hr hr);
 
     int deleteRoleByHrId(Long hrId);
 

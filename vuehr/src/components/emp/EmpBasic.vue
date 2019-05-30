@@ -462,22 +462,51 @@
                     v-model="emp.name"
                     size="mini"
                     style="width: 150px"
+                    disabled=""
                   ></el-input>
                 </el-form-item>
               </div>
             </el-col>
-          
+
+            <el-col :span="8">
+              <div>
+                <el-form-item label="身份证号码:" prop="idCard">
+                  <el-input
+                    prefix-icon="el-icon-edit"
+                    v-model="emp.idCard"
+                    size="mini"
+                    style="width: 180px"
+                    placeholder="请输入学员身份证号码..."
+                    disabled=""
+                  ></el-input>
+                </el-form-item>
+              </div>
+            </el-col>
+
             <el-col :span="6">
               <div>
-                <el-form-item label="考勤时间:" prop="birthday">
-                  <el-date-picker
-                    v-model="emp.birthday"
-                    size="mini"
-                    value-format="yyyy-MM-dd HH:mm:ss"
-                    style="width: 150px"
-                    type="date"
-                    placeholder="出生日期"
-                  ></el-date-picker>
+                <el-form-item label="所属部门:" prop="departmentId">
+                  <el-popover
+                    v-model="showOrHidePop"
+                    placement="right"
+                    title="请选择部门"
+                    trigger="manual"
+                    disabled=""
+                  >
+                    <el-tree
+                      :data="deps"
+                      :default-expand-all="true"
+                      :props="defaultProps"
+                      :expand-on-click-node="false"
+                      @node-click="handleNodeClick"
+                    ></el-tree>
+                    <div
+                      slot="reference"
+                      style="width: 150px;height: 26px;display: inline-flex;font-size:13px;border: 1px;border-radius: 5px;border-style: solid;padding-left: 13px;box-sizing:border-box;border-color: #dcdfe6;cursor: pointer;align-items: center"
+                      @click.left="showDepTree"
+                      v-bind:style="{color: depTextColor}"
+                    >{{emp.departmentName}}</div>
+                  </el-popover>
                 </el-form-item>
               </div>
             </el-col>
@@ -485,37 +514,28 @@
           <el-row>
             <el-col :span="4">
               <div>
-                <el-form-item label="考勤记录（次）：">
-                </el-form-item>
+                <el-form-item label="考勤记录（次）："></el-form-item>
               </div>
             </el-col>
             <el-col :span="4">
               <div>
-                <el-form-item label="出勤:" prop="nativePlace">
-                  {{emp.points}}
-                </el-form-item>
+                <el-form-item label="出勤:" prop="nativePlace">{{emp.points}}</el-form-item>
               </div>
             </el-col>
 
             <el-col :span="5">
               <div>
-                <el-form-item label="迟到:" prop="address">
-                  0
-                </el-form-item>
+                <el-form-item label="迟到:" prop="address">0</el-form-item>
               </div>
             </el-col>
             <el-col :span="5">
               <div>
-                <el-form-item label="早退:" prop="address">
-                  0
-                </el-form-item>
+                <el-form-item label="早退:" prop="address">0</el-form-item>
               </div>
             </el-col>
             <el-col :span="5">
               <div>
-                <el-form-item label="缺勤:" prop="address">
-                  2
-                </el-form-item>
+                <el-form-item label="缺勤:" prop="address">2</el-form-item>
               </div>
             </el-col>
           </el-row>
@@ -912,11 +932,9 @@ export default {
         address: "",
         departmentId: "",
         departmentName: "所属部门...",
-        jobLevelId: "",
         posId: "",
-        engageForm: "",
-
-        workID: ""
+        workID: "",
+        points: 0
       };
     }
   }

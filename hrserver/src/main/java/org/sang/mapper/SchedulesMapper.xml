@@ -11,6 +11,7 @@
         <result column="theme" property="theme"/>
         <result column="phone" property="phone"/>
         <result column="departmentId" property="departmentId"/>
+        <result column="des" property="des"/>
         <association property="department" javaType="org.sang.bean.Department">
             <id property="id" column="did"/>
             <result property="name" column="dname"/>
@@ -53,9 +54,9 @@
 
 
     <insert id="addSchedules" parameterType="org.sang.bean.Schedules">
-            insert into schedules (userId, time, state, theme, departmentId)
+            insert into schedules (userId, time, state, theme, departmentId,des)
     values (#{userId,jdbcType=INTEGER}, #{time,jdbcType=DATE},
-      #{state,jdbcType=INTEGER}, #{theme,jdbcType=VARCHAR}, #{departmentId,jdbcType=INTEGER}
+      #{state,jdbcType=INTEGER}, #{theme,jdbcType=VARCHAR}, #{departmentId,jdbcType=INTEGER},#{des,jdbcType=VARCHAR},
       )
     </insert>
 
@@ -78,6 +79,9 @@
             </if>
             <if test="schedule.state != null">
                 state = #{schedule.state,jdbcType=INTEGER},
+            </if>
+            <if test="schedule.des != null">
+                des = #{schedule.des,jdbcType=INTEGER},
             </if>
         </set>
         where id = #{schedule.id,jdbcType=BIGINT}

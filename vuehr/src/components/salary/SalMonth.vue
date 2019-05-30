@@ -178,53 +178,20 @@
                 </el-form-item>
               </div>
             </el-col>
-
-            <el-col :span="6">
-              <div>
-                <el-form-item label="授课日期:" prop="time">
-                  <el-date-picker
-                    v-model="schedule.time"
-                    size="mini"
-                    value-format="yyyy-MM-dd HH:mm:ss"
-                    style="width: 150px"
-                    type="date"
-                    placeholder="授课日期"
-                  ></el-date-picker>
-                </el-form-item>
-              </div>
-            </el-col>
-          </el-row>
-          <el-row>
             <el-col :span="7">
               <div>
-                <el-form-item label="授课状态:" prop="state">
+                <el-form-item label="电话号码:" prop="phone">
                   <el-input
-                    prefix-icon="el-icon-edit"
-                    v-model="schedule.state"
+                    prefix-icon="el-icon-phone"
+                    v-model="schedule.phone"
                     size="mini"
                     style="width: 200px"
-                    placeholder="授课状态..."
+                    placeholder="电话号码..."
                   ></el-input>
                 </el-form-item>
               </div>
             </el-col>
 
-            <el-col :span="6">
-              <div>
-                <el-form-item label="联系地址:" prop="departmentId">
-                  <el-input
-                    prefix-icon="el-icon-edit"
-                    v-model="schedule.departmentName"
-                    size="mini"
-                    style="width: 200px"
-                    placeholder="联系地址..."
-                  ></el-input>
-                </el-form-item>
-              </div>
-            </el-col>
-          </el-row>
-
-          <el-row>
             <el-col :span="6">
               <div>
                 <el-form-item label="所属部门:" prop="departmentId">
@@ -251,29 +218,85 @@
                 </el-form-item>
               </div>
             </el-col>
-            <el-col :span="7">
-              <div>
-                <el-form-item label="电话号码:" prop="phone">
-                  <el-input
-                    prefix-icon="el-icon-phone"
-                    v-model="schedule.phone"
-                    size="mini"
-                    style="width: 200px"
-                    placeholder="电话号码..."
-                  ></el-input>
-                </el-form-item>
-              </div>
-            </el-col>
           </el-row>
           <el-row>
             <el-col :span="6">
               <div>
+                <el-form-item label="授课日期:" prop="time">
+                  <el-date-picker
+                    v-model="sch.time"
+                    size="mini"
+                    value-format="yyyy-MM-dd HH:mm:ss"
+                    style="width: 150px"
+                    type="date"
+                    placeholder="授课日期"
+                  ></el-date-picker>
+                </el-form-item>
+              </div>
+            </el-col>
+             <el-col :span="6">
+              <div>
+                <el-form-item label="授课地点:" prop="departmentId">
+                  <el-popover
+                    v-model="showOrHidePop"
+                    placement="right"
+                    title="授课地点"
+                    trigger="manual"
+                  >
+                    <el-tree
+                      :data="deps"
+                      :default-expand-all="true"
+                      :props="defaultProps"
+                      :expand-on-click-node="false"
+                      @node-click="handleNodeClick"
+                    ></el-tree>
+                    <div
+                      slot="reference"
+                      style="width: 150px;height: 26px;display: inline-flex;font-size:13px;border: 1px;border-radius: 5px;border-style: solid;padding-left: 13px;box-sizing:border-box;border-color: #dcdfe6;cursor: pointer;align-items: center"
+                      @click.left="showDepTree"
+                      v-bind:style="{color: depTextColor}"
+                    >{{schedule.departmentName}}</div>
+                  </el-popover>
+                </el-form-item>
+              </div>
+            </el-col>
+            <el-col :span="6">
+              <div>
+                <el-form-item label="授课状态:" prop="state">
+                  <el-input
+                    prefix-icon="el-icon-edit"
+                    v-model="sch.state"
+                    size="mini"
+                    style="width: 100px"
+                    placeholder="授课状态..."
+                  ></el-input>
+                </el-form-item>
+              </div>
+            </el-col>
+
+
+          </el-row>
+          <el-row>
+            <el-col :span="9">
+              <div>
                 <el-form-item label="授课主题:" prop="theme">
                   <el-input
-                    v-model="schedule.theme"
+                    v-model="sch.theme"
                     size="mini"
                     style="width: 300px"
                     placeholder="授课主题..."
+                  ></el-input>
+                </el-form-item>
+              </div>
+            </el-col>
+              <el-col :span="9">
+              <div>
+                <el-form-item label="备注:" prop="des">
+                  <el-input
+                    v-model="sch.des"
+                    size="mini"
+                    style="width: 300px"
+                    placeholder="备注..."
                   ></el-input>
                 </el-form-item>
               </div>
@@ -287,8 +310,6 @@
         </el-dialog>
       </div>
     </el-form>
-
-  
   </div>
 </template>
 <script>
@@ -308,10 +329,9 @@ export default {
       totalCount: -1,
       currentPage: 1,
       hr: {
-        id:"",
-        name:"",
-        phone:"",
-        
+        id: "",
+        name: "",
+        phone: ""
       },
       deps: [],
       defaultProps: {
@@ -334,17 +354,26 @@ export default {
         address: "",
         phone: "",
         theme: ""
-        
       },
       schedule: {
         userId: "",
         name: "",
         departmentId: "",
-        // departmentName: "所属部门...",
+        departmentName: "所属部门...",
         time: "",
         state: "",
-        // address: "",
-        theme: ""
+        address: "",
+        theme: "",
+        des: ""
+      },
+      sch: {
+        id: "",
+        userId: "",
+        departmentId: "",
+        time: "",
+        state: "",
+        theme: "",
+        des: ""
       },
       rules: {
         name: [{ required: true, message: "必填:姓名", trigger: "blur" }],
@@ -405,11 +434,15 @@ export default {
         .catch(() => {});
     },
     deleteEmp(row) {
-      this.$confirm("此操作将永久删除[" + row.hr.name + "], 是否继续?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      })
+      this.$confirm(
+        "此操作将永久删除[" + row.hr.name + "], 是否继续?",
+        "提示",
+        {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        }
+      )
         .then(() => {
           this.doDelete(row.id);
         })
@@ -448,9 +481,9 @@ export default {
           "&size=10&keywords=" +
           this.keywords +
           "&userId=" +
-          this.schedule.userId +
+          this.sch.userId +
           "&departmentId=" +
-          this.schedule.departmentId
+          this.sch.departmentId
       ).then(resp => {
         this.tableLoading = false;
         if (resp && resp.status == 200) {
@@ -465,13 +498,13 @@ export default {
     addEmp(formName) {
       var _this = this;
       this.$refs[formName].validate(valid => {
-          debugger;
+        // debugger;
 
         if (valid) {
           if (this.schedule.id) {
             //更新
             this.tableLoading = true;
-            this.putRequest("/schedules/sch", this.schedule).then(resp => {
+            this.putRequest("/schedules/sch", this.sch).then(resp => {
               _this.tableLoading = false;
               if (resp && resp.status == 200) {
                 var data = resp.data;
@@ -528,17 +561,16 @@ export default {
       this.getRequest("/schedules/sch").then(resp => {
         if (resp && resp.status == 200) {
           var data = resp.data;
-      
+
           // _this.deps = data.deps;
           // _this.positions = data.positions;
-         
         }
         console.log(resp.data);
       });
     },
     showEditEmpView(row) {
       console.log(row);
-      this.dialogTitle = "编辑员工";
+      this.dialogTitle = "编辑排班";
       this.schedule = row;
       this.schedule.time = this.formatDate(row.time);
 
@@ -548,6 +580,15 @@ export default {
       this.schedule.departmentName = row.department.name;
       this.schedule.phone = row.hr.phone;
       this.dialogVisible = true;
+
+      this.sch.id = row.id;
+      this.sch.time = this.formatDate(row.time);
+      this.sch.userId = this.schedule.userId;
+      this.sch.departmentId = this.schedule.departmentId;
+      this.sch.departmentName = this.schedule.departmentName;
+      this.sch.theme = row.theme;
+      this.sch.state = row.state;
+      this.sch.des = row.des;
     },
     showAddEmpView() {
       this.dialogTitle = "添加排班";
@@ -567,8 +608,7 @@ export default {
         address: "",
         departmentId: "",
         departmentName: "所属部门...",
-        theme:""
-      
+        theme: ""
       };
     }
   }

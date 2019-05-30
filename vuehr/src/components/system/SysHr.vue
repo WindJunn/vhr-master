@@ -167,7 +167,7 @@
             <el-table-column prop="phone" width="100" label="电话号码"></el-table-column>
             <el-table-column prop="address" width="220" align="left" label="联系地址"></el-table-column>
             <el-table-column prop="department.name" align="left" width="100" label="所属部门"></el-table-column>
-            <el-table-column width="100" align="left" prop="position.name" label="职位"></el-table-column>
+            <el-table-column width="100" align="left" prop="position.name" label="角色"></el-table-column>
 
             <el-table-column fixed="right" label="操作" width="195">
               <template slot-scope="scope">
@@ -658,30 +658,20 @@ export default {
     loadEmps() {
       var _this = this;
       this.tableLoading = true;
+
+        var searchWords;
+        if (this.keywords === '') {
+          searchWords = 'all';
+        } else {
+          searchWords = this.keywords;
+        }
       this.getRequest(
-        "/employee/basic/emp?page=" +
-          this.currentPage +
-          "&size=10&keywords=" +
-          this.keywords +
-          "&politicId=" +
-          this.emp.politicId +
-          "&nationId=" +
-          this.emp.nationId +
-          "&posId=" +
-          this.emp.posId +
-          "&jobLevelId=" +
-          this.emp.jobLevelId +
-          "&engageForm=" +
-          this.emp.engageForm +
-          "&departmentId=" +
-          this.emp.departmentId +
-          "&beginDateScope=" +
-          this.beginDateScope
+       "/system/hr/" + searchWords
       ).then(resp => {
         this.tableLoading = false;
         if (resp && resp.status == 200) {
           var data = resp.data;
-          _this.emps = data.emps;
+          _this.emps = data.hr;
           _this.totalCount = data.count;
           //            _this.emptyEmpData();
         }

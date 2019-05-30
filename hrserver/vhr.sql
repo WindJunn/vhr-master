@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50725
 File Encoding         : 65001
 
-Date: 2019-05-28 18:00:30
+Date: 2019-05-30 18:19:43
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -97,7 +97,7 @@ INSERT INTO `article` VALUES ('121', '感悟感悟', '啊啊啊啊啊啊啊啊�
 INSERT INTO `article` VALUES ('123', '423', '33342', '<p>33342</p>\n', '33342\n', '1', '3', null, '2019-05-17 09:19:41', '0', '0');
 INSERT INTO `article` VALUES ('124', 'fdgbfdgcchgf', 'tyrhgfhfghfgdhfgdhfdghdfg<embed src=\'http://player.youku.com/player.php/sid/XNDE2Njg3MTI2OA==/v.swf\' allowFullScreen=\'true\' quality=\'high\' width=\'480\' height=\'400\' align=\'middle\' allowScriptAccess=\'always\' type=\'application/x-shockwave-flash\'></embed>**粗体**', '<p>tyrhgfhfghfgdhfgdhfdghdfg<embed src=\'http://player.youku.com/player.php/sid/XNDE2Njg3MTI2OA==/v.swf\' allowFullScreen=\'true\' quality=\'high\' width=\'480\' height=\'400\' align=\'middle\' allowScriptAccess=\'always\' type=\'application/x-shockwave-flash\'></embed><strong>粗体</strong></p>\n', 'tyrhgfhfghfgdhfgdhfdghdfg粗体\n', '2', '3', '2019-05-28 12:46:12', '2019-05-28 12:46:12', '1', '1');
 INSERT INTO `article` VALUES ('125', 'sadfasdfsdafsdafsda', 'tyrhgfhfghfgdhfgdhfdghdfg<embed src=\'http://player.youku.com/player.php/sid/XNDE2Njg3MTI2OA==/v.swf\' allowFullScreen=\'true\' quality=\'high\' width=\'480\' height=\'400\' align=\'middle\' allowScriptAccess=\'always\' type=\'application/x-shockwave-flash\'></embed>**粗体**', '<p>tyrhgfhfghfgdhfgdhfdghdfg<embed src=\'http://player.youku.com/player.php/sid/XNDE2Njg3MTI2OA==/v.swf\' allowFullScreen=\'true\' quality=\'high\' width=\'480\' height=\'400\' align=\'middle\' allowScriptAccess=\'always\' type=\'application/x-shockwave-flash\'></embed><strong>粗体</strong></p>\n', 'tyrhgfhfghfgdhfgdhfdghdfg粗体\n', '2', '3', '2019-05-28 12:46:22', '2019-05-28 12:46:22', '1', '1');
-INSERT INTO `article` VALUES ('126', 'sadfasdfsdafsdafsda', 'tyrhgfhfghfgdhfgdhfdghdfg<embed src=\'http://player.youku.com/player.php/sid/XNDE2Njg3MTI2OA==/v.swf\' allowFullScreen=\'true\' quality=\'high\' width=\'480\' height=\'400\' align=\'middle\' allowScriptAccess=\'always\' type=\'application/x-shockwave-flash\'></embed>**粗体**', '<p>tyrhgfhfghfgdhfgdhfdghdfg<embed src=\'http://player.youku.com/player.php/sid/XNDE2Njg3MTI2OA==/v.swf\' allowFullScreen=\'true\' quality=\'high\' width=\'480\' height=\'400\' align=\'middle\' allowScriptAccess=\'always\' type=\'application/x-shockwave-flash\'></embed><strong>粗体</strong></p>\n', 'tyrhgfhfghfgdhfgdhfdghdfg粗体\n', '2', '3', '2019-05-28 12:46:28', '2019-05-28 12:46:28', '1', '3');
+INSERT INTO `article` VALUES ('126', 'sadfasdfsdafsdafsda', 'tyrhgfhfghfgdhfgdhfdghdfg<embed src=\'http://player.youku.com/player.php/sid/XNDE2Njg3MTI2OA==/v.swf\' allowFullScreen=\'true\' quality=\'high\' width=\'480\' height=\'400\' align=\'middle\' allowScriptAccess=\'always\' type=\'application/x-shockwave-flash\'></embed>**粗体**', '<p>tyrhgfhfghfgdhfgdhfdghdfg<embed src=\'http://player.youku.com/player.php/sid/XNDE2Njg3MTI2OA==/v.swf\' allowFullScreen=\'true\' quality=\'high\' width=\'480\' height=\'400\' align=\'middle\' allowScriptAccess=\'always\' type=\'application/x-shockwave-flash\'></embed><strong>粗体</strong></p>\n', 'tyrhgfhfghfgdhfgdhfdghdfg粗体\n', '2', '3', '2019-05-28 12:46:28', '2019-05-28 12:46:28', '1', '5');
 
 -- ----------------------------
 -- Table structure for article_tags
@@ -115,6 +115,48 @@ CREATE TABLE `article_tags` (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for attendance
+-- ----------------------------
+DROP TABLE IF EXISTS `attendance`;
+CREATE TABLE `attendance` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `sid` int(11) DEFAULT NULL,
+  `stateId` int(11) DEFAULT '1',
+  `atime` date DEFAULT NULL COMMENT '考勤时间',
+  `des` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `stateId` (`stateId`) USING BTREE,
+  KEY `sid` (`sid`) USING BTREE,
+  CONSTRAINT `a_ibfk_1` FOREIGN KEY (`stateId`) REFERENCES `attname` (`id`),
+  CONSTRAINT `a_ibfk_2` FOREIGN KEY (`sid`) REFERENCES `student` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of attendance
+-- ----------------------------
+INSERT INTO `attendance` VALUES ('1', '1', '1', '2019-05-29', null);
+INSERT INTO `attendance` VALUES ('2', '3', '1', '2019-05-29', null);
+INSERT INTO `attendance` VALUES ('3', '4', '3', '2019-05-21', '');
+
+-- ----------------------------
+-- Table structure for attname
+-- ----------------------------
+DROP TABLE IF EXISTS `attname`;
+CREATE TABLE `attname` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of attname
+-- ----------------------------
+INSERT INTO `attname` VALUES ('1', '出勤');
+INSERT INTO `attname` VALUES ('2', '迟到');
+INSERT INTO `attname` VALUES ('3', '早退');
+INSERT INTO `attname` VALUES ('4', '缺勤');
+
+-- ----------------------------
 -- Table structure for category
 -- ----------------------------
 DROP TABLE IF EXISTS `category`;
@@ -123,7 +165,7 @@ CREATE TABLE `category` (
   `cateName` varchar(255) DEFAULT NULL,
   `date` date DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of category
@@ -132,6 +174,7 @@ INSERT INTO `category` VALUES ('1', '政策', '2019-05-16');
 INSERT INTO `category` VALUES ('2', '文化', '2019-05-16');
 INSERT INTO `category` VALUES ('3', '教育', '2019-05-16');
 INSERT INTO `category` VALUES ('4', '农技', '2019-05-16');
+INSERT INTO `category` VALUES ('5', '其他', '2019-05-29');
 
 -- ----------------------------
 -- Table structure for comments
@@ -442,22 +485,16 @@ CREATE TABLE `hr_role` (
   KEY `hr_role_ibfk_1` (`hrid`),
   CONSTRAINT `hr_role_ibfk_1` FOREIGN KEY (`hrid`) REFERENCES `hr` (`id`) ON DELETE CASCADE,
   CONSTRAINT `hr_role_ibfk_2` FOREIGN KEY (`rid`) REFERENCES `role` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hr_role
 -- ----------------------------
 INSERT INTO `hr_role` VALUES ('1', '3', '6');
-INSERT INTO `hr_role` VALUES ('35', '12', '4');
-INSERT INTO `hr_role` VALUES ('36', '12', '3');
-INSERT INTO `hr_role` VALUES ('37', '12', '2');
-INSERT INTO `hr_role` VALUES ('43', '11', '3');
-INSERT INTO `hr_role` VALUES ('44', '11', '2');
-INSERT INTO `hr_role` VALUES ('45', '11', '4');
-INSERT INTO `hr_role` VALUES ('46', '11', '5');
-INSERT INTO `hr_role` VALUES ('48', '10', '3');
-INSERT INTO `hr_role` VALUES ('49', '10', '4');
-INSERT INTO `hr_role` VALUES ('50', '5', '1');
+INSERT INTO `hr_role` VALUES ('2', '12', '2');
+INSERT INTO `hr_role` VALUES ('3', '10', '4');
+INSERT INTO `hr_role` VALUES ('4', '5', '1');
+INSERT INTO `hr_role` VALUES ('5', '11', '2');
 
 -- ----------------------------
 -- Table structure for joblevel
@@ -519,7 +556,7 @@ INSERT INTO `menu` VALUES ('9', '/personnel/emp/**', '/per/emp', 'PerEmp', '员�
 INSERT INTO `menu` VALUES ('10', '/personnel/ec/**', '/per/ec', 'PerEc', '文章管理', null, null, '1', '3', '1');
 INSERT INTO `menu` VALUES ('11', '/personnel/train/**', '/per/train', 'PerTrain', '文章发布', null, null, '1', '3', '1');
 INSERT INTO `menu` VALUES ('12', '/personnel/salary/**', '/per/salary', 'PerSalary', '文章详情', null, null, '1', '3', '1');
-INSERT INTO `menu` VALUES ('13', '/personnel/remove/**', '/per/mv', 'PerMv', '员工调动', null, null, '1', '3', '0');
+INSERT INTO `menu` VALUES ('13', '/personnel/remove/**', '/per/mv', 'PerMv', '文章分类', null, null, '1', '3', '1');
 INSERT INTO `menu` VALUES ('14', '/salary/sob/**', '/sal/sob', 'SalSob', '工资账套管理', null, null, '1', '4', '0');
 INSERT INTO `menu` VALUES ('15', '/salary/sobcfg/**', '/sal/sobcfg', 'SalSobCfg', '员工账套设置', null, null, '1', '4', '0');
 INSERT INTO `menu` VALUES ('16', '/salary/table/**', '/sal/table', 'SalTable', '排班管理', null, null, '1', '4', '1');
@@ -715,6 +752,46 @@ CREATE TABLE `oplog` (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for piontwater
+-- ----------------------------
+DROP TABLE IF EXISTS `piontwater`;
+CREATE TABLE `piontwater` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `sid` int(11) DEFAULT NULL,
+  `point` int(11) DEFAULT '0',
+  `type` varchar(255) DEFAULT NULL,
+  `des` varchar(255) DEFAULT NULL,
+  `createTime` datetime DEFAULT NULL,
+  `modifyTime` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of piontwater
+-- ----------------------------
+INSERT INTO `piontwater` VALUES ('1', '1', '30', '', '添加', '2019-05-29 12:03:46', '2019-05-29 12:03:50');
+
+-- ----------------------------
+-- Table structure for point
+-- ----------------------------
+DROP TABLE IF EXISTS `point`;
+CREATE TABLE `point` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `point` int(11) DEFAULT '0',
+  `sid` int(11) DEFAULT NULL,
+  `pointuse` varchar(255) DEFAULT NULL,
+  `createTime` datetime DEFAULT NULL,
+  `modifyTime` datetime DEFAULT NULL,
+  `memo` varchar(255) DEFAULT NULL COMMENT '扩展字段',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of point
+-- ----------------------------
+INSERT INTO `point` VALUES ('1', '30', '1', '0', '2019-05-29 12:03:19', '2019-05-29 12:03:21', null);
+
+-- ----------------------------
 -- Table structure for politicsstatus
 -- ----------------------------
 DROP TABLE IF EXISTS `politicsstatus`;
@@ -843,14 +920,15 @@ CREATE TABLE `schedules` (
   `departmentId` int(11) DEFAULT NULL COMMENT '授课地点',
   `theme` varchar(255) DEFAULT NULL,
   `state` int(1) DEFAULT '1' COMMENT '授课状态 1.未授课 2.已授课',
+  `des` varchar(255) DEFAULT '' COMMENT '备注',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of schedules
 -- ----------------------------
-INSERT INTO `schedules` VALUES ('1', '5', '2019-05-28 00:00:00', '1', '水稻防害', '1');
-INSERT INTO `schedules` VALUES ('2', '5', '2019-05-13 00:00:00', '1', '122', '1');
+INSERT INTO `schedules` VALUES ('1', '5', '2019-05-28 00:00:00', '1', '水稻防害', '1', null);
+INSERT INTO `schedules` VALUES ('2', '5', '2019-05-13 00:00:00', '1', '水稻', '2', '');
 
 -- ----------------------------
 -- Table structure for student
@@ -868,22 +946,27 @@ CREATE TABLE `student` (
   `phone` varchar(11) DEFAULT NULL COMMENT '电话号码',
   `address` varchar(255) DEFAULT NULL COMMENT '联系地址',
   `departmentId` int(11) DEFAULT NULL COMMENT '所属部门',
-  `workID` char(10) DEFAULT NULL COMMENT '工号',
-  `points` int(20) NOT NULL DEFAULT '0' COMMENT '积分',
+  `workID` varchar(10) DEFAULT NULL COMMENT '工号',
+  `points` int(20) DEFAULT '0' COMMENT '积分',
   PRIMARY KEY (`id`),
   KEY `departmentId` (`departmentId`),
   KEY `nationId` (`nationId`),
   KEY `workID` (`workID`),
   CONSTRAINT `student_ibfk_1` FOREIGN KEY (`departmentId`) REFERENCES `department` (`id`),
   CONSTRAINT `student_ibfk_2` FOREIGN KEY (`nationId`) REFERENCES `nation` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of student
 -- ----------------------------
-INSERT INTO `student` VALUES ('1', '吴语', '男', '2019-05-06', '612328199412129999', '未婚', '1', '陕西', '18829345027', '广东省广州市天河区冼村路', '115', '0000000001', '11');
-INSERT INTO `student` VALUES ('3', '尚胡', '男', '2019-05-01', '612328199412120316', '已婚', '3', '固原', '18829345012', '固原市原州区', '95', '0000000003', '15');
+INSERT INTO `student` VALUES ('1', '吴语', '男', '2019-05-06', '612328199412129999', '未婚', '1', '陕西', '18829345027', '广东省广州市天河区冼村路', '115', '0000000001', '1');
+INSERT INTO `student` VALUES ('3', '尚胡', '男', '2019-05-01', '612328199412120316', '已婚', '3', '固原', '18829345012', '固原市原州区', '95', '0000000003', '20');
 INSERT INTO `student` VALUES ('4', '尚玉', '男', '2019-04-29', '612328199412120316', '已婚', '2', '固原', '18829345012', '固原市原州区', '5', '0000000004', '25');
+INSERT INTO `student` VALUES ('5', '江南一点雨', '男', '1990-01-01', '610122199001011256', '已婚', '1', '陕西', '18565558897', '深圳市南山区', '5', null, '5');
+INSERT INTO `student` VALUES ('6', '陈静', '女', '1989-02-01', '421288198902011234', '已婚', '1', '海南', '18795556693', '海南省海口市美兰区', '8', null, '3');
+INSERT INTO `student` VALUES ('7', '积极', '男', '2019-05-07', '612328199412120322', '未婚', '1', '陕西', '18829345202', '的说法', '147', '0000000007', '53');
+INSERT INTO `student` VALUES ('8', '江南一点雨', '男', '1990-01-01', '610122199001011256', '已婚', '1', '陕西', '18565558897', '深圳市南山区', '5', null, '2');
+INSERT INTO `student` VALUES ('9', '陈静', '女', '1989-02-01', '421288198902011234', '已婚', '1', '海南', '18795556693', '海南省海口市美兰区', '8', null, '2');
 
 -- ----------------------------
 -- Table structure for sysmsg

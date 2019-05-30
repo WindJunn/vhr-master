@@ -9,6 +9,10 @@ public class Schedules {
     private Date time;
     private Long state;
     private String theme;
+    private String des;
+
+
+
     private Long departmentId;
 
     private Hr hr;
@@ -18,6 +22,13 @@ public class Schedules {
     private Department department;
     private String departmentName;
 
+    public String getDes() {
+        return des;
+    }
+
+    public void setDes(String des) {
+        this.des = des;
+    }
     public Department getDepartment() {
         return department;
     }
