@@ -67,22 +67,7 @@
               v-show="advanceSearchViewVisible"
             >
               <el-row>
-                <el-col :span="5">
-                  政治面貌:
-                  <el-select
-                    v-model="emp.politicId"
-                    style="width: 130px"
-                    size="mini"
-                    placeholder="政治面貌"
-                  >
-                    <el-option
-                      v-for="item in politics"
-                      :key="item.id"
-                      :label="item.name"
-                      :value="item.id"
-                    ></el-option>
-                  </el-select>
-                </el-col>
+               
                 <el-col :span="4">
                   民族:
                   <el-select
@@ -162,12 +147,11 @@
      
             <el-table-column prop="idCard" width="150" align="left" label="身份证号码"></el-table-column>
 
-            <el-table-column width="50" prop="nation.name" label="民族"></el-table-column>
 
             <el-table-column prop="phone" width="100" label="电话号码"></el-table-column>
             <el-table-column prop="address" width="220" align="left" label="联系地址"></el-table-column>
             <el-table-column prop="department.name" align="left" width="100" label="所属部门"></el-table-column>
-            <el-table-column width="100" align="left" prop="position.name" label="角色"></el-table-column>
+            <el-table-column width="100" align="left" prop="roles.nameZh" label="角色"></el-table-column>
 
             <el-table-column fixed="right" label="操作" width="195">
               <template slot-scope="scope">
@@ -257,25 +241,7 @@
                 </el-form-item>
               </div>
             </el-col>
-            <el-col :span="7">
-              <div>
-                <el-form-item label="政治面貌:" prop="politicId">
-                  <el-select
-                    v-model="emp.politicId"
-                    style="width: 200px"
-                    size="mini"
-                    placeholder="政治面貌"
-                  >
-                    <el-option
-                      v-for="item in politics"
-                      :key="item.id"
-                      :label="item.name"
-                      :value="item.id"
-                    ></el-option>
-                  </el-select>
-                </el-form-item>
-              </div>
-            </el-col>
+            
           </el-row>
           <el-row>
             <el-col :span="6">
@@ -325,25 +291,7 @@
             </el-col>
           </el-row>
           <el-row>
-            <el-col :span="6">
-              <div>
-                <el-form-item label="职位:" prop="posId">
-                  <el-select
-                    v-model="emp.posId"
-                    style="width: 150px"
-                    size="mini"
-                    placeholder="请选择职位"
-                  >
-                    <el-option
-                      v-for="item in positions"
-                      :key="item.id"
-                      :label="item.name"
-                      :value="item.id"
-                    ></el-option>
-                  </el-select>
-                </el-form-item>
-              </div>
-            </el-col>
+         
             
             <el-col :span="6">
               <div>
@@ -385,23 +333,7 @@
               </div>
             </el-col>
           </el-row>
-          <el-row>
-            <el-col :span="6">
-              <div>
-                <el-form-item label="工号:" prop="workID">
-                  <el-input
-                    v-model="emp.workID"
-                    disabled
-                    size="mini"
-                    style="width: 150px"
-                    placeholder="员工工号..."
-                  ></el-input>
-                </el-form-item>
-              </div>
-            </el-col>
-            
-         
-          </el-row>
+      
          
           <el-row>
             <el-col :span="8">
@@ -449,6 +381,7 @@ export default {
       currentPage: 1,
       
       deps: [],
+      roles:[],
       defaultProps: {
         label: "name",
         isLeaf: "leaf",
@@ -467,27 +400,14 @@ export default {
         wedlock: "",
         nationId: "",
         nativePlace: "",
-        politicId: "",
         email: "",
         phone: "",
         address: "",
         departmentId: "",
         departmentName: "所属部门...",
-        jobLevelId: "",
-        posId: "",
-        engageForm: "",
-        tiptopDegree: "",
-        specialty: "",
-        school: "",
-        beginDate: "",
-        workState: "",
+        
         workID: "",
-        contractTerm: "",
-        conversionTime: "",
-        notWorkDate: "",
-        beginContract: "",
-        endContract: "",
-        workAge: ""
+       
       },
       rules: {
         name: [{ required: true, message: "必填:姓名", trigger: "blur" }],
@@ -514,17 +434,8 @@ export default {
         nativePlace: [
           { required: true, message: "必填:籍贯", trigger: "blur" }
         ],
-        politicId: [
-          { required: true, message: "必填:政治面貌", trigger: "blur" }
-        ],
-        email: [
-          { required: true, message: "必填:电子邮箱", trigger: "blur" },
-          {
-            type: "email",
-            message: "邮箱格式不正确",
-            trigger: "blur"
-          }
-        ],
+        
+       
         phone: [{ required: true, message: "必填:电话号码", trigger: "blur" }],
         address: [
           { required: true, message: "必填:联系地址", trigger: "blur" }
@@ -532,32 +443,7 @@ export default {
         departmentId: [
           { required: true, message: "必填:部门", trigger: "change" }
         ],
-        jobLevelId: [
-          { required: true, message: "必填:职称", trigger: "change" }
-        ],
-        posId: [{ required: true, message: "必填:职位", trigger: "change" }],
-        engageForm: [
-          { required: true, message: "必填:聘用形式", trigger: "blur" }
-        ],
-        tiptopDegree: [
-          { required: true, message: "必填:最高学历", trigger: "change" }
-        ],
-        specialty: [{ required: true, message: "必填:专业", trigger: "blur" }],
-        workID: [{ required: true, message: "必填:工号", trigger: "blur" }],
-        school: [{ required: true, message: "必填:毕业院校", trigger: "blur" }],
-        beginDate: [
-          { required: true, message: "必填:入职日期", trigger: "blur" }
-        ],
-        conversionTime: [
-          { required: true, message: "必填:转正日期", trigger: "blur" }
-        ],
-        beginContract: [
-          { required: true, message: "必填:合同起始日期", trigger: "blur" }
-        ],
-        endContract: [
-          { required: true, message: "必填:合同终止日期", trigger: "blur" }
-        ],
-        workAge: [{ required: true, message: "必填:工龄", trigger: "blur" }]
+       
       }
     };
   },
@@ -671,7 +557,7 @@ export default {
         this.tableLoading = false;
         if (resp && resp.status == 200) {
           var data = resp.data;
-          _this.emps = data.hr;
+          _this.emps = data.hrs;
           _this.totalCount = data.count;
           //            _this.emptyEmpData();
         }
@@ -744,6 +630,7 @@ export default {
           _this.deps = data.deps;
           _this.positions = data.positions;
           _this.joblevels = data.joblevels;
+          _this.roles = data.roles;
           _this.emp.workID = data.workID;
         }
       });
@@ -791,27 +678,11 @@ export default {
         wedlock: "",
         nationId: "",
         nativePlace: "",
-        politicId: "",
-        email: "",
         phone: "",
         address: "",
         departmentId: "",
         departmentName: "所属部门...",
-        jobLevelId: "",
-        posId: "",
-        engageForm: "",
-        tiptopDegree: "",
-        specialty: "",
-        school: "",
-        beginDate: "",
-        workState: "",
-        workID: "",
-        contractTerm: "",
-        conversionTime: "",
-        notWorkDate: "",
-        beginContract: "",
-        endContract: "",
-        workAge: ""
+        workID: ""
       };
     }
   }

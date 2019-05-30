@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by sang on 2018/1/2.
@@ -50,9 +52,11 @@ public class SystemHrController {
     }
 
     @RequestMapping(value="/{keywords}")
-    public List<Hr> getHrsByKeywords(@PathVariable(required = false) String keywords) {
+    public Map<String, Object> getHrsByKeywords(@PathVariable(required = false) String keywords) {
         List<Hr> hrs = hrService.getHrsByKeywords(keywords);
-        return hrs;
+        Map<String, Object> map = new HashMap<>();
+        map.put("hrs",hrs);
+        return map;
     }
 
 
