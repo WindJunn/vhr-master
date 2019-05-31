@@ -41,7 +41,7 @@
           <el-upload
             :show-file-list="false"
             accept="application/vnd.ms-excel"
-            action="/employee/basic/importEmp"
+            action="/system/hr/importEmp"
             :on-success="fileUploadSuccess"
             :on-error="fileUploadError"
             :disabled="fileUploadBtnText=='正在导入'"
@@ -67,11 +67,10 @@
               v-show="advanceSearchViewVisible"
             >
               <el-row>
-               
                 <el-col :span="4">
                   民族:
                   <el-select
-                    v-model="emp.nationId"
+                    v-model="hr.nationId"
                     style="width: 130px"
                     size="mini"
                     placeholder="请选择民族"
@@ -87,7 +86,7 @@
                 <el-col :span="4">
                   职位:
                   <el-select
-                    v-model="emp.posId"
+                    v-model="hr.nationId"
                     style="width: 130px"
                     size="mini"
                     placeholder="请选择职位"
@@ -122,7 +121,7 @@
                       style="width: 130px;height: 26px;display: inline-flex;font-size:13px;border: 1px;border-radius: 5px;border-style: solid;padding-left: 13px;box-sizing:border-box;border-color: #dcdfe6;cursor: pointer;align-items: center"
                       @click="showDepTree2"
                       v-bind:style="{color: depTextColor}"
-                    >{{emp.departmentName}}</div>
+                    >{{hr.departmentName}}</div>
                   </el-popover>
                 </el-col>
 
@@ -134,7 +133,7 @@
             </div>
           </transition>
           <el-table
-            :data="emps"
+            :data="hrs"
             v-loading="tableLoading"
             border
             stripe
@@ -144,14 +143,22 @@
           >
             <el-table-column type="selection" align="left" width="30"></el-table-column>
             <el-table-column prop="name" align="left" fixed label="姓名" width="90"></el-table-column>
-     
-            <el-table-column prop="idCard" width="150" align="left" label="身份证号码"></el-table-column>
 
+            <el-table-column prop="gender" label="性别" width="50"></el-table-column>
+
+            <el-table-column prop="idCard" width="150" align="left" label="身份证号码"></el-table-column>
+            <el-table-column width="85" align="left" label="出生日期">
+              <template slot-scope="scope">{{ scope.row.birthday | formatDate}}</template>
+            </el-table-column>
+            <el-table-column width="60" prop="nation.name" label="民族"></el-table-column>
 
             <el-table-column prop="phone" width="100" label="电话号码"></el-table-column>
             <el-table-column prop="address" width="220" align="left" label="联系地址"></el-table-column>
+
             <el-table-column prop="department.name" align="left" width="100" label="所属部门"></el-table-column>
-            <el-table-column width="100" align="left" prop="roles.nameZh" label="角色"></el-table-column>
+            <el-table-column width="100" align="left" prop="roles[0].nameZh" label="角色"></el-table-column>
+
+            <el-table-column prop="email" width="180" align="left" label="电子邮件"></el-table-column>
 
             <el-table-column fixed="right" label="操作" width="195">
               <template slot-scope="scope">
@@ -164,7 +171,7 @@
                   style="padding: 3px 4px 3px 4px;margin: 2px"
                   type="primary"
                   size="mini"
-                >添加角色</el-button>
+                >角色管理</el-button>
                 <el-button
                   type="danger"
                   style="padding: 3px 4px 3px 4px;margin: 2px"
@@ -178,7 +185,7 @@
             <el-button
               type="danger"
               size="mini"
-              v-if="emps.length>0"
+              v-if="hrs.length>0"
               :disabled="multipleSelection.length==0"
               @click="deleteManyEmps"
             >批量删除</el-button>
@@ -194,7 +201,7 @@
         </div>
       </el-main>
     </el-container>
-    <el-form :model="emp" :rules="rules" ref="addEmpForm" style="margin: 0px;padding: 0px;">
+    <el-form :model="hr" :rules="rules" ref="addUserForm" style="margin: 0px;padding: 0px;">
       <div style="text-align: left">
         <el-dialog
           :title="dialogTitle"
@@ -209,7 +216,7 @@
                 <el-form-item label="姓名:" prop="name">
                   <el-input
                     prefix-icon="el-icon-edit"
-                    v-model="emp.name"
+                    v-model="hr.name"
                     size="mini"
                     style="width: 150px"
                     placeholder="请输入管理员姓名"
@@ -220,7 +227,7 @@
             <el-col :span="5">
               <div>
                 <el-form-item label="性别:" prop="gender">
-                  <el-radio-group v-model="emp.gender">
+                  <el-radio-group v-model="hr.gender">
                     <el-radio label="男">男</el-radio>
                     <el-radio style="margin-left: 15px" label="女">女</el-radio>
                   </el-radio-group>
@@ -231,7 +238,7 @@
               <div>
                 <el-form-item label="出生日期:" prop="birthday">
                   <el-date-picker
-                    v-model="emp.birthday"
+                    v-model="hr.birthday"
                     size="mini"
                     value-format="yyyy-MM-dd HH:mm:ss"
                     style="width: 150px"
@@ -241,14 +248,13 @@
                 </el-form-item>
               </div>
             </el-col>
-            
           </el-row>
           <el-row>
             <el-col :span="6">
               <div>
                 <el-form-item label="民族:" prop="nationId">
                   <el-select
-                    v-model="emp.nationId"
+                    v-model="hr.nationId"
                     style="width: 150px"
                     size="mini"
                     placeholder="请选择民族"
@@ -263,25 +269,13 @@
                 </el-form-item>
               </div>
             </el-col>
-            <el-col :span="5">
-              <div>
-                <el-form-item label="籍贯:" prop="nativePlace">
-                  <el-input
-                    v-model="emp.nativePlace"
-                    size="mini"
-                    style="width: 120px"
-                    placeholder="员工籍贯"
-                  ></el-input>
-                </el-form-item>
-              </div>
-            </el-col>
-            
+
             <el-col :span="7">
               <div>
                 <el-form-item label="联系地址:" prop="address">
                   <el-input
                     prefix-icon="el-icon-edit"
-                    v-model="emp.address"
+                    v-model="hr.address"
                     size="mini"
                     style="width: 200px"
                     placeholder="联系地址..."
@@ -291,8 +285,6 @@
             </el-col>
           </el-row>
           <el-row>
-         
-            
             <el-col :span="6">
               <div>
                 <el-form-item label="所属部门:" prop="departmentId">
@@ -314,7 +306,7 @@
                       style="width: 150px;height: 26px;display: inline-flex;font-size:13px;border: 1px;border-radius: 5px;border-style: solid;padding-left: 13px;box-sizing:border-box;border-color: #dcdfe6;cursor: pointer;align-items: center"
                       @click.left="showDepTree"
                       v-bind:style="{color: depTextColor}"
-                    >{{emp.departmentName}}</div>
+                    >{{hr.departmentName}}</div>
                   </el-popover>
                 </el-form-item>
               </div>
@@ -324,7 +316,7 @@
                 <el-form-item label="电话号码:" prop="phone">
                   <el-input
                     prefix-icon="el-icon-phone"
-                    v-model="emp.phone"
+                    v-model="hr.phone"
                     size="mini"
                     style="width: 200px"
                     placeholder="电话号码..."
@@ -333,15 +325,14 @@
               </div>
             </el-col>
           </el-row>
-      
-         
+
           <el-row>
             <el-col :span="8">
               <div>
                 <el-form-item label="身份证号码:" prop="idCard">
                   <el-input
                     prefix-icon="el-icon-edit"
-                    v-model="emp.idCard"
+                    v-model="hr.idCard"
                     size="mini"
                     style="width: 180px"
                     placeholder="请输入员工身份证号码..."
@@ -349,11 +340,10 @@
                 </el-form-item>
               </div>
             </el-col>
-            
           </el-row>
           <span slot="footer" class="dialog-footer">
             <el-button size="mini" @click="cancelEidt">取 消</el-button>
-            <el-button size="mini" type="primary" @click="addEmp('addEmpForm')">确 定</el-button>
+            <el-button size="mini" type="primary" @click="addEmp('addUserForm')">确 定</el-button>
           </span>
         </el-dialog>
       </div>
@@ -365,6 +355,7 @@ export default {
   data() {
     return {
       emps: [],
+      hrs: [],
       keywords: "",
       fileUploadBtnText: "导入数据",
       beginDateScope: "",
@@ -379,9 +370,9 @@ export default {
       joblevels: [],
       totalCount: -1,
       currentPage: 1,
-      
+
       deps: [],
-      roles:[],
+      roles: [],
       defaultProps: {
         label: "name",
         isLeaf: "leaf",
@@ -392,22 +383,40 @@ export default {
       advanceSearchViewVisible: false,
       showOrHidePop: false,
       showOrHidePop2: false,
-      emp: {
+      hr: {
+        id: "",
         name: "",
-        gender: "",
-        birthday: "",
-        idCard: "",
-        wedlock: "",
-        nationId: "",
-        nativePlace: "",
-        email: "",
         phone: "",
+        gender: "",
         address: "",
         departmentId: "",
-        departmentName: "所属部门...",
-        
-        workID: "",
-       
+        enabled: "",
+        username: "",
+        password: "",
+        userface: "",
+        idCard: "",
+        remark: "",
+        birthday: "",
+        nationId: "",
+        email: "",
+        departmentName: "所属部门..."
+      },
+      user: {
+        id: "",
+        name: "",
+        phone: "",
+        gender: "",
+        address: "",
+        departmentId: "",
+        enabled: "",
+        username: "",
+        password: "",
+        userface: "",
+        idCard: "",
+        remark: "",
+        birthday: "",
+        nationId: "",
+        email: "",
       },
       rules: {
         name: [{ required: true, message: "必填:姓名", trigger: "blur" }],
@@ -427,23 +436,15 @@ export default {
             trigger: "blur"
           }
         ],
-        wedlock: [
-          { required: true, message: "必填:婚姻状况", trigger: "blur" }
-        ],
-        nationId: [{ required: true, message: "必填:民族", trigger: "change" }],
-        nativePlace: [
-          { required: true, message: "必填:籍贯", trigger: "blur" }
-        ],
+
         
-       
         phone: [{ required: true, message: "必填:电话号码", trigger: "blur" }],
         address: [
           { required: true, message: "必填:联系地址", trigger: "blur" }
         ],
         departmentId: [
           { required: true, message: "必填:部门", trigger: "change" }
-        ],
-       
+        ]
       }
     };
   },
@@ -467,7 +468,7 @@ export default {
       this.fileUploadBtnText = "正在导入";
     },
     exportEmps() {
-      window.open("/employee/basic/exportEmp", "_parent");
+      window.open("/system/hr/exportEmp", "_parent");
     },
     cancelSearch() {
       this.advanceSearchViewVisible = false;
@@ -520,7 +521,7 @@ export default {
     doDelete(ids) {
       this.tableLoading = true;
       var _this = this;
-      this.deleteRequest("/employee/basic/emp/" + ids).then(resp => {
+      this.deleteRequest("/system/hr/" + ids).then(resp => {
         _this.tableLoading = false;
         if (resp && resp.status == 200) {
           var data = resp.data;
@@ -545,21 +546,32 @@ export default {
       var _this = this;
       this.tableLoading = true;
 
-        var searchWords;
-        if (this.keywords === '') {
-          searchWords = 'all';
-        } else {
-          searchWords = this.keywords;
-        }
+      var searchWords;
+      if (this.keywords === "") {
+        searchWords = "all";
+      } else {
+        searchWords = this.keywords;
+      }
       this.getRequest(
-       "/system/hr/" + searchWords
+        "/system/hr/?page=" +
+          this.currentPage +
+          "&size=10&keywords=" +
+          this.keywords +
+          "&nationId=" +
+          this.hr.nationId +
+          "&departmentId=" +
+          this.hr.departmentId
       ).then(resp => {
         this.tableLoading = false;
         if (resp && resp.status == 200) {
           var data = resp.data;
-          _this.emps = data.hrs;
+          _this.hrs = data.hrs;
+          _this.roles = data.roles;
+          _this.nation = data.nation;
           _this.totalCount = data.count;
           //            _this.emptyEmpData();
+
+          console.log(data);
         }
       });
     },
@@ -567,10 +579,10 @@ export default {
       var _this = this;
       this.$refs[formName].validate(valid => {
         if (valid) {
-          if (this.emp.id) {
+          if (this.hr.id) {
             //更新
             this.tableLoading = true;
-            this.putRequest("/employee/basic/emp", this.emp).then(resp => {
+            this.putRequest("/system/hr/", this.user).then(resp => {
               _this.tableLoading = false;
               if (resp && resp.status == 200) {
                 var data = resp.data;
@@ -582,7 +594,7 @@ export default {
           } else {
             //添加
             this.tableLoading = true;
-            this.postRequest("/employee/basic/emp", this.emp).then(resp => {
+            this.postRequest("/system/hr/", this.hr).then(resp => {
               _this.tableLoading = false;
               if (resp && resp.status == 200) {
                 var data = resp.data;
@@ -609,80 +621,78 @@ export default {
       this.showOrHidePop2 = !this.showOrHidePop2;
     },
     handleNodeClick(data) {
-      this.emp.departmentName = data.name;
-      this.emp.departmentId = data.id;
+      this.hr.departmentName = data.name;
+      this.hr.departmentId = data.id;
       this.showOrHidePop = false;
       this.depTextColor = "#606266";
     },
     handleNodeClick2(data) {
-      this.emp.departmentName = data.name;
-      this.emp.departmentId = data.id;
+      this.hr.departmentName = data.name;
+      this.hr.departmentId = data.id;
       this.showOrHidePop2 = false;
       this.depTextColor = "#606266";
     },
     initData() {
       var _this = this;
-      this.getRequest("/employee/basic/basicdata").then(resp => {
+      this.getRequest("/system/hr/basicdata").then(resp => {
         if (resp && resp.status == 200) {
           var data = resp.data;
           _this.nations = data.nations;
           _this.politics = data.politics;
           _this.deps = data.deps;
           _this.positions = data.positions;
-          _this.joblevels = data.joblevels;
           _this.roles = data.roles;
-          _this.emp.workID = data.workID;
         }
       });
     },
     showEditEmpView(row) {
       console.log(row);
-      this.dialogTitle = "编辑员工";
-      this.emp = row;
-      this.emp.birthday = this.formatDate(row.birthday);
-      this.emp.conversionTime = this.formatDate(row.conversionTime);
-      this.emp.beginContract = this.formatDate(row.beginContract);
-      this.emp.endContract = this.formatDate(row.endContract);
-      this.emp.beginDate = this.formatDate(row.beginDate);
-      this.emp.nationId = row.nation.id;
-      this.emp.politicId = row.politicsStatus.id;
-      this.emp.departmentId = row.department.id;
-      this.emp.departmentName = row.department.name;
-      this.emp.jobLevelId = row.jobLevel.id;
-      this.emp.posId = row.position.id;
-      //        delete this.emp.department;
-      //        delete this.emp.jobLevel;
-      //        delete this.emp.position;
-      //        delete this.emp.nation;
-      //        delete this.emp.politicsStatus;
-      delete this.emp.workAge;
-      delete this.emp.notWorkDate;
+      this.dialogTitle = "编辑管理员";
+      this.hr = row;
+      this.hr.birthday = this.formatDate(row.birthday);
+
+      this.hr.nationId = row.nation.id;
+      this.hr.departmentId = row.department.id;
+      this.hr.departmentName = row.department.name;
       this.dialogVisible = true;
+
+      this.user.id = row.id;
+      this.user.name = row.name;
+      this.user.gender = row.gender;
+      this.user.phone = row.phone;
+      this.user.address = row.address;
+      this.user.departmentId = this.hr.departmentId;
+      // this.user.departmentName = this.hr.departmentName;
+      this.user.enabled = row.enabled;
+      this.user.idCard = row.idCard;
+      this.user.email = row.email;
+      this.user.birthday = this.hr.birthday;
+      this.user.nationId = this.hr.nationId;
     },
     showAddEmpView() {
       this.dialogTitle = "添加员工";
       this.dialogVisible = true;
       var _this = this;
-      this.getRequest("/employee/basic/maxWorkID").then(resp => {
-        if (resp && resp.status == 200) {
-          _this.emp.workID = resp.data;
-        }
-      });
     },
     emptyEmpData() {
-      this.emp = {
+      this.hr = {
+        id: "",
         name: "",
-        gender: "",
-        birthday: "",
-        idCard: "",
-        wedlock: "",
-        nationId: "",
-        nativePlace: "",
         phone: "",
+        gender: "",
         address: "",
         departmentId: "",
+        enabled: "",
+        username: "",
+        password: "",
+        userface: "",
+        idCard: "",
+        remark: "",
+        birthday: "",
+        nationId: "",
+        email: "",
         departmentName: "所属部门...",
-        workID: ""
+        email: ""
       };
     }
   }

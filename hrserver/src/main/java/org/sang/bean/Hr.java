@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -17,7 +18,7 @@ public class Hr implements UserDetails, Serializable {
     private Long id;
     private String name;
     private String phone;
-    private String telephone;
+    private String gender;
     private String address;
     private boolean enabled;
     private String username;
@@ -25,8 +26,65 @@ public class Hr implements UserDetails, Serializable {
     private String remark;
     private List<Role> roles;
     private String userface;
+
     private Long departmentId;
     private Department department;
+
+    private Date birthday;
+    private String email;
+    private Long nationId;
+    private String nationName;
+    private Nation nation;
+
+    public Nation getNation() {
+        return nation;
+    }
+
+    public void setNation(Nation nation) {
+        this.nation = nation;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Long getNationId() {
+        return nationId;
+    }
+
+    public void setNationId(Long nationId) {
+        this.nationId = nationId;
+    }
+
+    public String getNationName() {
+        return nationName;
+    }
+
+    public void setNationName(String nationName) {
+        this.nationName = nationName;
+    }
+
+    public String getIdCard() {
+        return idCard;
+    }
+
+    public void setIdCard(String idCard) {
+        this.idCard = idCard;
+    }
+
+    private String idCard;
     @JsonIgnore
     public Long getDepartmentId() {
         return departmentId;
@@ -123,12 +181,12 @@ public class Hr implements UserDetails, Serializable {
         this.phone = phone;
     }
 
-    public String getTelephone() {
-        return telephone;
+    public String getGender() {
+        return gender;
     }
 
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
+    public void setGender(String telephone) {
+        this.gender = telephone;
     }
 
     public String getAddress() {

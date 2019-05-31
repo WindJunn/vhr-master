@@ -46,8 +46,8 @@ public class HrService implements UserDetailsService {
         return hrMapper.hrReg(username, encode);
     }
 
-    public List<Hr> getHrsByKeywords(String keywords) {
-        return hrMapper.getHrsByKeywords(keywords);
+    public List<Hr> getHrsByKeywords(Integer page,Integer size,String keywords,Long nationId,Long departmentId) {
+        return hrMapper.getHrsByKeywords(page,size,keywords,nationId,departmentId);
     }
 
     public int updateHr(Hr hr) {

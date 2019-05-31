@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50725
 File Encoding         : 65001
 
-Date: 2019-05-30 18:19:43
+Date: 2019-05-31 18:16:05
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -75,7 +75,7 @@ CREATE TABLE `article` (
   PRIMARY KEY (`id`),
   KEY `cid` (`cid`) USING BTREE,
   KEY `uid` (`uid`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=127 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=128 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of article
@@ -98,6 +98,7 @@ INSERT INTO `article` VALUES ('123', '423', '33342', '<p>33342</p>\n', '33342\n'
 INSERT INTO `article` VALUES ('124', 'fdgbfdgcchgf', 'tyrhgfhfghfgdhfgdhfdghdfg<embed src=\'http://player.youku.com/player.php/sid/XNDE2Njg3MTI2OA==/v.swf\' allowFullScreen=\'true\' quality=\'high\' width=\'480\' height=\'400\' align=\'middle\' allowScriptAccess=\'always\' type=\'application/x-shockwave-flash\'></embed>**粗体**', '<p>tyrhgfhfghfgdhfgdhfdghdfg<embed src=\'http://player.youku.com/player.php/sid/XNDE2Njg3MTI2OA==/v.swf\' allowFullScreen=\'true\' quality=\'high\' width=\'480\' height=\'400\' align=\'middle\' allowScriptAccess=\'always\' type=\'application/x-shockwave-flash\'></embed><strong>粗体</strong></p>\n', 'tyrhgfhfghfgdhfgdhfdghdfg粗体\n', '2', '3', '2019-05-28 12:46:12', '2019-05-28 12:46:12', '1', '1');
 INSERT INTO `article` VALUES ('125', 'sadfasdfsdafsdafsda', 'tyrhgfhfghfgdhfgdhfdghdfg<embed src=\'http://player.youku.com/player.php/sid/XNDE2Njg3MTI2OA==/v.swf\' allowFullScreen=\'true\' quality=\'high\' width=\'480\' height=\'400\' align=\'middle\' allowScriptAccess=\'always\' type=\'application/x-shockwave-flash\'></embed>**粗体**', '<p>tyrhgfhfghfgdhfgdhfdghdfg<embed src=\'http://player.youku.com/player.php/sid/XNDE2Njg3MTI2OA==/v.swf\' allowFullScreen=\'true\' quality=\'high\' width=\'480\' height=\'400\' align=\'middle\' allowScriptAccess=\'always\' type=\'application/x-shockwave-flash\'></embed><strong>粗体</strong></p>\n', 'tyrhgfhfghfgdhfgdhfdghdfg粗体\n', '2', '3', '2019-05-28 12:46:22', '2019-05-28 12:46:22', '1', '1');
 INSERT INTO `article` VALUES ('126', 'sadfasdfsdafsdafsda', 'tyrhgfhfghfgdhfgdhfdghdfg<embed src=\'http://player.youku.com/player.php/sid/XNDE2Njg3MTI2OA==/v.swf\' allowFullScreen=\'true\' quality=\'high\' width=\'480\' height=\'400\' align=\'middle\' allowScriptAccess=\'always\' type=\'application/x-shockwave-flash\'></embed>**粗体**', '<p>tyrhgfhfghfgdhfgdhfdghdfg<embed src=\'http://player.youku.com/player.php/sid/XNDE2Njg3MTI2OA==/v.swf\' allowFullScreen=\'true\' quality=\'high\' width=\'480\' height=\'400\' align=\'middle\' allowScriptAccess=\'always\' type=\'application/x-shockwave-flash\'></embed><strong>粗体</strong></p>\n', 'tyrhgfhfghfgdhfgdhfdghdfg粗体\n', '2', '3', '2019-05-28 12:46:28', '2019-05-28 12:46:28', '1', '5');
+INSERT INTO `article` VALUES ('127', 'f', 'b', '<p>b</p>\n', 'b\n', '1', '3', '2019-05-31 17:48:01', '2019-05-31 17:48:01', '2', '0');
 
 -- ----------------------------
 -- Table structure for article_tags
@@ -129,7 +130,7 @@ CREATE TABLE `attendance` (
   KEY `sid` (`sid`) USING BTREE,
   CONSTRAINT `a_ibfk_1` FOREIGN KEY (`stateId`) REFERENCES `attname` (`id`),
   CONSTRAINT `a_ibfk_2` FOREIGN KEY (`sid`) REFERENCES `student` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of attendance
@@ -449,28 +450,32 @@ CREATE TABLE `hr` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'hrID',
   `name` varchar(32) DEFAULT NULL COMMENT '姓名',
   `phone` char(11) DEFAULT NULL COMMENT '手机号码',
-  `telephone` varchar(16) DEFAULT NULL COMMENT '住宅电话',
+  `gender` char(4) DEFAULT NULL COMMENT '性别',
   `address` varchar(64) DEFAULT NULL COMMENT '联系地址',
   `departmentId` int(11) DEFAULT NULL,
   `enabled` tinyint(1) DEFAULT '1',
   `username` varchar(255) DEFAULT NULL COMMENT '用户名',
   `password` varchar(255) DEFAULT NULL COMMENT '密码',
   `userface` varchar(255) DEFAULT NULL,
+  `idCard` char(18) DEFAULT NULL COMMENT '身份证号',
   `remark` varchar(255) DEFAULT NULL,
+  `birthday` date DEFAULT NULL,
+  `email` varchar(30) DEFAULT NULL,
+  `nationId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `hr_ibfk_1` (`departmentId`),
   CONSTRAINT `hr_ibfk_1` FOREIGN KEY (`departmentId`) REFERENCES `department` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hr
 -- ----------------------------
-INSERT INTO `hr` VALUES ('3', '系统管理员', '18568887789', '029-82881234', '深圳南山', '1', '1', 'admin', '$2a$10$ySG2lkvjFHY5O0./CPIE1OI8VJsuKYEzOYzqIa7AJR6sEgSzUFOAm', 'http://bpic.588ku.com/element_pic/01/40/00/64573ce2edc0728.jpg', null);
-INSERT INTO `hr` VALUES ('5', '李白', '18568123489', '029-82123434', '海口美兰', '1', '1', 'libai', '$2a$10$oE39aG10kB/rFu2vQeCJTu/V/v4n6DRR0f8WyXRiAYvBpmadoOBE.', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1514093920321&di=913e88c23f382933ef430024afd9128a&imgtype=0&src=http%3A%2F%2Fp.3761.com%2Fpic%2F9771429316733.jpg', null);
-INSERT INTO `hr` VALUES ('10', '韩愈', '18568123666', '029-82111555', '广州番禺', '4', '1', 'hanyu', '$2a$10$oE39aG10kB/rFu2vQeCJTu/V/v4n6DRR0f8WyXRiAYvBpmadoOBE.', 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1406745149,1563524794&fm=27&gp=0.jpg', null);
-INSERT INTO `hr` VALUES ('11', '柳宗元', '18568123377', '029-82111333', '广州天河', '5', '1', 'liuzongyuan', '$2a$10$oE39aG10kB/rFu2vQeCJTu/V/v4n6DRR0f8WyXRiAYvBpmadoOBE.', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1515233756&di=0856d923a0a37a87fd26604a2c871370&imgtype=jpg&er=1&src=http%3A%2F%2Fwww.qqzhi.com%2Fuploadpic%2F2014-09-27%2F041716704.jpg', null);
-INSERT INTO `hr` VALUES ('12', '曾巩', '18568128888', '029-82111222', '广州越秀', '8', '1', 'zenggong', '$2a$10$oE39aG10kB/rFu2vQeCJTu/V/v4n6DRR0f8WyXRiAYvBpmadoOBE.', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1517070040185&di=be0375e0c3db6c311b837b28c208f318&imgtype=0&src=http%3A%2F%2Fimg2.soyoung.com%2Fpost%2F20150213%2F6%2F20150213141918532.jpg', null);
-INSERT INTO `hr` VALUES ('13', '李玉', '18568128888', '029-82111222', '广州越秀', '1', '1', 'liyu', '$2a$10$oE39aG10kB/rFu2vQeCJTu/V/v4n6DRR0f8WyXRiAYvBpmadoOBE.', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1514093920321&di=913e88c23f382933ef430024afd9128a&imgtype=0&src=http%3A%2F%2Fp.3761.com%2Fpic%2F9771429316733.jpg', null);
+INSERT INTO `hr` VALUES ('1', '系统管理员', '18829345027', '男', '深圳南山', '1', '1', 'admin', '$2a$10$ySG2lkvjFHY5O0./CPIE1OI8VJsuKYEzOYzqIa7AJR6sEgSzUFOAm', 'http://bpic.588ku.com/element_pic/01/40/00/64573ce2edc0728.jpg', '612328199412120316', '1', '2019-05-31', '123@qq.com', '1');
+INSERT INTO `hr` VALUES ('2', '韩浩', '18568128881', '男', '广州越秀', '4', '1', '18568128881', '$10$oE39aG10kB/rFu2vQeCJTu/V/v4n6DRR0f8WyXRiAYvBpmadoOBE.', null, '612328199412120312', null, '2019-05-15', '123@qq.com', '3');
+INSERT INTO `hr` VALUES ('5', '李白', '18568123489', '男', '海口美兰', '1', '1', 'libai', '$2a$10$oE39aG10kB/rFu2vQeCJTu/V/v4n6DRR0f8WyXRiAYvBpmadoOBE.', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1514093920321&di=913e88c23f382933ef430024afd9128a&imgtype=0&src=http%3A%2F%2Fp.3761.com%2Fpic%2F9771429316733.jpg', '612328199412120315', '1', '2019-05-31', '123@qq.com', '1');
+INSERT INTO `hr` VALUES ('10', '韩愈', '18568123666', '男', '广州番禺', '4', '1', 'hanyu', '$2a$10$oE39aG10kB/rFu2vQeCJTu/V/v4n6DRR0f8WyXRiAYvBpmadoOBE.', 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1406745149,1563524794&fm=27&gp=0.jpg', '612328199412120319', '1', '2019-05-31', '123@qq.com', '1');
+INSERT INTO `hr` VALUES ('11', '柳宗元', '18568123377', '男', '广州天河', '5', '1', 'liuzongyuan', '$2a$10$oE39aG10kB/rFu2vQeCJTu/V/v4n6DRR0f8WyXRiAYvBpmadoOBE.', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1515233756&di=0856d923a0a37a87fd26604a2c871370&imgtype=jpg&er=1&src=http%3A%2F%2Fwww.qqzhi.com%2Fuploadpic%2F2014-09-27%2F041716704.jpg', '612328199412120318', '1', '2019-05-31', '123@qq.com', '1');
+INSERT INTO `hr` VALUES ('12', '曾巩', '18568128888', '男', '广州越秀', '8', '1', 'zenggong', '$2a$10$oE39aG10kB/rFu2vQeCJTu/V/v4n6DRR0f8WyXRiAYvBpmadoOBE.', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1517070040185&di=be0375e0c3db6c311b837b28c208f318&imgtype=0&src=http%3A%2F%2Fimg2.soyoung.com%2Fpost%2F20150213%2F6%2F20150213141918532.jpg', '612328199412120317', '1', '2019-05-31', '123@qq.com', '2');
 
 -- ----------------------------
 -- Table structure for hr_role
@@ -483,18 +488,17 @@ CREATE TABLE `hr_role` (
   PRIMARY KEY (`id`),
   KEY `rid` (`rid`),
   KEY `hr_role_ibfk_1` (`hrid`),
-  CONSTRAINT `hr_role_ibfk_1` FOREIGN KEY (`hrid`) REFERENCES `hr` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `hr_role_ibfk_1` FOREIGN KEY (`hrid`) REFERENCES `hr` (`id`),
   CONSTRAINT `hr_role_ibfk_2` FOREIGN KEY (`rid`) REFERENCES `role` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hr_role
 -- ----------------------------
-INSERT INTO `hr_role` VALUES ('1', '3', '6');
-INSERT INTO `hr_role` VALUES ('2', '12', '2');
+INSERT INTO `hr_role` VALUES ('1', '1', '6');
+INSERT INTO `hr_role` VALUES ('2', '11', '2');
 INSERT INTO `hr_role` VALUES ('3', '10', '4');
 INSERT INTO `hr_role` VALUES ('4', '5', '1');
-INSERT INTO `hr_role` VALUES ('5', '11', '2');
 
 -- ----------------------------
 -- Table structure for joblevel
@@ -928,7 +932,7 @@ CREATE TABLE `schedules` (
 -- Records of schedules
 -- ----------------------------
 INSERT INTO `schedules` VALUES ('1', '5', '2019-05-28 00:00:00', '1', '水稻防害', '1', null);
-INSERT INTO `schedules` VALUES ('2', '5', '2019-05-13 00:00:00', '1', '水稻', '2', '');
+INSERT INTO `schedules` VALUES ('2', '5', '2019-05-13 00:00:00', '1', '水稻', '2', '23');
 
 -- ----------------------------
 -- Table structure for student
@@ -966,7 +970,7 @@ INSERT INTO `student` VALUES ('5', '江南一点雨', '男', '1990-01-01', '6101
 INSERT INTO `student` VALUES ('6', '陈静', '女', '1989-02-01', '421288198902011234', '已婚', '1', '海南', '18795556693', '海南省海口市美兰区', '8', null, '3');
 INSERT INTO `student` VALUES ('7', '积极', '男', '2019-05-07', '612328199412120322', '未婚', '1', '陕西', '18829345202', '的说法', '147', '0000000007', '53');
 INSERT INTO `student` VALUES ('8', '江南一点雨', '男', '1990-01-01', '610122199001011256', '已婚', '1', '陕西', '18565558897', '深圳市南山区', '5', null, '2');
-INSERT INTO `student` VALUES ('9', '陈静', '女', '1989-02-01', '421288198902011234', '已婚', '1', '海南', '18795556693', '海南省海口市美兰区', '8', null, '2');
+INSERT INTO `student` VALUES ('9', '陈静', '女', '1989-02-01', '421288198902011234', '已婚', '1', '海南', '18795556693', '海南省海口市美兰区', '8', null, '23');
 
 -- ----------------------------
 -- Table structure for sysmsg
@@ -988,27 +992,27 @@ CREATE TABLE `sysmsg` (
 -- ----------------------------
 -- Records of sysmsg
 -- ----------------------------
-INSERT INTO `sysmsg` VALUES ('57', '14', '0', '3', '1');
+INSERT INTO `sysmsg` VALUES ('57', '14', '0', '5', '1');
 INSERT INTO `sysmsg` VALUES ('58', '14', '0', '5', '1');
 INSERT INTO `sysmsg` VALUES ('59', '14', '0', '10', '1');
 INSERT INTO `sysmsg` VALUES ('60', '14', '0', '11', '0');
 INSERT INTO `sysmsg` VALUES ('61', '14', '0', '12', '0');
-INSERT INTO `sysmsg` VALUES ('62', '15', '0', '3', '1');
+INSERT INTO `sysmsg` VALUES ('62', '15', '0', '5', '1');
 INSERT INTO `sysmsg` VALUES ('63', '15', '0', '5', '1');
 INSERT INTO `sysmsg` VALUES ('64', '15', '0', '10', '1');
 INSERT INTO `sysmsg` VALUES ('65', '15', '0', '11', '0');
 INSERT INTO `sysmsg` VALUES ('66', '15', '0', '12', '0');
-INSERT INTO `sysmsg` VALUES ('67', '16', '0', '3', '1');
+INSERT INTO `sysmsg` VALUES ('67', '16', '0', '5', '1');
 INSERT INTO `sysmsg` VALUES ('68', '16', '0', '5', '1');
 INSERT INTO `sysmsg` VALUES ('69', '16', '0', '10', '1');
 INSERT INTO `sysmsg` VALUES ('70', '16', '0', '11', '0');
 INSERT INTO `sysmsg` VALUES ('71', '16', '0', '12', '0');
-INSERT INTO `sysmsg` VALUES ('72', '17', '0', '3', '1');
+INSERT INTO `sysmsg` VALUES ('72', '17', '0', '5', '1');
 INSERT INTO `sysmsg` VALUES ('73', '17', '0', '5', '1');
 INSERT INTO `sysmsg` VALUES ('74', '17', '0', '10', '1');
 INSERT INTO `sysmsg` VALUES ('75', '17', '0', '11', '0');
 INSERT INTO `sysmsg` VALUES ('76', '17', '0', '12', '0');
-INSERT INTO `sysmsg` VALUES ('77', '18', '0', '3', '1');
+INSERT INTO `sysmsg` VALUES ('77', '18', '0', '5', '1');
 INSERT INTO `sysmsg` VALUES ('78', '18', '0', '5', '1');
 INSERT INTO `sysmsg` VALUES ('79', '18', '0', '10', '0');
 INSERT INTO `sysmsg` VALUES ('80', '18', '0', '11', '0');

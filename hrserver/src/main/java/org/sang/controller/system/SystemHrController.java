@@ -2,12 +2,11 @@ package org.sang.controller.system;
 
 import org.sang.bean.Hr;
 import org.sang.bean.RespBean;
+import org.sang.service.DepartmentService;
 import org.sang.service.HrService;
+import org.sang.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +20,19 @@ import java.util.Map;
 public class SystemHrController {
     @Autowired
     HrService hrService;
+
+    @Autowired
+    StudentService studentService;
+    @Autowired
+    DepartmentService departmentService;
+
+    @RequestMapping(value = "/basicdata", method = RequestMethod.GET)
+    public Map<String, Object> getAllNations() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("nations", studentService.getAllNations());
+        map.put("deps", departmentService.getDepByPid(-1L));
+        return map;
+    }
 
     @RequestMapping("/id/{hrId}")
     public Hr getHrById(@PathVariable Long hrId) {
@@ -51,9 +63,12 @@ public class SystemHrController {
         return RespBean.error("更新失败!");
     }
 
-    @RequestMapping(value="/{keywords}")
-    public Map<String, Object> getHrsByKeywords(@PathVariable(required = false) String keywords) {
-        List<Hr> hrs = hrService.getHrsByKeywords(keywords);
+    @RequestMapping(value="/")
+    public Map<String, Object> getHrsByKeywords(@RequestParam(defaultValue = "0") Integer page,
+                                                @RequestParam(defaultValue = "10") Integer size,
+                                                @RequestParam(defaultValue = "") String keywords,
+                                                Long nationId,Long departmentId) {
+        List<Hr> hrs = hrService.getHrsByKeywords(page,size,keywords,nationId,departmentId);
         Map<String, Object> map = new HashMap<>();
         map.put("hrs",hrs);
         return map;

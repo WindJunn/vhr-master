@@ -30,8 +30,6 @@ public class Student {
         this.points = points;
     }
 
-
-
     public Department getDepartment() {
         return department;
     }
@@ -47,8 +45,6 @@ public class Student {
     public void setNation(Nation nation) {
         this.nation = nation;
     }
-
-
 
     public Long getId() {
         return id;

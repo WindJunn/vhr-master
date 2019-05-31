@@ -16,7 +16,10 @@ public interface HrMapper {
 
     int hrReg(@Param("username") String username, @Param("password") String password);
 
-    List<Hr> getHrsByKeywords(@Param("keywords") String keywords);
+    List<Hr> getHrsByKeywords(@Param("start") Integer start, @Param("size") Integer size,
+                              @Param("keywords") String keywords, @Param("nationId") Long nationId,
+                              @Param("departmentId")Long  departmentId);
+
 
     int updateHr(@Param("hr") Hr hr);
 

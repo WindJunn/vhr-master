@@ -7,7 +7,7 @@
         <id column="id" property="id"/>
         <result column="name" property="name"/>
         <result column="phone" property="phone"/>
-        <result column="telephone" property="telephone"/>
+        <result column="gender" property="gender"/>
         <result column="address" property="address"/>
         <result column="enabled" property="enabled"/>
         <result column="username" property="username"/>
@@ -15,6 +15,10 @@
         <result column="userface" property="userface"/>
         <result column="remark" property="remark"/>
         <result column="departmentId" property="departmentId"/>
+        <result column="idCard" property="idCard"/>
+        <result column="nationId" property="nationId"/>
+        <result column="email" property="email"/>
+        <result column="birthday" property="birthday"/>
     </resultMap>
     <resultMap id="lazyLoadRoles" type="org.sang.bean.Hr" extends="BaseResultMap">
         <collection property="roles" ofType="org.sang.bean.Role" select="org.sang.mapper.HrMapper.getRolesByHrId"
@@ -25,6 +29,10 @@
             <id property="id" column="rid"/>
             <result property="name" column="rname"/>
             <result property="nameZh" column="rnameZh"/>
+        </collection>
+        <collection property="nation" javaType="org.sang.bean.Nation">
+            <id property="id" column="nid"/>
+            <result property="name" column="nname"/>
         </collection>
         <collection property="department" ofType="org.sang.bean.Department">
             <id property="id" column="did"/>
@@ -45,14 +53,24 @@
         INSERT INTO hr set username=#{username},password=#{password}
     </insert>
     <select id="getHrsByKeywords" resultMap="eagerLoadRoles">
-        select h.*,`r`.`id` AS `rid`,`r`.`name` AS `rname`,`r`.`nameZh` AS `rnameZh` ,d.id as did ,d.name as dname
+        select h.*,`r`.`id` AS `rid`,`r`.`name` AS `rname`,`r`.`nameZh` AS `rnameZh` ,d.id as did ,d.name as dname,
+        n.id as nid, n.name as nname
         from `hr` `h` left join `hr_role` `h_r` on (`h`.`id` = `h_r`.`hrid`) left join `role` `r` on (`h_r`.`rid` = `r`.`id`)
-        LEFT JOIN department d on h.departmentId = d.id
+        LEFT JOIN department d on h.departmentId = d.id LEFT JOIN nation n on h.nationId = n.id
         where h.`id` not in(select h_r.`hrid` from hr_role h_r,role r where h_r.`rid`=r.`id` and r.`nameZh`='系统管理员')
         <if test="keywords!='all' and keywords!=''">
             and h.`name` like concat('%',#{keywords},'%')
         </if>
-        order by h.`id` limit 10
+        <if test="nationId!=null and nationId!=''">
+            AND h.nationId=#{nationId}
+        </if>
+        <if test="departmentId!=null and departmentId!=''">
+            AND h.departmentId=#{departmentId}
+        </if>
+
+        <if test="start!=null and size!=null">
+            order by h.id limit #{start},#{size}
+        </if>
     </select>
     <select id="getHrById" resultMap="eagerLoadRoles">
         select h.*, d.name as dname,`r`.`id` AS `rid`,`r`.`name` AS `rname`,`r`.`nameZh` AS `rnameZh` from
@@ -69,11 +87,14 @@
             <if test="phone != null">
                 phone = #{phone,jdbcType=CHAR},
             </if>
-            <if test="telephone != null">
-                telephone = #{telephone,jdbcType=VARCHAR},
+            <if test="gender != null">
+                gender = #{gender,jdbcType=CHAR},
             </if>
             <if test="address != null">
                 address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="departmentId != null">
+                departmentId = #{departmentId,jdbcType=INTEGER},
             </if>
             <if test="enabled != null">
                 enabled = #{enabled,jdbcType=BIT},
@@ -87,9 +108,24 @@
             <if test="userface != null">
                 userface = #{userface,jdbcType=VARCHAR},
             </if>
+            <if test="idCard != null">
+                idCard = #{idCard,jdbcType=VARCHAR},
+            </if>
             <if test="remark != null">
                 remark = #{remark,jdbcType=VARCHAR},
             </if>
+
+            <if test="birthday != null">
+                birthday = #{birthday,jdbcType=DATE},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="nationId != null">
+                nationId = #{nationId,jdbcType=INTEGER},
+            </if>
+
+
         </set>
         where id = #{id}
     </update>
