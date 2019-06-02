@@ -2,11 +2,15 @@ package org.sang.controller.system;
 
 import org.sang.bean.Hr;
 import org.sang.bean.RespBean;
+import org.sang.bean.Student;
+import org.sang.common.poi.StudentPoiUtils;
 import org.sang.service.DepartmentService;
 import org.sang.service.HrService;
 import org.sang.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
 import java.util.List;
@@ -64,7 +68,7 @@ public class SystemHrController {
     }
 
     @RequestMapping(value="/")
-    public Map<String, Object> getHrsByKeywords(@RequestParam(defaultValue = "0") Integer page,
+    public Map<String, Object> getHrsByKeywords(@RequestParam(defaultValue = "1") Integer page,
                                                 @RequestParam(defaultValue = "10") Integer size,
                                                 @RequestParam(defaultValue = "") String keywords,
                                                 Long nationId,Long departmentId) {
@@ -84,6 +88,35 @@ public class SystemHrController {
             return RespBean.error("用户名重复，注册失败!");
         }
         return RespBean.error("注册失败!");
+    }
+
+    @RequestMapping(value = "/", method = RequestMethod.POST)
+    public RespBean addHr(Hr hr) {
+        /*int i = hrService.hrReg(hr.getUsername(), hr.getPassword());
+        if (i == 1) {
+            return RespBean.ok("注册成功!");
+        } else if (i == -1) {
+            return RespBean.error("用户名重复，注册失败!");
+        }*/
+        if (hrService.addHr(hr) == 1) {
+            return RespBean.ok("添加成功!");
+        }
+        return RespBean.error("添加失败!");
+    }
+
+    @RequestMapping(value = "/exportEmp", method = RequestMethod.GET)
+    public ResponseEntity<byte[]> exportEmp() {
+        return StudentPoiUtils.exportEmp2Excel(studentService.getAllStudents());
+    }
+
+    @RequestMapping(value = "/importEmp", method = RequestMethod.POST)
+    public RespBean importEmp(MultipartFile file) {
+        List<Student> emps = StudentPoiUtils.importEmp2List(file,
+                studentService.getAllNations(), departmentService.getAllDeps());
+        if (studentService.addStudents(emps) == emps.size()) {
+            return RespBean.ok("导入成功!");
+        }
+        return RespBean.error("导入失败!");
     }
 
 }

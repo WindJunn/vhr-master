@@ -66,7 +66,8 @@
               style="margin-bottom: 10px;border: 1px;border-radius: 5px;border-style: solid;padding: 5px 0px 5px 0px;box-sizing:border-box;border-color: #20a0ff"
               v-show="advanceSearchViewVisible"
             >
-              <el-row>
+              <el-row></el-row>
+              <el-row style="margin-top: 10px">
                 <el-col :span="4">
                   民族:
                   <el-select
@@ -83,24 +84,7 @@
                     ></el-option>
                   </el-select>
                 </el-col>
-                <el-col :span="4">
-                  职位:
-                  <el-select
-                    v-model="hr.nationId"
-                    style="width: 130px"
-                    size="mini"
-                    placeholder="请选择职位"
-                  >
-                    <el-option
-                      v-for="item in positions"
-                      :key="item.id"
-                      :label="item.name"
-                      :value="item.id"
-                    ></el-option>
-                  </el-select>
-                </el-col>
-              </el-row>
-              <el-row style="margin-top: 10px">
+
                 <el-col :span="5">
                   所属部门:
                   <el-popover
@@ -201,13 +185,175 @@
         </div>
       </el-main>
     </el-container>
-    <el-form :model="hr" :rules="rules" ref="addUserForm" style="margin: 0px;padding: 0px;">
+    <el-form :model="user" :rules="rules" ref="editUserForm" style="margin: 0px;padding: 0px;">
       <div style="text-align: left">
         <el-dialog
           :title="dialogTitle"
           style="padding: 0px;"
           :close-on-click-modal="false"
           :visible.sync="dialogVisible"
+          width="77%"
+        >
+          <el-row>
+            <el-col :span="6">
+              <div>
+                <el-form-item label="姓名:" prop="name">
+                  <el-input
+                    prefix-icon="el-icon-edit"
+                    v-model="user.name"
+                    size="mini"
+                    style="width: 150px"
+                    placeholder="请输入管理员姓名"
+                  ></el-input>
+                </el-form-item>
+              </div>
+            </el-col>
+            <el-col :span="5">
+              <div>
+                <el-form-item label="性别:" prop="gender">
+                  <el-radio-group v-model="user.gender">
+                    <el-radio label="男">男</el-radio>
+                    <el-radio style="margin-left: 15px" label="女">女</el-radio>
+                  </el-radio-group>
+                </el-form-item>
+              </div>
+            </el-col>
+            <el-col :span="6">
+              <div>
+                <el-form-item label="出生日期:" prop="birthday">
+                  <el-date-picker
+                    v-model="user.birthday"
+                    size="mini"
+                    value-format="yyyy-MM-dd HH:mm:ss"
+                    style="width: 150px"
+                    type="date"
+                    placeholder="出生日期"
+                  ></el-date-picker>
+                </el-form-item>
+              </div>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="6">
+              <div>
+                <el-form-item label="民族:" prop="nationId">
+                  <el-select
+                    v-model="user.nationId"
+                    style="width: 150px"
+                    size="mini"
+                    placeholder="请选择民族"
+                  >
+                    <el-option
+                      v-for="item in nations"
+                      :key="item.id"
+                      :label="item.name"
+                      :value="item.id"
+                    ></el-option>
+                  </el-select>
+                </el-form-item>
+              </div>
+            </el-col>
+
+            <el-col :span="7">
+              <div>
+                <el-form-item label="联系地址:" prop="address">
+                  <el-input
+                    prefix-icon="el-icon-edit"
+                    v-model="user.address"
+                    size="mini"
+                    style="width: 200px"
+                    placeholder="联系地址..."
+                  ></el-input>
+                </el-form-item>
+              </div>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="6">
+              <div>
+                <el-form-item label="所属部门:" prop="departmentId">
+                  <el-popover
+                    v-model="showOrHidePop"
+                    placement="right"
+                    title="请选择部门"
+                    trigger="manual"
+                  >
+                    <el-tree
+                      :data="deps"
+                      :default-expand-all="true"
+                      :props="defaultProps"
+                      :expand-on-click-node="false"
+                      @node-click="handleNodeClick"
+                    ></el-tree>
+                    <div
+                      slot="reference"
+                      style="width: 150px;height: 26px;display: inline-flex;font-size:13px;border: 1px;border-radius: 5px;border-style: solid;padding-left: 13px;box-sizing:border-box;border-color: #dcdfe6;cursor: pointer;align-items: center"
+                      @click.left="showDepTree"
+                      v-bind:style="{color: depTextColor}"
+                    >{{user.departmentName}}</div>
+                  </el-popover>
+                </el-form-item>
+              </div>
+            </el-col>
+            <el-col :span="7">
+              <div>
+                <el-form-item label="电话号码:" prop="phone">
+                  <el-input
+                    prefix-icon="el-icon-phone"
+                    v-model="user.phone"
+                    size="mini"
+                    style="width: 200px"
+                    placeholder="电话号码..."
+                  ></el-input>
+                </el-form-item>
+              </div>
+            </el-col>
+          </el-row>
+
+          <el-row>
+            <el-col :span="8">
+              <div>
+                <el-form-item label="身份证号码:" prop="idCard">
+                  <el-input
+                    prefix-icon="el-icon-edit"
+                    v-model="user.idCard"
+                    size="mini"
+                    style="width: 180px"
+                    placeholder="请输入员工身份证号码..."
+                  ></el-input>
+                </el-form-item>
+              </div>
+            </el-col>
+
+            <el-col :span="8">
+              <div>
+                <el-form-item label="邮箱:" prop="email">
+                  <el-input
+                    prefix-icon="el-icon-edit"
+                    v-model="user.email"
+                    size="mini"
+                    style="width: 180px"
+                    placeholder="请输入邮箱..."
+                  ></el-input>
+                </el-form-item>
+              </div>
+            </el-col>
+          </el-row>
+          <span slot="footer" class="dialog-footer">
+            <el-button size="mini" @click="cancelEidt">取 消</el-button>
+            <el-button size="mini" type="primary" @click="addEmp('editUserForm')">确 定</el-button>
+          </span>
+        </el-dialog>
+      </div>
+    </el-form>
+
+    <el-form :model="hr" :rules="rules" ref="addUserForm" style="margin: 0px;padding: 0px;">
+      <div style="text-align: left">
+        <el-dialog
+          :title="dialogTitle"
+          style="padding: 0px;"
+          :close-on-click-modal="false"
+          :visible.sync="dialogVisible1"
           width="77%"
         >
           <el-row>
@@ -340,6 +486,20 @@
                 </el-form-item>
               </div>
             </el-col>
+
+            <el-col :span="8">
+              <div>
+                <el-form-item label="邮箱:" prop="email">
+                  <el-input
+                    prefix-icon="el-icon-edit"
+                    v-model="hr.email"
+                    size="mini"
+                    style="width: 180px"
+                    placeholder="请输入邮箱..."
+                  ></el-input>
+                </el-form-item>
+              </div>
+            </el-col>
           </el-row>
           <span slot="footer" class="dialog-footer">
             <el-button size="mini" @click="cancelEidt">取 消</el-button>
@@ -348,6 +508,8 @@
         </el-dialog>
       </div>
     </el-form>
+
+    <el-button @click="reg()">注册</el-button>
   </div>
 </template>
 <script>
@@ -379,6 +541,7 @@ export default {
         children: "children"
       },
       dialogVisible: false,
+       dialogVisible1: false,
       tableLoading: false,
       advanceSearchViewVisible: false,
       showOrHidePop: false,
@@ -417,6 +580,7 @@ export default {
         birthday: "",
         nationId: "",
         email: "",
+        departmentName: "所属部门..."
       },
       rules: {
         name: [{ required: true, message: "必填:姓名", trigger: "blur" }],
@@ -437,7 +601,6 @@ export default {
           }
         ],
 
-        
         phone: [{ required: true, message: "必填:电话号码", trigger: "blur" }],
         address: [
           { required: true, message: "必填:联系地址", trigger: "blur" }
@@ -599,7 +762,7 @@ export default {
               if (resp && resp.status == 200) {
                 var data = resp.data;
 
-                _this.dialogVisible = false;
+                _this.dialogVisible1 = false;
                 _this.emptyEmpData();
                 _this.loadEmps();
               }
@@ -610,8 +773,20 @@ export default {
         }
       });
     },
+    reg() {
+      this.postRequest("/system/hr/hr/reg", {
+        username: 123,
+        password: 123
+      }).then(resp => {
+        if (resp && resp.status == 200) {
+          var data = resp.data;
+          console.log(data);
+        }
+      });
+    },
     cancelEidt() {
       this.dialogVisible = false;
+      this.dialogVisible1 = false;
       this.emptyEmpData();
     },
     showDepTree() {
@@ -623,6 +798,8 @@ export default {
     handleNodeClick(data) {
       this.hr.departmentName = data.name;
       this.hr.departmentId = data.id;
+      this.user.departmentId = this.hr.departmentId;
+      this.user.departmentName = this.hr.departmentName;
       this.showOrHidePop = false;
       this.depTextColor = "#606266";
     },
@@ -657,22 +834,28 @@ export default {
       this.dialogVisible = true;
 
       this.user.id = row.id;
-      this.user.name = row.name;
-      this.user.gender = row.gender;
-      this.user.phone = row.phone;
-      this.user.address = row.address;
+      this.user.name = this.hr.name;
+      this.user.gender = this.hr.gender;
+      this.user.phone = this.hr.phone;
+      this.user.address = this.hr.address;
       this.user.departmentId = this.hr.departmentId;
-      // this.user.departmentName = this.hr.departmentName;
-      this.user.enabled = row.enabled;
-      this.user.idCard = row.idCard;
-      this.user.email = row.email;
+      this.user.departmentName = this.hr.departmentName;
+      this.user.enabled = this.hr.enabled;
+      this.user.idCard = this.hr.idCard;
+      this.user.email = this.hr.email;
       this.user.birthday = this.hr.birthday;
       this.user.nationId = this.hr.nationId;
     },
     showAddEmpView() {
-      this.dialogTitle = "添加员工";
-      this.dialogVisible = true;
+      this.dialogTitle = "添加管理员";
+      this.dialogVisible1 = true;
       var _this = this;
+
+_this.hr.enabled = true;
+      _this.hr.username = '1212';
+      _this.hr.password = "123";
+      _this.hr.remark = "1";
+      _this.hr.userface = "1";
     },
     emptyEmpData() {
       this.hr = {
@@ -682,7 +865,25 @@ export default {
         gender: "",
         address: "",
         departmentId: "",
-        enabled: "",
+        enabled: true,
+        username: phone,
+        password: 123,
+        userface: "",
+        idCard: "",
+        remark: "",
+        birthday: "",
+        nationId: "",
+        email: "",
+        departmentName: "所属部门...",
+      };
+      this.user = {
+        // id: "",
+        name: "",
+        phone: "",
+        gender: "",
+        address: "",
+        departmentId: "",
+        // enabled: true,
         username: "",
         password: "",
         userface: "",
@@ -692,7 +893,6 @@ export default {
         nationId: "",
         email: "",
         departmentName: "所属部门...",
-        email: ""
       };
     }
   }

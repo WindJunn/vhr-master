@@ -81,53 +81,51 @@
     <update id="updateHr" parameterType="org.sang.bean.Hr">
         update hr
         <set>
-            <if test="name != null">
-                name = #{name,jdbcType=VARCHAR},
+            <if test="hr.name != null">
+                name = #{hr.name,jdbcType=VARCHAR},
             </if>
-            <if test="phone != null">
-                phone = #{phone,jdbcType=CHAR},
+            <if test="hr.phone != null">
+                phone = #{hr.phone,jdbcType=CHAR},
             </if>
-            <if test="gender != null">
-                gender = #{gender,jdbcType=CHAR},
+            <if test="hr.gender != null">
+                gender = #{hr.gender,jdbcType=CHAR},
             </if>
-            <if test="address != null">
-                address = #{address,jdbcType=VARCHAR},
+            <if test="hr.address != null">
+                address = #{hr.address,jdbcType=VARCHAR},
             </if>
-            <if test="departmentId != null">
-                departmentId = #{departmentId,jdbcType=INTEGER},
+            <if test="hr.departmentId != null">
+                departmentId = #{hr.departmentId,jdbcType=INTEGER},
             </if>
-            <if test="enabled != null">
-                enabled = #{enabled,jdbcType=BIT},
+            <if test="hr.enabled != null">
+                enabled = #{hr.enabled,jdbcType=BIT},
             </if>
-            <if test="username != null">
-                username = #{username,jdbcType=VARCHAR},
+            <if test="hr.username != null">
+                username = #{hr.username,jdbcType=VARCHAR},
             </if>
-            <if test="password != null">
-                password = #{password,jdbcType=VARCHAR},
+            <if test="hr.password != null">
+                password = #{hr.password,jdbcType=VARCHAR},
             </if>
-            <if test="userface != null">
-                userface = #{userface,jdbcType=VARCHAR},
+            <if test="hr.userface != null">
+                userface = #{hr.userface,jdbcType=VARCHAR},
             </if>
-            <if test="idCard != null">
-                idCard = #{idCard,jdbcType=VARCHAR},
+            <if test="hr.idCard != null">
+                idCard = #{hr.idCard,jdbcType=VARCHAR},
             </if>
-            <if test="remark != null">
-                remark = #{remark,jdbcType=VARCHAR},
-            </if>
-
-            <if test="birthday != null">
-                birthday = #{birthday,jdbcType=DATE},
-            </if>
-            <if test="email != null">
-                email = #{email,jdbcType=VARCHAR},
-            </if>
-            <if test="nationId != null">
-                nationId = #{nationId,jdbcType=INTEGER},
+            <if test="hr.remark != null">
+                remark = #{hr.remark,jdbcType=VARCHAR},
             </if>
 
-
+            <if test="hr.birthday != null">
+                birthday = #{hr.birthday,jdbcType=DATE},
+            </if>
+            <if test="hr.email != null">
+                email = #{hr.email,jdbcType=VARCHAR},
+            </if>
+            <if test="hr.nationId != null">
+                nationId = #{hr.nationId,jdbcType=INTEGER},
+            </if>
         </set>
-        where id = #{id}
+        where id = #{hr.id,jdbcType=BIGINT}
     </update>
     <delete id="deleteRoleByHrId" parameterType="Long">
         DELETE FROM hr_role where hrid=#{hrId}
@@ -147,4 +145,80 @@
             WHERE id !=#{currentId}
         </if>
     </select>
+
+    <insert id="addHrs" parameterType="org.sang.bean.Hr">
+            insert into hr (name,phone,gender,address,departmentId,enabled,username,password,
+        userface,idCard,remark,birthday,email,nationId
+      )
+    values (#{name,jdbcType=VARCHAR}, #{phone,jdbcType=CHAR},#{gender,jdbcType=CHAR},
+    #{address,jdbcType=VARCHAR},#{departmentId,jdbcType=INTEGER},#{enabled,jdbcType=BIT},
+    #{username,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR},#{userface,jdbcType=VARCHAR},
+       #{idCard,jdbcType=CHAR}, #{remark,jdbcType=VARCHAR},#{birthday,jdbcType=DATE},
+        #{email,jdbcType=VARCHAR}, #{nationId,jdbcType=INTEGER}
+
+      )
+    </insert>
+
+    <insert id="addHr" parameterType="org.sang.bean.Hr">
+        INSERT INTO hr(name,phone,gender,address,departmentId,enabled,username,password,
+        userface,idCard,remark,birthday,email,nationId)
+        values (
+            name = #{hr.name,jdbcType=VARCHAR},
+            phone = #{hr.phone,jdbcType=CHAR},
+            gender = #{hr.gender,jdbcType=CHAR},
+            address = #{hr.address,jdbcType=VARCHAR},
+            departmentId = #{hr.departmentId,jdbcType=INTEGER},
+            enabled = #{hr.enabled,jdbcType=BIT},
+            username = #{hr.username,jdbcType=VARCHAR},
+            password = #{hr.password,jdbcType=VARCHAR},
+            userface = #{hr.userface,jdbcType=VARCHAR},
+            idCard = #{hr.idCard,jdbcType=CHAR},
+            remark = #{hr.remark,jdbcType=VARCHAR},
+            birthday = #{hr.birthday,jdbcType=DATE},
+            email = #{hr.email,jdbcType=VARCHAR},
+            nationId = #{hr.nationId,jdbcType=INTEGER}
+        )
+    </insert>
+
+    <update id="updateHreg" parameterType="org.sang.bean.Hr">
+        update hr
+        <set>
+            <if test="hr.name != null">
+                name = #{hr.name,jdbcType=VARCHAR},
+            </if>
+            <if test="hr.phone != null">
+                phone = #{hr.phone,jdbcType=CHAR},
+            </if>
+            <if test="hr.gender != null">
+                gender = #{hr.gender,jdbcType=CHAR},
+            </if>
+            <if test="hr.address != null">
+                address = #{hr.address,jdbcType=VARCHAR},
+            </if>
+            <if test="hr.departmentId != null">
+                departmentId = #{hr.departmentId,jdbcType=INTEGER},
+            </if>
+
+            <if test="hr.userface != null">
+                userface = #{hr.userface,jdbcType=VARCHAR},
+            </if>
+            <if test="hr.idCard != null">
+                idCard = #{hr.idCard,jdbcType=VARCHAR},
+            </if>
+            <if test="hr.remark != null">
+                remark = #{hr.remark,jdbcType=VARCHAR},
+            </if>
+
+            <if test="hr.birthday != null">
+                birthday = #{hr.birthday,jdbcType=DATE},
+            </if>
+            <if test="hr.email != null">
+                email = #{hr.email,jdbcType=VARCHAR},
+            </if>
+            <if test="hr.nationId != null">
+                nationId = #{hr.nationId,jdbcType=INTEGER},
+            </if>
+        </set>
+        where username = #{hr.username,jdbcType=BIGINT}
+    </update>
 </mapper>

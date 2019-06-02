@@ -73,4 +73,15 @@ public class HrService implements UserDetailsService {
     public List<Hr> getAllHr() {
         return hrMapper.getAllHr(null);
     }
+
+    public int addHr(Hr hr){
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String encode = encoder.encode(hr.getPassword());
+        hr.setPassword(encode);
+        return hrMapper.addHr(hr);
+    }
+    public int updateHreg(Hr hr){
+        return hrMapper.updateHreg(hr);
+    }
+
 }

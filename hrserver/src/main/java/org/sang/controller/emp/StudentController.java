@@ -56,13 +56,6 @@ public class StudentController {
     @RequestMapping(value = "/emp", method = RequestMethod.POST)
     public RespBean addStudent(Student student) {
         if (studentService.addStudent(student) == 1) {
-//            List<Position> allPos = positionService.getAllPos();
-            /*for (Position allPo : allPos) {
-                if (allPo.getId() == student.getPosId()) {
-                    student.setPosName(allPo.getName());
-                }
-            }*/
-//            executorService.execute(new EmailRunnable(student, javaMailSender, templateEngine));
             return RespBean.ok("添加成功!");
         }
         return RespBean.error("添加失败!");
