@@ -20,6 +20,8 @@ public class AttnameController {
     @Autowired
     AttnameService attnameService;
 
+
+
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public List<Attname> getAllCategories() {
         return attnameService.getAllCategories();

@@ -85,6 +85,9 @@
             AND a.stateId=#{stateId}
         </if>
     </select>
+    <select id="getAttCountBySidAndStateId" resultType="Long">
+        SELECT count(*) FROM attendance a WHERE a.sid=#{sid} and a.stateId=#{stateId}
+    </select>
     <update id="updateAtt">
         update attendance
         <set>

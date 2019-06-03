@@ -541,7 +541,7 @@ export default {
         children: "children"
       },
       dialogVisible: false,
-       dialogVisible1: false,
+      dialogVisible1: false,
       tableLoading: false,
       advanceSearchViewVisible: false,
       showOrHidePop: false,
@@ -851,8 +851,8 @@ export default {
       this.dialogVisible1 = true;
       var _this = this;
 
-_this.hr.enabled = true;
-      _this.hr.username = '1212';
+      _this.hr.enabled = true;
+      _this.hr.username = "1212";
       _this.hr.password = "123";
       _this.hr.remark = "1";
       _this.hr.userface = "1";
@@ -874,7 +874,7 @@ _this.hr.enabled = true;
         birthday: "",
         nationId: "",
         email: "",
-        departmentName: "所属部门...",
+        departmentName: "所属部门..."
       };
       this.user = {
         // id: "",
@@ -892,7 +892,7 @@ _this.hr.enabled = true;
         birthday: "",
         nationId: "",
         email: "",
-        departmentName: "所属部门...",
+        departmentName: "所属部门..."
       };
     }
   }

@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -30,26 +29,26 @@ public class AttendanceService {
     }
 
     public int addAtt(Attendance att) {
-       return attendanceMapper.addAtt(att);
+        return attendanceMapper.addAtt(att);
     }
 
 
-    public List<Attendance> getAttByPage(Integer page, Integer size, String keywords,  String atime,
-                                        Long stateId,  Long sid, Long departmentId) {
+    public List<Attendance> getAttByPage(Integer page, Integer size, String keywords, String atime,
+                                         Long stateId, Long sid, Long departmentId) {
         int start = (page - 1) * size;
 
         List<Attendance> attByPage = attendanceMapper.getAttByPage(start, size, keywords, atime, stateId, sid, departmentId);
         return attByPage;
     }
 
-    public Long getCountByKeywords( String keywords,  String atime,
-                                    Long stateId,  Long sid, Long departmentId) {
+    public Long getCountByKeywords(String keywords, String atime,
+                                   Long stateId, Long sid, Long departmentId) {
 
-        return attendanceMapper.getCountByKeywords( keywords, atime, stateId, sid,  departmentId);
+        return attendanceMapper.getCountByKeywords(keywords, atime, stateId, sid, departmentId);
     }
 
-    public int updateAtt( Attendance att) {
-      return attendanceMapper.updateAtt(att);
+    public int updateAtt(Attendance att) {
+        return attendanceMapper.updateAtt(att);
     }
 
     public boolean deleteAttById(String ids) {
@@ -67,6 +66,10 @@ public class AttendanceService {
 
     public List<Attendance> getEmployeeByPageShort(Integer page, Integer size) {
         int start = (page - 1) * size;
-        return attendanceMapper.getAttByPageShort(start,size);
+        return attendanceMapper.getAttByPageShort(start, size);
+    }
+
+    public Long getAttCountBySidAndStateId(Long stateId, Long sid) {
+        return attendanceMapper.getAttCountBySidAndStateId(stateId, sid);
     }
 }

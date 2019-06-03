@@ -30,14 +30,14 @@
         <el-aside width="180px" class="home-aside">
           <div style="display: flex;justify-content: flex-start;width: 180px;text-align: left;">
             <el-menu style="background: #ececec;width: 180px;" unique-opened router>
-              <template>
+              <!-- <template>
                 <el-menu-item index="PersonalCenter">
                   <template slot="title">
                     <i class="el-icon-user-solid" style="color: #20a0ff;width: 14px;"></i>
                     <span slot="title">个人中心</span>
                   </template>
                 </el-menu-item>
-              </template>
+              </template> -->
               <template v-for="(item,index) in this.routes" v-if="!item.hidden">
                 <el-submenu :key="index" :index="index+''">
                   <template slot="title">

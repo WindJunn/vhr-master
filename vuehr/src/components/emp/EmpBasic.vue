@@ -164,7 +164,7 @@
                   type="primary"
                   size="mini"
                   @click="showEditPointView(scope.row)"
-                >积分详情</el-button>
+                >积分管理</el-button>
                 <el-button
                   style="padding: 3px 4px 3px 4px;margin: 2px"
                   type="primary"
@@ -412,6 +412,7 @@
           :visible.sync="dialogVisible1"
           width="77%"
         >
+         <el-tag>总积分</el-tag>:<el-tag>{{emp.points}}</el-tag>
           <el-form-item label="积分项目" prop="region">
             <el-select v-model="ruleForm.region" placeholder="请选择积分项目">
               <el-option label="好人好事" value="shanghai"></el-option>
@@ -462,7 +463,7 @@
                     v-model="emp.name"
                     size="mini"
                     style="width: 150px"
-                    disabled=""
+                    disabled
                   ></el-input>
                 </el-form-item>
               </div>
@@ -477,7 +478,7 @@
                     size="mini"
                     style="width: 180px"
                     placeholder="请输入学员身份证号码..."
-                    disabled=""
+                    disabled
                   ></el-input>
                 </el-form-item>
               </div>
@@ -491,7 +492,7 @@
                     placement="right"
                     title="请选择部门"
                     trigger="manual"
-                    disabled=""
+                    disabled
                   >
                     <el-tree
                       :data="deps"
@@ -512,32 +513,15 @@
             </el-col>
           </el-row>
           <el-row>
-            <el-col :span="4">
-              <div>
-                <el-form-item label="考勤记录（次）："></el-form-item>
-              </div>
-            </el-col>
-            <el-col :span="4">
-              <div>
-                <el-form-item label="出勤:" prop="nativePlace">{{emp.points}}</el-form-item>
-              </div>
-            </el-col>
-
-            <el-col :span="5">
-              <div>
-                <el-form-item label="迟到:" prop="address">0</el-form-item>
-              </div>
-            </el-col>
-            <el-col :span="5">
-              <div>
-                <el-form-item label="早退:" prop="address">0</el-form-item>
-              </div>
-            </el-col>
-            <el-col :span="5">
-              <div>
-                <el-form-item label="缺勤:" prop="address">2</el-form-item>
-              </div>
-            </el-col>
+           
+            <template >
+               
+              <el-tag type="danger">考勤记录(次)：</el-tag>
+            </template>
+            <template v-for="(item,index) in counts">
+               
+              <el-tag>{{index}}</el-tag>:<el-tag type="info">{{item}}</el-tag>&#12288;
+            </template>
           </el-row>
 
           <span slot="footer" class="dialog-footer">
@@ -569,6 +553,7 @@ export default {
       totalCount: -1,
       currentPage: 1,
       deps: [],
+      counts: [],
       defaultProps: {
         label: "name",
         isLeaf: "leaf",
@@ -605,6 +590,25 @@ export default {
         resource: "",
         desc: ""
       },
+      att: {
+        name: "",
+        gender: "",
+        birthday: "",
+        idCard: "",
+        wedlock: "",
+        nationId: "",
+        nativePlace: "",
+        phone: "",
+        address: "",
+        departmentId: "",
+        departmentName: "所属部门...",
+        workID: "",
+        atime: "",
+        aname: "",
+        stateId: "",
+        sid: ""
+      },
+      sid: "",
 
       rules1: {
         name: [
@@ -895,7 +899,7 @@ export default {
       });
     },
     showEditPointView(row) {
-      this.dialogTitle = "积分修改";
+      this.dialogTitle = "积分管理";
       this.emp = row;
       this.emp.points = row.points;
       // this.emp.conversionTime = this.formatDate(row.conversionTime);
@@ -910,14 +914,22 @@ export default {
     showAttendanceView(row) {
       this.dialogTitle = "考勤详情";
       this.emp = row;
+      this.emp.id = row.id;
       this.emp.points = row.points;
-      // this.emp.conversionTime = this.formatDate(row.conversionTime);
 
       this.emp.nationId = row.nation.id;
       this.emp.departmentId = row.department.id;
       this.emp.departmentName = row.department.name;
 
       this.dialogVisible2 = true;
+
+      var _this = this;
+      this.getRequest("/attendance/count?sid=" + this.emp.id).then(resp => {
+        if (resp && resp.status == 200) {
+          _this.counts = resp.data.counts;
+          console.log(_this.counts)
+        }
+      });
     },
     emptyEmpData() {
       this.emp = {

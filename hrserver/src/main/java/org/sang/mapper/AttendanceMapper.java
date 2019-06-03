@@ -28,4 +28,6 @@ public interface AttendanceMapper {
     int addAtts(@Param("atts") List<Attendance> atts);
 
     List<Attendance> getAttByPageShort(@Param("start") int start, @Param("size") Integer size);
+
+    Long getAttCountBySidAndStateId(@Param("sid") Long sid,  @Param("stateId") Long stateId);
 }

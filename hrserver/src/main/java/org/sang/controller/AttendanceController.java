@@ -1,14 +1,13 @@
 package org.sang.controller;
 
 import org.sang.bean.Attendance;
+import org.sang.bean.Attname;
 import org.sang.bean.RespBean;
 import org.sang.service.AttendanceService;
 import org.sang.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.thymeleaf.TemplateEngine;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,10 +25,7 @@ public class AttendanceController {
     DepartmentService departmentService;
     @Autowired
     ExecutorService executorService;
-    @Autowired
-    TemplateEngine templateEngine;
-  /*  @Autowired
-    JavaMailSender javaMailSender;*/
+
 
     @RequestMapping(value = "/basicdata", method = RequestMethod.GET)
     public Map<String, Object> getAllAttname() {
@@ -39,6 +35,17 @@ public class AttendanceController {
         return map;
     }
 
+    @RequestMapping(value = "/count", method = RequestMethod.GET)
+    public Map<String, Object> getAttCountBySidAndStateId(Long sid) {
+        Map<String, Object> map = new HashMap<>();
+        Map<String, Long> att = new HashMap<>();
+        List<Attname> allAttname = attendanceService.getAllAttname();
+        for (int i = 0; i < allAttname.size(); i++) {
+            att.put(allAttname.get(i).getName(), attendanceService.getAttCountBySidAndStateId(sid,allAttname.get(i).getId()));
+        }
+        map.put("counts",att);
+        return map;
+    }
 
     @RequestMapping(value = "/att", method = RequestMethod.POST)
     public RespBean addAtt(Attendance attendance) {
