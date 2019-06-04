@@ -44,7 +44,7 @@ export const formatRoutes = (routes)=> {
         if (component.startsWith("Home")) {
           require(['../components/' + component + '.vue'], resolve)
         }else if (component.startsWith("One")) {
-          require(['../components/one' + component + '.vue'], resolve)
+          require(['../components/one/' + component + '.vue'], resolve)
         }else if (component.startsWith("Emp")) {
           require(['../components/emp/' + component + '.vue'], resolve)
         } else if (component.startsWith("Per")) {

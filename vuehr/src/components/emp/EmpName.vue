@@ -1,5 +1,7 @@
 <template>
   <div>
+    <span></span>
+    <hr/>
     <div style="text-align: left">
       <el-input
         :placeholder="'添加考勤状态...'"

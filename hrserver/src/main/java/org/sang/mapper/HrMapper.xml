@@ -67,6 +67,9 @@
         <if test="departmentId!=null and departmentId!=''">
             AND h.departmentId=#{departmentId}
         </if>
+        <if test="nameZh!=null and nameZh!=''">
+            AND r.nameZh=#{nameZh}
+        </if>
 
         <if test="start!=null and size!=null">
             order by h.id limit #{start},#{size}
@@ -78,10 +81,18 @@
         left join `role` `r` on (`h_r`.`rid` = `r`.`id`) LEFT JOIN department d ON h.departmentId = d.id
         where h.`id`=#{hrId}
     </select>
+    <select id="getHrByUsername" resultMap="eagerLoadRoles">
+        select h.*, d.name as dname,`r`.`id` AS `rid`,`r`.`name` AS `rname`,`r`.`nameZh` AS `rnameZh`,
+         n.id as nid, n.name as nname from
+        `hr` `h` left join `hr_role` `h_r` on (`h`.`id` = `h_r`.`hrid`)
+        left join `role` `r` on (`h_r`.`rid` = `r`.`id`) LEFT JOIN department d ON h.departmentId = d.id
+        LEFT JOIN nation n on h.nationId = n.id
+        where h.`username`=#{username}
+    </select>
     <update id="updateHr" parameterType="org.sang.bean.Hr">
         update hr
         <set>
-            <if test="hr.name != null">
+            <if test="hr.name != null" >
                 name = #{hr.name,jdbcType=VARCHAR},
             </if>
             <if test="hr.phone != null">
@@ -99,12 +110,12 @@
             <if test="hr.enabled != null">
                 enabled = #{hr.enabled,jdbcType=BIT},
             </if>
-            <if test="hr.username != null">
+            <!--<if test="hr.username != null">
                 username = #{hr.username,jdbcType=VARCHAR},
             </if>
             <if test="hr.password != null">
                 password = #{hr.password,jdbcType=VARCHAR},
-            </if>
+            </if>-->
             <if test="hr.userface != null">
                 userface = #{hr.userface,jdbcType=VARCHAR},
             </if>
@@ -221,4 +232,10 @@
         </set>
         where username = #{hr.username,jdbcType=BIGINT}
     </update>
+
+    <update id="updateHrPassword">
+        update hr set password = #{password,jdbcType=VARCHAR}
+        where username = #{username,jdbcType=BIGINT}
+    </update>
+
 </mapper>

@@ -46,8 +46,15 @@ public class HrService implements UserDetailsService {
         return hrMapper.hrReg(username, encode);
     }
 
-    public List<Hr> getHrsByKeywords(Integer page,Integer size,String keywords,Long nationId,Long departmentId) {
-        return hrMapper.getHrsByKeywords(page,size,keywords,nationId,departmentId);
+    public int updateHrPassword(String username, String password) {
+
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String encode = encoder.encode(password);
+        return hrMapper.updateHrPassword(username, encode);
+    }
+
+    public List<Hr> getHrsByKeywords(Integer page,Integer size,String keywords,Long nationId,Long departmentId,String nameZh) {
+        return hrMapper.getHrsByKeywords(page,size,keywords,nationId,departmentId,nameZh);
     }
 
     public int updateHr(Hr hr) {
@@ -62,6 +69,11 @@ public class HrService implements UserDetailsService {
     public Hr getHrById(Long hrId) {
         return hrMapper.getHrById(hrId);
     }
+
+    public Hr getHrByUsername(String username) {
+        return hrMapper.getHrByUsername(username);
+    }
+
 
     public int deleteHr(Long hrId) {
         return hrMapper.deleteHr(hrId);

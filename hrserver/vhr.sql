@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50725
 File Encoding         : 65001
 
-Date: 2019-06-03 18:15:48
+Date: 2019-06-04 18:23:39
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -97,7 +97,7 @@ INSERT INTO `article` VALUES ('121', '感悟感悟', '啊啊啊啊啊啊啊啊�
 INSERT INTO `article` VALUES ('123', '423', '33342', '<p>33342</p>\n', '33342\n', '1', '1', null, '2019-05-17 09:19:41', '0', '0');
 INSERT INTO `article` VALUES ('124', 'fdgbfdgcchgf', 'tyrhgfhfghfgdhfgdhfdghdfg<embed src=\'http://player.youku.com/player.php/sid/XNDE2Njg3MTI2OA==/v.swf\' allowFullScreen=\'true\' quality=\'high\' width=\'480\' height=\'400\' align=\'middle\' allowScriptAccess=\'always\' type=\'application/x-shockwave-flash\'></embed>**粗体**', '<p>tyrhgfhfghfgdhfgdhfdghdfg<embed src=\'http://player.youku.com/player.php/sid/XNDE2Njg3MTI2OA==/v.swf\' allowFullScreen=\'true\' quality=\'high\' width=\'480\' height=\'400\' align=\'middle\' allowScriptAccess=\'always\' type=\'application/x-shockwave-flash\'></embed><strong>粗体</strong></p>\n', 'tyrhgfhfghfgdhfgdhfdghdfg粗体\n', '2', '1', '2019-05-28 12:46:12', '2019-05-28 12:46:12', '1', '1');
 INSERT INTO `article` VALUES ('125', 'sadfasdfsdafsdafsda', 'tyrhgfhfghfgdhfgdhfdghdfg<embed src=\'http://player.youku.com/player.php/sid/XNDE2Njg3MTI2OA==/v.swf\' allowFullScreen=\'true\' quality=\'high\' width=\'480\' height=\'400\' align=\'middle\' allowScriptAccess=\'always\' type=\'application/x-shockwave-flash\'></embed>**粗体**', '<p>tyrhgfhfghfgdhfgdhfdghdfg<embed src=\'http://player.youku.com/player.php/sid/XNDE2Njg3MTI2OA==/v.swf\' allowFullScreen=\'true\' quality=\'high\' width=\'480\' height=\'400\' align=\'middle\' allowScriptAccess=\'always\' type=\'application/x-shockwave-flash\'></embed><strong>粗体</strong></p>\n', 'tyrhgfhfghfgdhfgdhfdghdfg粗体\n', '2', '1', '2019-05-28 12:46:22', '2019-05-28 12:46:22', '1', '1');
-INSERT INTO `article` VALUES ('126', 'sadfasdfsdafsdafsda', 'tyrhgfhfghfgdhfgdhfdghdfg<embed src=\'http://player.youku.com/player.php/sid/XNDE2Njg3MTI2OA==/v.swf\' allowFullScreen=\'true\' quality=\'high\' width=\'480\' height=\'400\' align=\'middle\' allowScriptAccess=\'always\' type=\'application/x-shockwave-flash\'></embed>**粗体**', '<p>tyrhgfhfghfgdhfgdhfdghdfg<embed src=\'http://player.youku.com/player.php/sid/XNDE2Njg3MTI2OA==/v.swf\' allowFullScreen=\'true\' quality=\'high\' width=\'480\' height=\'400\' align=\'middle\' allowScriptAccess=\'always\' type=\'application/x-shockwave-flash\'></embed><strong>粗体</strong></p>\n', 'tyrhgfhfghfgdhfgdhfdghdfg粗体\n', '2', '1', '2019-05-28 12:46:28', '2019-05-28 12:46:28', '1', '5');
+INSERT INTO `article` VALUES ('126', 'sadfasdfsdafsdafsda', 'tyrhgfhfghfgdhfgdhfdghdfg<embed src=\'http://player.youku.com/player.php/sid/XNDE2Njg3MTI2OA==/v.swf\' allowFullScreen=\'true\' quality=\'high\' width=\'480\' height=\'400\' align=\'middle\' allowScriptAccess=\'always\' type=\'application/x-shockwave-flash\'></embed>**粗体**', '<p>tyrhgfhfghfgdhfgdhfdghdfg<embed src=\'http://player.youku.com/player.php/sid/XNDE2Njg3MTI2OA==/v.swf\' allowFullScreen=\'true\' quality=\'high\' width=\'480\' height=\'400\' align=\'middle\' allowScriptAccess=\'always\' type=\'application/x-shockwave-flash\'></embed><strong>粗体</strong></p>\n', 'tyrhgfhfghfgdhfgdhfdghdfg粗体\n', '2', '1', '2019-05-28 12:46:28', '2019-05-28 12:46:28', '1', '6');
 INSERT INTO `article` VALUES ('127', 'f', 'b', '<p>b</p>\n', 'b\n', '1', '1', '2019-05-31 17:48:01', '2019-05-31 17:48:01', '2', '1');
 
 -- ----------------------------
@@ -149,7 +149,7 @@ CREATE TABLE `attname` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of attname
@@ -473,12 +473,12 @@ CREATE TABLE `hr` (
 -- ----------------------------
 -- Records of hr
 -- ----------------------------
-INSERT INTO `hr` VALUES ('1', '系统管理员', '18829345027', '男', '深圳南山', '1', '1', 'admin', '$2a$10$ySG2lkvjFHY5O0./CPIE1OI8VJsuKYEzOYzqIa7AJR6sEgSzUFOAm', 'http://bpic.588ku.com/element_pic/01/40/00/64573ce2edc0728.jpg', '612328199412120316', '1', '2019-05-31', '123@qq.com', '1');
+INSERT INTO `hr` VALUES ('1', '系统管理员', '18829345027', '男', '深圳南山111', '1', '1', 'admin', '$2a$10$BccCXG0j72xYY78dSH/OsudPE6auOYhgQQ5ncdOM080ZN7RW2AhJC', '', '612328199412120316', '', '2019-05-06', '12223@qq.com', '3');
 INSERT INTO `hr` VALUES ('2', '韩浩', '18568128881', '男', '广州越秀', '4', '1', '18568128881', '$10$oE39aG10kB/rFu2vQeCJTu/V/v4n6DRR0f8WyXRiAYvBpmadoOBE.', null, '612328199412120312', null, '2019-05-15', '123@qq.com', '3');
 INSERT INTO `hr` VALUES ('5', '李白', '18568123489', '男', '海口美兰', '1', '1', 'libai', '$2a$10$oE39aG10kB/rFu2vQeCJTu/V/v4n6DRR0f8WyXRiAYvBpmadoOBE.', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1514093920321&di=913e88c23f382933ef430024afd9128a&imgtype=0&src=http%3A%2F%2Fp.3761.com%2Fpic%2F9771429316733.jpg', '612328199412120315', '1', '2019-05-31', '123@qq.com', '1');
 INSERT INTO `hr` VALUES ('10', '韩愈', '18568123666', '男', '广州番禺', '4', '1', 'hanyu', '$2a$10$oE39aG10kB/rFu2vQeCJTu/V/v4n6DRR0f8WyXRiAYvBpmadoOBE.', 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1406745149,1563524794&fm=27&gp=0.jpg', '612328199412120319', '1', '2019-05-31', '123@qq.com', '1');
 INSERT INTO `hr` VALUES ('11', '柳宗元', '18568123377', '男', '广州天河', '5', '1', 'liuzongyuan', '$2a$10$oE39aG10kB/rFu2vQeCJTu/V/v4n6DRR0f8WyXRiAYvBpmadoOBE.', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1515233756&di=0856d923a0a37a87fd26604a2c871370&imgtype=jpg&er=1&src=http%3A%2F%2Fwww.qqzhi.com%2Fuploadpic%2F2014-09-27%2F041716704.jpg', '612328199412120318', '1', '2019-05-31', '123@qq.com', '1');
-INSERT INTO `hr` VALUES ('12', '曾巩', '18568128888', '男', '广州越秀', '8', '1', 'zenggong', '$2a$10$oE39aG10kB/rFu2vQeCJTu/V/v4n6DRR0f8WyXRiAYvBpmadoOBE.', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1517070040185&di=be0375e0c3db6c311b837b28c208f318&imgtype=0&src=http%3A%2F%2Fimg2.soyoung.com%2Fpost%2F20150213%2F6%2F20150213141918532.jpg', '612328199412120317', '1', '2019-05-31', '123@qq.com', '2');
+INSERT INTO `hr` VALUES ('12', '曾巩', '18568128888', '男', '广州越秀', '8', '1', '123', '$2a$10$UT8Idjay0QWJhwsKHKPnYuUZMmwrd3/cXa0KwQEfjZbRtjCzpRKUi', '', '612328199412120317', '', '2019-05-31', '1234@qq.com', '2');
 
 -- ----------------------------
 -- Table structure for hr_role
@@ -581,7 +581,7 @@ INSERT INTO `menu` VALUES ('26', '/system/hr/**', '/sys/hr', 'SysHr', '操作员
 INSERT INTO `menu` VALUES ('27', '/system/data/**', '/sys/data', 'SysData', '备份恢复数据库', null, null, '1', '6', '0');
 INSERT INTO `menu` VALUES ('28', '/system/init/**', '/sys/init', 'SysInit', '初始化数据库', null, null, '1', '6', '0');
 INSERT INTO `menu` VALUES ('29', '/employee/basic/**', '/emp/att', 'EmpAtt', '考勤信息', null, null, '1', '2', '1');
-INSERT INTO `menu` VALUES ('30', '/article/**', '/per/blogDetail', 'BlogDetail', '文章详情1', null, null, '1', '3', '1');
+INSERT INTO `menu` VALUES ('30', '/article/**', '/per/blogDetail', 'BlogDetail', '文章详情1', null, null, '1', '3', '0');
 INSERT INTO `menu` VALUES ('31', '/information/**', '/info', 'BlogDetail', '教员信息', '', null, '1', '1', '1');
 INSERT INTO `menu` VALUES ('32', '/', '/home', 'Home', '个人中心', 'fa fa-user-circle-o', null, '1', '1', '1');
 INSERT INTO `menu` VALUES ('33', '/employee/name/**', '/emp/name', 'EmpName', '考勤名称', null, null, '1', '2', '1');
@@ -871,7 +871,7 @@ CREATE TABLE `role` (
   `name` varchar(64) DEFAULT NULL,
   `nameZh` varchar(64) DEFAULT NULL COMMENT '角色名称',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of role
@@ -964,7 +964,7 @@ CREATE TABLE `student` (
 -- ----------------------------
 INSERT INTO `student` VALUES ('1', '吴语', '男', '2019-05-06', '612328199412129999', '未婚', '1', '陕西', '18829345027', '广东省广州市天河区冼村路', '115', '0000000001', '1');
 INSERT INTO `student` VALUES ('3', '尚胡', '男', '2019-05-01', '612328199412120316', '已婚', '3', '固原', '18829345012', '固原市原州区', '95', '0000000003', '20');
-INSERT INTO `student` VALUES ('4', '尚玉', '男', '2019-04-29', '612328199412120316', '已婚', '2', '固原', '18829345012', '固原市原州区', '5', '0000000004', '25');
+INSERT INTO `student` VALUES ('4', '尚玉', '男', '2019-04-29', '612328199412120317', '已婚', '2', '固原', '18829345012', '固原市原州区', '5', '0000000004', '25');
 INSERT INTO `student` VALUES ('5', '江南一点雨', '男', '1990-01-01', '610122199001011256', '已婚', '1', '陕西', '18565558897', '深圳市南山区', '5', null, '5');
 INSERT INTO `student` VALUES ('6', '陈静', '女', '1989-02-01', '421288198902011234', '已婚', '1', '海南', '18795556693', '海南省海口市美兰区', '8', null, '3');
 INSERT INTO `student` VALUES ('7', '积极', '男', '2019-05-07', '612328199412120322', '未婚', '1', '陕西', '18829345202', '的说法', '147', '0000000007', '53');

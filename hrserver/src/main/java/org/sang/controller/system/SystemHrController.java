@@ -43,6 +43,11 @@ public class SystemHrController {
         return hrService.getHrById(hrId);
     }
 
+    @RequestMapping("/name/{username}")
+    public Hr getHrByUsername(@PathVariable String username) {
+        return hrService.getHrByUsername(username);
+    }
+
     @RequestMapping(value = "/{hrId}", method = RequestMethod.DELETE)
     public RespBean deleteHr(@PathVariable Long hrId) {
         if (hrService.deleteHr(hrId) == 1) {
@@ -71,8 +76,8 @@ public class SystemHrController {
     public Map<String, Object> getHrsByKeywords(@RequestParam(defaultValue = "1") Integer page,
                                                 @RequestParam(defaultValue = "10") Integer size,
                                                 @RequestParam(defaultValue = "") String keywords,
-                                                Long nationId,Long departmentId) {
-        List<Hr> hrs = hrService.getHrsByKeywords(page,size,keywords,nationId,departmentId);
+                                                Long nationId,Long departmentId,String nameZh) {
+        List<Hr> hrs = hrService.getHrsByKeywords(page,size,keywords,nationId,departmentId,nameZh);
         Map<String, Object> map = new HashMap<>();
         map.put("hrs",hrs);
         return map;
@@ -88,6 +93,16 @@ public class SystemHrController {
             return RespBean.error("用户名重复，注册失败!");
         }
         return RespBean.error("注册失败!");
+    }
+
+
+    @RequestMapping(value = "/updateps", method = RequestMethod.POST)
+    public RespBean updateHrPassword(String username, String password) {
+        int i = hrService.updateHrPassword(username, password);
+        if (i == 1) {
+            return RespBean.ok("修改成功!");
+        }
+        return RespBean.error("修改失败!");
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)

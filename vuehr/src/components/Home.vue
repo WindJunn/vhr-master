@@ -77,7 +77,7 @@
 <script>
 export default {
   mounted: function() {
-    //      this.devMsg();
+        //  this.devMsg();
     this.loadNF();
   },
   methods: {
