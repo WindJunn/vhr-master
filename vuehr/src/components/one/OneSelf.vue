@@ -2,7 +2,7 @@
   <div>
     <el-container>
       <el-header
-        style="padding: 0px;display:flex;justify-content:space-between;align-items: center"
+        style="height:20px"
       ></el-header>
 
       <el-main style="padding-left: 0px;padding-top: 0px">
@@ -14,7 +14,7 @@
           class="demo-ruleForm"
         >
           <el-row>
-            <el-col :span="6">
+            <el-col style="width:30%">
               <div>
                 <el-form-item label="姓名:" prop="name">
                   <el-input
@@ -27,7 +27,9 @@
                 </el-form-item>
               </div>
             </el-col>
-            <el-col :span="5">
+          </el-row>
+          <el-row>
+            <el-col style="width:30%">
               <div>
                 <el-form-item label="性别:" prop="gender">
                   <el-radio-group v-model="hr.gender">
@@ -37,7 +39,9 @@
                 </el-form-item>
               </div>
             </el-col>
-            <el-col :span="6">
+          </el-row>
+          <el-row>
+            <el-col style="width:30%">
               <div>
                 <el-form-item label="出生日期:" prop="birthday">
                   <el-date-picker
@@ -53,7 +57,7 @@
             </el-col>
           </el-row>
           <el-row>
-            <el-col :span="6">
+            <el-col style="width:30%">
               <div>
                 <el-form-item label="民族:" prop="nationId">
                   <el-select
@@ -72,8 +76,9 @@
                 </el-form-item>
               </div>
             </el-col>
-
-            <el-col :span="7">
+          </el-row>
+          <el-row>
+            <el-col style="width:30%">
               <div>
                 <el-form-item label="联系地址:" prop="address">
                   <el-input
@@ -88,7 +93,7 @@
             </el-col>
           </el-row>
           <el-row>
-            <el-col :span="6">
+            <el-col style="width:30%">
               <div>
                 <el-form-item label="所属部门:" prop="departmentId">
                   <el-popover
@@ -115,7 +120,9 @@
                 </el-form-item>
               </div>
             </el-col>
-            <el-col :span="7">
+          </el-row>
+          <el-row>
+            <el-col style="width:30%">
               <div>
                 <el-form-item label="电话号码:" prop="phone">
                   <el-input
@@ -131,7 +138,7 @@
           </el-row>
 
           <el-row>
-            <el-col :span="8">
+            <el-col style="width:30%">
               <div>
                 <el-form-item label="身份证号码:" prop="idCard">
                   <el-input
@@ -144,8 +151,9 @@
                 </el-form-item>
               </div>
             </el-col>
-
-            <el-col :span="8">
+          </el-row>
+          <el-row>
+            <el-col style="width:30%">
               <div>
                 <el-form-item label="邮箱:" prop="email">
                   <el-input
@@ -163,7 +171,7 @@
             <el-button size="mini" @click="cancelEidt">取 消</el-button>
             <el-button size="mini" type="primary" @click="addEmp('ruleForm')">确 定</el-button>
           </span>-->
-          <el-form-item>
+          <el-form-item style="width:30%">
             <el-button type="primary" @click="updatePer('ruleForm')">确认修改</el-button>
           </el-form-item>
         </el-form>

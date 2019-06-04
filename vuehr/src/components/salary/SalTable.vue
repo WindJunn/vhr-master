@@ -715,7 +715,7 @@ export default {
           "&departmentId=" +
           this.hr.departmentId+
           "&nameZh=" +
-          "教员"
+          ""
       ).then(resp => {
         this.tableLoading = false;
         if (resp && resp.status == 200) {

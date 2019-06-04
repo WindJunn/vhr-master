@@ -40,6 +40,8 @@ public class EmpBasicController {
 //    @Autowired
 //    JavaMailSender javaMailSender;
 
+
+
     @RequestMapping(value = "/basicdata", method = RequestMethod.GET)
     public Map<String, Object> getAllNations() {
         Map<String, Object> map = new HashMap<>();

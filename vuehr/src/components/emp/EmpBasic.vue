@@ -518,7 +518,7 @@
                
               <el-tag type="danger">考勤记录(次)：</el-tag>
             </template>
-            <template v-for="(item,index) in counts">
+            <template v-for="(item,index) in counts" >
                
               <el-tag>{{index}}</el-tag>:<el-tag type="info">{{item}}</el-tag>&#12288;
             </template>
