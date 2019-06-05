@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50725
 File Encoding         : 65001
 
-Date: 2019-06-04 18:23:39
+Date: 2019-06-05 18:23:53
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -478,7 +478,7 @@ INSERT INTO `hr` VALUES ('2', '韩浩', '18568128881', '男', '广州越秀', '4
 INSERT INTO `hr` VALUES ('5', '李白', '18568123489', '男', '海口美兰', '1', '1', 'libai', '$2a$10$oE39aG10kB/rFu2vQeCJTu/V/v4n6DRR0f8WyXRiAYvBpmadoOBE.', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1514093920321&di=913e88c23f382933ef430024afd9128a&imgtype=0&src=http%3A%2F%2Fp.3761.com%2Fpic%2F9771429316733.jpg', '612328199412120315', '1', '2019-05-31', '123@qq.com', '1');
 INSERT INTO `hr` VALUES ('10', '韩愈', '18568123666', '男', '广州番禺', '4', '1', 'hanyu', '$2a$10$oE39aG10kB/rFu2vQeCJTu/V/v4n6DRR0f8WyXRiAYvBpmadoOBE.', 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1406745149,1563524794&fm=27&gp=0.jpg', '612328199412120319', '1', '2019-05-31', '123@qq.com', '1');
 INSERT INTO `hr` VALUES ('11', '柳宗元', '18568123377', '男', '广州天河', '5', '1', 'liuzongyuan', '$2a$10$oE39aG10kB/rFu2vQeCJTu/V/v4n6DRR0f8WyXRiAYvBpmadoOBE.', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1515233756&di=0856d923a0a37a87fd26604a2c871370&imgtype=jpg&er=1&src=http%3A%2F%2Fwww.qqzhi.com%2Fuploadpic%2F2014-09-27%2F041716704.jpg', '612328199412120318', '1', '2019-05-31', '123@qq.com', '1');
-INSERT INTO `hr` VALUES ('12', '曾巩', '18568128888', '男', '广州越秀', '8', '1', '123', '$2a$10$UT8Idjay0QWJhwsKHKPnYuUZMmwrd3/cXa0KwQEfjZbRtjCzpRKUi', '', '612328199412120317', '', '2019-05-31', '1234@qq.com', '2');
+INSERT INTO `hr` VALUES ('12', '曾巩', '18568128888', '男', '广州越秀', '8', '1', '123', '$2a$10$UT8Idjay0QWJhwsKHKPnYuUZMmwrd3/cXa0KwQEfjZbRtjCzpRKUi', '', '612328199412120317', '', '2019-05-31', '12234@qq.com', '2');
 
 -- ----------------------------
 -- Table structure for hr_role
@@ -547,7 +547,7 @@ CREATE TABLE `menu` (
   PRIMARY KEY (`id`),
   KEY `parentId` (`parentId`),
   CONSTRAINT `menu_ibfk_1` FOREIGN KEY (`parentId`) REFERENCES `menu` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of menu
@@ -576,7 +576,7 @@ INSERT INTO `menu` VALUES ('21', '/statistics/personnel/**', '/sta/pers', 'StaPe
 INSERT INTO `menu` VALUES ('22', '/statistics/recored/**', '/sta/record', 'StaRecord', '人事记录统计', null, null, '1', '5', '0');
 INSERT INTO `menu` VALUES ('23', '/system/basic/**', '/sys/basic', 'SysBasic', '基础信息设置', null, null, '1', '6', '1');
 INSERT INTO `menu` VALUES ('24', '/system/cfg/**', '/sys/cfg', 'SysCfg', '系统管理', null, null, '1', '6', '0');
-INSERT INTO `menu` VALUES ('25', '/system/log/**', '/sys/log', 'SysLog', '操作日志管理', null, null, '1', '6', '1');
+INSERT INTO `menu` VALUES ('25', '/system/log/**', '/sys/log', 'SysLog', '操作日志管理', null, null, '1', '6', '0');
 INSERT INTO `menu` VALUES ('26', '/system/hr/**', '/sys/hr', 'SysHr', '操作员管理', null, null, '1', '6', '1');
 INSERT INTO `menu` VALUES ('27', '/system/data/**', '/sys/data', 'SysData', '备份恢复数据库', null, null, '1', '6', '0');
 INSERT INTO `menu` VALUES ('28', '/system/init/**', '/sys/init', 'SysInit', '初始化数据库', null, null, '1', '6', '0');
@@ -587,6 +587,8 @@ INSERT INTO `menu` VALUES ('32', '/', '/home', 'Home', '个人中心', 'fa fa-us
 INSERT INTO `menu` VALUES ('33', '/employee/name/**', '/emp/name', 'EmpName', '考勤名称', null, null, '1', '2', '1');
 INSERT INTO `menu` VALUES ('34', '/oneself/one/**', '/one/self', 'OneSelf', '我的信息', null, null, '1', '32', '1');
 INSERT INTO `menu` VALUES ('35', '/oneself/one/**', '/one/name', 'OneName', '账号密码', null, null, '1', '32', '1');
+INSERT INTO `menu` VALUES ('36', '/system/point/**', '/sys/point', 'SysPoint', '积分项目', null, null, '1', '6', '1');
+INSERT INTO `menu` VALUES ('37', '/system/name/**', '/sys/name', 'SysName', '系统名称管理', null, null, '1', '6', '1');
 
 -- ----------------------------
 -- Table structure for menu_role
@@ -601,7 +603,7 @@ CREATE TABLE `menu_role` (
   KEY `rid` (`rid`),
   CONSTRAINT `menu_role_ibfk_1` FOREIGN KEY (`mid`) REFERENCES `menu` (`id`),
   CONSTRAINT `menu_role_ibfk_2` FOREIGN KEY (`rid`) REFERENCES `role` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=372 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=417 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of menu_role
@@ -616,34 +618,36 @@ INSERT INTO `menu_role` VALUES ('252', '9', '2');
 INSERT INTO `menu_role` VALUES ('253', '10', '2');
 INSERT INTO `menu_role` VALUES ('254', '12', '2');
 INSERT INTO `menu_role` VALUES ('255', '13', '2');
-INSERT INTO `menu_role` VALUES ('293', '7', '1');
-INSERT INTO `menu_role` VALUES ('294', '8', '1');
-INSERT INTO `menu_role` VALUES ('295', '29', '1');
-INSERT INTO `menu_role` VALUES ('296', '33', '1');
-INSERT INTO `menu_role` VALUES ('297', '10', '1');
-INSERT INTO `menu_role` VALUES ('298', '11', '1');
-INSERT INTO `menu_role` VALUES ('299', '12', '1');
-INSERT INTO `menu_role` VALUES ('300', '13', '1');
-INSERT INTO `menu_role` VALUES ('301', '30', '1');
-INSERT INTO `menu_role` VALUES ('302', '17', '1');
-INSERT INTO `menu_role` VALUES ('303', '23', '1');
-INSERT INTO `menu_role` VALUES ('304', '25', '1');
-INSERT INTO `menu_role` VALUES ('305', '26', '1');
-INSERT INTO `menu_role` VALUES ('357', '7', '6');
-INSERT INTO `menu_role` VALUES ('358', '29', '6');
-INSERT INTO `menu_role` VALUES ('359', '33', '6');
-INSERT INTO `menu_role` VALUES ('360', '10', '6');
-INSERT INTO `menu_role` VALUES ('361', '11', '6');
-INSERT INTO `menu_role` VALUES ('362', '12', '6');
-INSERT INTO `menu_role` VALUES ('363', '13', '6');
-INSERT INTO `menu_role` VALUES ('364', '30', '6');
-INSERT INTO `menu_role` VALUES ('365', '16', '6');
-INSERT INTO `menu_role` VALUES ('366', '17', '6');
-INSERT INTO `menu_role` VALUES ('367', '23', '6');
-INSERT INTO `menu_role` VALUES ('368', '25', '6');
-INSERT INTO `menu_role` VALUES ('369', '26', '6');
-INSERT INTO `menu_role` VALUES ('370', '34', '6');
-INSERT INTO `menu_role` VALUES ('371', '35', '6');
+INSERT INTO `menu_role` VALUES ('372', '7', '1');
+INSERT INTO `menu_role` VALUES ('373', '29', '1');
+INSERT INTO `menu_role` VALUES ('374', '33', '1');
+INSERT INTO `menu_role` VALUES ('375', '10', '1');
+INSERT INTO `menu_role` VALUES ('376', '11', '1');
+INSERT INTO `menu_role` VALUES ('377', '12', '1');
+INSERT INTO `menu_role` VALUES ('378', '13', '1');
+INSERT INTO `menu_role` VALUES ('379', '16', '1');
+INSERT INTO `menu_role` VALUES ('380', '17', '1');
+INSERT INTO `menu_role` VALUES ('381', '23', '1');
+INSERT INTO `menu_role` VALUES ('382', '25', '1');
+INSERT INTO `menu_role` VALUES ('383', '26', '1');
+INSERT INTO `menu_role` VALUES ('384', '36', '1');
+INSERT INTO `menu_role` VALUES ('385', '34', '1');
+INSERT INTO `menu_role` VALUES ('386', '35', '1');
+INSERT INTO `menu_role` VALUES ('402', '7', '6');
+INSERT INTO `menu_role` VALUES ('403', '29', '6');
+INSERT INTO `menu_role` VALUES ('404', '33', '6');
+INSERT INTO `menu_role` VALUES ('405', '10', '6');
+INSERT INTO `menu_role` VALUES ('406', '11', '6');
+INSERT INTO `menu_role` VALUES ('407', '12', '6');
+INSERT INTO `menu_role` VALUES ('408', '13', '6');
+INSERT INTO `menu_role` VALUES ('409', '16', '6');
+INSERT INTO `menu_role` VALUES ('410', '17', '6');
+INSERT INTO `menu_role` VALUES ('411', '23', '6');
+INSERT INTO `menu_role` VALUES ('412', '26', '6');
+INSERT INTO `menu_role` VALUES ('413', '36', '6');
+INSERT INTO `menu_role` VALUES ('414', '37', '6');
+INSERT INTO `menu_role` VALUES ('415', '34', '6');
+INSERT INTO `menu_role` VALUES ('416', '35', '6');
 
 -- ----------------------------
 -- Table structure for msgcontent
@@ -780,19 +784,47 @@ INSERT INTO `piontwater` VALUES ('1', '1', '30', '', '添加', '2019-05-29 12:03
 DROP TABLE IF EXISTS `point`;
 CREATE TABLE `point` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `point` int(11) DEFAULT '0',
+  `poid` int(11) DEFAULT NULL,
   `sid` int(11) DEFAULT NULL,
-  `pointuse` varchar(255) DEFAULT NULL,
+  `pointuse` int(11) DEFAULT NULL,
   `createTime` datetime DEFAULT NULL,
   `modifyTime` datetime DEFAULT NULL,
   `memo` varchar(255) DEFAULT NULL COMMENT '扩展字段',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+  `des` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `po_ibfk_1` (`sid`),
+  KEY `po_ibfk_2` (`poid`),
+  CONSTRAINT `po_ibfk_1` FOREIGN KEY (`sid`) REFERENCES `student` (`id`),
+  CONSTRAINT `po_ibfk_2` FOREIGN KEY (`poid`) REFERENCES `pointoption` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of point
 -- ----------------------------
-INSERT INTO `point` VALUES ('1', '30', '1', '0', '2019-05-29 12:03:19', '2019-05-29 12:03:21', null);
+INSERT INTO `point` VALUES ('1', '1', '1', '3', '2019-05-29 12:03:19', '2019-05-29 12:03:21', null, null);
+INSERT INTO `point` VALUES ('2', '2', '1', '4', '2019-06-05 12:26:54', '2019-06-05 12:26:56', null, '1');
+INSERT INTO `point` VALUES ('3', '1', '1', '3', '2019-06-05 14:44:19', '2019-06-05 14:44:36', null, null);
+
+-- ----------------------------
+-- Table structure for pointoption
+-- ----------------------------
+DROP TABLE IF EXISTS `pointoption`;
+CREATE TABLE `pointoption` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `point` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of pointoption
+-- ----------------------------
+INSERT INTO `pointoption` VALUES ('1', '脱贫攻坚', '5');
+INSERT INTO `pointoption` VALUES ('2', '公德美德', '5');
+INSERT INTO `pointoption` VALUES ('3', '遵纪守法', '5');
+INSERT INTO `pointoption` VALUES ('4', '移风易俗', '5');
+INSERT INTO `pointoption` VALUES ('5', '环境卫生', '5');
+INSERT INTO `pointoption` VALUES ('6', '1', '111');
 
 -- ----------------------------
 -- Table structure for politicsstatus
@@ -962,7 +994,7 @@ CREATE TABLE `student` (
 -- ----------------------------
 -- Records of student
 -- ----------------------------
-INSERT INTO `student` VALUES ('1', '吴语', '男', '2019-05-06', '612328199412129999', '未婚', '1', '陕西', '18829345027', '广东省广州市天河区冼村路', '115', '0000000001', '1');
+INSERT INTO `student` VALUES ('1', '吴语', '男', '2019-05-06', '612328199412129999', '未婚', '1', '陕西', '18829345027', '广东省广州市天河区冼村路', '115', '0000000001', '7');
 INSERT INTO `student` VALUES ('3', '尚胡', '男', '2019-05-01', '612328199412120316', '已婚', '3', '固原', '18829345012', '固原市原州区', '95', '0000000003', '20');
 INSERT INTO `student` VALUES ('4', '尚玉', '男', '2019-04-29', '612328199412120317', '已婚', '2', '固原', '18829345012', '固原市原州区', '5', '0000000004', '25');
 INSERT INTO `student` VALUES ('5', '江南一点雨', '男', '1990-01-01', '610122199001011256', '已婚', '1', '陕西', '18565558897', '深圳市南山区', '5', null, '5');
@@ -1016,6 +1048,28 @@ INSERT INTO `sysmsg` VALUES ('78', '18', '0', '5', '1');
 INSERT INTO `sysmsg` VALUES ('79', '18', '0', '10', '0');
 INSERT INTO `sysmsg` VALUES ('80', '18', '0', '11', '0');
 INSERT INTO `sysmsg` VALUES ('81', '18', '0', '12', '0');
+
+-- ----------------------------
+-- Table structure for systemname
+-- ----------------------------
+DROP TABLE IF EXISTS `systemname`;
+CREATE TABLE `systemname` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) DEFAULT NULL,
+  `leftname` varchar(255) DEFAULT NULL,
+  `rightname` varchar(255) DEFAULT NULL,
+  `path` varchar(255) DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `des` varchar(255) DEFAULT NULL,
+  `cratedate` datetime DEFAULT NULL,
+  `updatetime` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of systemname
+-- ----------------------------
+INSERT INTO `systemname` VALUES ('1', '新时代农民讲习所', '新时代农民讲习所', null, null, null, null, '2019-06-05 17:47:58', '2019-06-05 17:48:00');
 
 -- ----------------------------
 -- Table structure for tags

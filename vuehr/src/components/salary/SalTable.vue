@@ -7,7 +7,7 @@
           <el-option v-for="item in deps" :key="item.id" :label="item.name" :value="item.id"></el-option>
         </el-select>
 
-         <div style="display: inline">
+        <div style="display: inline">
           <el-input
             placeholder="通过姓名搜索管理员,记得回车哦..."
             clearable
@@ -40,7 +40,6 @@
             ></i>高级搜索
           </el-button>
         </div>
-        
       </el-header>
 
       <el-main style="padding-left: 0px;padding-top: 0px">
@@ -139,6 +138,7 @@
                   style="padding: 3px 4px 3px 4px;margin: 2px"
                   type="primary"
                   size="mini"
+                  @click="showAddSchView(scope.row)"
                 >添加排班</el-button>
                 <el-button
                   type="danger"
@@ -332,7 +332,7 @@
       </div>
     </el-form>
 
-    <el-form :model="hr" :rules="rules" ref="addUserForm" style="margin: 0px;padding: 0px;">
+    <el-form :model="schedule" :rules="rules1" ref="addEmpForm" style="margin: 0px;padding: 0px;">
       <div style="text-align: left">
         <el-dialog
           :title="dialogTitle"
@@ -347,70 +347,38 @@
                 <el-form-item label="姓名:" prop="name">
                   <el-input
                     prefix-icon="el-icon-edit"
-                    v-model="hr.name"
+                    v-model="user.name"
                     size="mini"
                     style="width: 150px"
-                    placeholder="请输入管理员姓名"
+                    disabled
                   ></el-input>
                 </el-form-item>
               </div>
             </el-col>
-            <el-col :span="5">
+            <el-col :span="7">
               <div>
-                <el-form-item label="性别:" prop="gender">
-                  <el-radio-group v-model="hr.gender">
-                    <el-radio label="男">男</el-radio>
-                    <el-radio style="margin-left: 15px" label="女">女</el-radio>
-                  </el-radio-group>
-                </el-form-item>
-              </div>
-            </el-col>
-            <el-col :span="6">
-              <div>
-                <el-form-item label="出生日期:" prop="birthday">
-                  <el-date-picker
-                    v-model="hr.birthday"
+                <el-form-item label="电话号码:" prop="phone">
+                  <el-input
+                    prefix-icon="el-icon-phone"
+                    v-model="user.phone"
                     size="mini"
-                    value-format="yyyy-MM-dd HH:mm:ss"
-                    style="width: 150px"
-                    type="date"
-                    placeholder="出生日期"
-                  ></el-date-picker>
-                </el-form-item>
-              </div>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="6">
-              <div>
-                <el-form-item label="民族:" prop="nationId">
-                  <el-select
-                    v-model="hr.nationId"
-                    style="width: 150px"
-                    size="mini"
-                    placeholder="请选择民族"
-                  >
-                    <el-option
-                      v-for="item in nations"
-                      :key="item.id"
-                      :label="item.name"
-                      :value="item.id"
-                    ></el-option>
-                  </el-select>
+                    style="width: 200px"
+                    disabled
+                  ></el-input>
                 </el-form-item>
               </div>
             </el-col>
 
-            <el-col :span="7">
+            <el-col :span="6">
               <div>
-                <el-form-item label="联系地址:" prop="address">
-                  <el-input
-                    prefix-icon="el-icon-edit"
-                    v-model="hr.address"
-                    size="mini"
-                    style="width: 200px"
-                    placeholder="联系地址..."
-                  ></el-input>
+                <el-form-item label="所属部门:" prop="departmentId">
+                  <el-popover v-model="showOrHidePop" placement="right" trigger="manual">
+                    <div
+                      slot="reference"
+                      style="width: 150px;height: 26px;display: inline-flex;font-size:13px;border: 1px;border-radius: 5px;border-style: solid;padding-left: 13px;box-sizing:border-box;border-color: #dcdfe6;cursor: pointer;align-items: center"
+                      v-bind:style="{color: depTextColor}"
+                    >{{user.departmentName}}</div>
+                  </el-popover>
                 </el-form-item>
               </div>
             </el-col>
@@ -418,11 +386,25 @@
           <el-row>
             <el-col :span="6">
               <div>
-                <el-form-item label="所属部门:" prop="departmentId">
+                <el-form-item label="授课日期:" prop="time">
+                  <el-date-picker
+                    v-model="schedule.time"
+                    size="mini"
+                    value-format="yyyy-MM-dd HH:mm:ss"
+                    style="width: 150px"
+                    type="date"
+                    placeholder="授课日期"
+                  ></el-date-picker>
+                </el-form-item>
+              </div>
+            </el-col>
+            <el-col :span="6">
+              <div>
+                <el-form-item label="授课地点:" prop="departmentId">
                   <el-popover
                     v-model="showOrHidePop"
                     placement="right"
-                    title="请选择部门"
+                    title="授课地点"
                     trigger="manual"
                   >
                     <el-tree
@@ -437,50 +419,46 @@
                       style="width: 150px;height: 26px;display: inline-flex;font-size:13px;border: 1px;border-radius: 5px;border-style: solid;padding-left: 13px;box-sizing:border-box;border-color: #dcdfe6;cursor: pointer;align-items: center"
                       @click.left="showDepTree"
                       v-bind:style="{color: depTextColor}"
-                    >{{hr.departmentName}}</div>
+                    >{{schedule.departmentName}}</div>
                   </el-popover>
                 </el-form-item>
               </div>
             </el-col>
-            <el-col :span="7">
+            <el-col :span="6">
               <div>
-                <el-form-item label="电话号码:" prop="phone">
+                <el-form-item label="授课状态:" prop="state">
                   <el-input
-                    prefix-icon="el-icon-phone"
-                    v-model="hr.phone"
+                    prefix-icon="el-icon-edit"
+                    v-model="schedule.state"
                     size="mini"
-                    style="width: 200px"
-                    placeholder="电话号码..."
+                    style="width: 100px"
+                    placeholder="授课状态..."
                   ></el-input>
                 </el-form-item>
               </div>
             </el-col>
           </el-row>
-
           <el-row>
-            <el-col :span="8">
+            <el-col :span="9">
               <div>
-                <el-form-item label="身份证号码:" prop="idCard">
+                <el-form-item label="授课主题:" prop="theme">
                   <el-input
-                    prefix-icon="el-icon-edit"
-                    v-model="hr.idCard"
+                    v-model="schedule.theme"
                     size="mini"
-                    style="width: 180px"
-                    placeholder="请输入员工身份证号码..."
+                    style="width: 300px"
+                    placeholder="授课主题..."
                   ></el-input>
                 </el-form-item>
               </div>
             </el-col>
-
-            <el-col :span="8">
+            <el-col :span="9">
               <div>
-                <el-form-item label="邮箱:" prop="email">
+                <el-form-item label="备注:" prop="des">
                   <el-input
-                    prefix-icon="el-icon-edit"
-                    v-model="hr.email"
+                    v-model="schedule.des"
                     size="mini"
-                    style="width: 180px"
-                    placeholder="请输入邮箱..."
+                    style="width: 300px"
+                    placeholder="备注..."
                   ></el-input>
                 </el-form-item>
               </div>
@@ -488,7 +466,7 @@
           </el-row>
           <span slot="footer" class="dialog-footer">
             <el-button size="mini" @click="cancelEidt">取 消</el-button>
-            <el-button size="mini" type="primary" @click="addEmp('addUserForm')">确 定</el-button>
+            <el-button size="mini" type="primary" @click="addSch('addEmpForm')">确 定</el-button>
           </span>
         </el-dialog>
       </div>
@@ -565,6 +543,27 @@ export default {
         nationId: "",
         email: "",
         departmentName: "所属部门..."
+      },
+      schedule: {
+        userId: "",
+        name: "",
+        phone: "",
+        departmentId: "",
+        departmentName: "所属部门...",
+        time: "",
+        state: "",
+        address: "",
+        theme: "",
+        des: ""
+      },
+      sch: {
+        id: "",
+        userId: "",
+        departmentId: "",
+        time: "",
+        state: "",
+        theme: "",
+        des: ""
       },
       rules: {
         name: [{ required: true, message: "必填:姓名", trigger: "blur" }],
@@ -713,7 +712,7 @@ export default {
           "&nationId=" +
           this.hr.nationId +
           "&departmentId=" +
-          this.hr.departmentId+
+          this.hr.departmentId +
           "&nameZh=" +
           ""
       ).then(resp => {
@@ -762,6 +761,21 @@ export default {
           }
         } else {
           return false;
+        }
+      });
+    },
+
+    addSch() {
+      //添加
+      this.tableLoading = true;
+      this.postRequest("/schedules/sch", this.sch).then(resp => {
+        _this.tableLoading = false;
+        if (resp && resp.status == 200) {
+          var data = resp.data;
+
+          _this.dialogVisible = false;
+          _this.emptyEmpData();
+          _this.loadEmps();
         }
       });
     },
@@ -837,6 +851,26 @@ export default {
       this.user.email = this.hr.email;
       this.user.birthday = this.hr.birthday;
       this.user.nationId = this.hr.nationId;
+    },
+    showAddSchView(row) {
+      console.log(row);
+      this.dialogTitle = "编辑排班";
+      this.user = row;
+      // this.schedule.userId = row.hr.id;
+      // this.schedule.name = row.hr.name;
+      this.user.departmentId = row.department.id;
+      this.user.departmentName = row.department.name;
+      // this.schedule.phone = row.hr.phone;
+      this.dialogVisible1 = true;
+
+      // this.sch.id = row.id;
+      this.sch.time = this.schedule.time;
+      this.sch.userId = this.user.id;
+      this.sch.departmentId = this.schedule.departmentId;
+      // this.sch.departmentName = this.user.departmentName;
+      this.sch.theme = this.schedule.theme;
+      this.sch.state = this.schedule.state;
+      this.sch.des = schedule.des;
     },
     showAddEmpView() {
       this.dialogTitle = "添加管理员";

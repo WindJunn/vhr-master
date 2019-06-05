@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.sang.mapper.PointMapper">
+    <resultMap id="BaseResultMap" type="org.sang.bean.Point">
+        <id column="id" property="id"/>
+        <result column="poid" property="poid"/>
+        <result column="sid" property="sid"/>
+        <result column="pointuse" property="pointuse"/>
+        <result column="createTime" property="createTime"/>
+        <result column="modifyTime" property="modifyTime"/>
+        <result column="memo" property="memo"/>
+        <result column="des" property="des"/>
+
+        <association property="pointoption" javaType="org.sang.bean.Pointoption">
+            <id property="id" column="popid"/>
+            <result property="name" column="poname"/>
+            <result property="point" column="popoint"/>
+        </association>
+    </resultMap>
+
+    <select id="getPointsById" resultMap="BaseResultMap">
+        SELECT p.*,po.id as popid,po.`name` as poname,po.point as popoint
+        FROM point p LEFT JOIN pointoption po ON p.poid = po.id
+        WHERE  sid = #{sid}
+        ORDER BY p.modifyTime DESC
+        <if test="start!=null and size!=null">
+            limit #{start},#{size}
+        </if>
+    </select>
+
+    <update id="updatePoint">
+        update point
+        <set>
+            <if test="point.poid != null and point.poid!=''">
+                poid = #{point.poid,jdbcType=INTEGER},
+            </if>
+            <if test="att.stateId != null">
+                stateId = #{att.stateId,jdbcType=INTEGER},
+            </if>
+            <if test="att.atime != null">
+                atime = #{att.atime,jdbcType=DATE},
+            </if>
+            <if test="att.des != null">
+                des = #{att.des,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{att.id,jdbcType=BIGINT}
+    </update>
+
+    <delete id="deletePointByIds">
+        DELETE FROM point WHERE id IN
+        <foreach collection="ids" separator="," open="(" close=")" item="id">
+            #{id}
+        </foreach>
+    </delete>
+    <update id="updatePoint1" parameterType="org.sang.bean.Point">
+        UPDATE point SET name=#{name} WHERE id=#{id}
+    </update>
+    <insert id="addPoint1" parameterType="org.sang.bean.Point">
+        INSERT INTO point SET name=#{name}
+    </insert>
+
+</mapper>

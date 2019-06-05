@@ -410,36 +410,71 @@
           style="padding: 0px;"
           :close-on-click-modal="false"
           :visible.sync="dialogVisible1"
-          width="77%"
+          width="85%"
         >
-         <el-tag>总积分</el-tag>:<el-tag>{{emp.points}}</el-tag>
-          <el-form-item label="积分项目" prop="region">
-            <el-select v-model="ruleForm.region" placeholder="请选择积分项目">
-              <el-option label="好人好事" value="shanghai"></el-option>
-              <el-option label="卫生" value="beijing"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="积分分数" prop="name">
-            <el-input v-model="ruleForm.name" style="width: 150px"></el-input>
-          </el-form-item>
-          <el-form-item label="积分时间" required>
-            <el-col :span="11">
-              <el-form-item prop="date1">
-                <el-date-picker
-                  type="date"
-                  placeholder="选择日期"
-                  v-model="ruleForm.date1"
-                  style="width: 100%;"
-                ></el-date-picker>
-              </el-form-item>
+          <el-tag>总积分</el-tag>:
+          <el-tag>{{emp.points}}</el-tag>
+          <el-row>
+            <el-col style="width:25%">
+              <div>
+                <el-form-item label="积分项目:" prop="name">
+                 <el-select
+                    v-model="emp.nationId"
+                    style="width: 150px"
+                    size="mini"
+                    placeholder="请选择积分项目"
+                  >
+                    <el-option
+                      v-for="item in nations"
+                      :key="item.id"
+                      :label="item.name"
+                      :value="item.id"
+                    ></el-option>
+                  </el-select>
+                </el-form-item>
+              </div>
             </el-col>
-          </el-form-item>
-          <el-form-item label="积分描述" prop="desc">
-            <el-input type="textarea" v-model="ruleForm.desc"></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
-            <el-button @click="resetForm('ruleForm')">重置</el-button>
+            <el-col style="width:20%">
+              <div>
+                <el-form-item label="积分分数:" prop="phone">
+                  <el-input
+                    v-model="emp.points"
+                    size="mini"
+                    style="width: 50%"
+                  ></el-input>
+                </el-form-item>
+              </div>
+            </el-col>
+            <el-col style="width:20%">
+              <div>
+                <el-form-item label="积分时间:" prop="time">
+                  <el-date-picker
+                    v-model="emp.points"
+                    size="mini"
+                    value-format="yyyy-MM-dd"
+                    style="width: 50%"
+                    type="date"
+                    placeholder="选择日期"
+                  ></el-date-picker>
+                </el-form-item>
+              </div>
+            </el-col>
+            <el-col style="width:35%">
+              <div>
+                <el-form-item label="积分描述:" prop="phone">
+                  <el-input
+                    v-model="emp.points"
+                    size="mini"
+                    style="width: 70%"
+                  ></el-input>
+                </el-form-item>
+              </div>
+            </el-col>
+          </el-row>
+
+          <el-form-item style="left">
+            <el-button type="primary" @click="submitForm('ruleForm')" size="mini">增加积分记录</el-button>
+            <el-button @click="resetForm('ruleForm')" size="mini">重置</el-button>
           </el-form-item>
         </el-dialog>
       </div>
@@ -513,14 +548,12 @@
             </el-col>
           </el-row>
           <el-row>
-           
-            <template >
-               
+            <template>
               <el-tag type="danger">考勤记录(次)：</el-tag>
             </template>
-            <template v-for="(item,index) in counts" >
-               
-              <el-tag>{{index}}</el-tag>:<el-tag type="info">{{item}}</el-tag>&#12288;
+            <template v-for="(item,index) in counts">
+              <el-tag>{{index}}</el-tag>:
+              <el-tag type="info">{{item}}</el-tag>&#12288;
             </template>
           </el-row>
 
@@ -927,7 +960,7 @@ export default {
       this.getRequest("/attendance/count?sid=" + this.emp.id).then(resp => {
         if (resp && resp.status == 200) {
           _this.counts = resp.data.counts;
-          console.log(_this.counts)
+          console.log(_this.counts);
         }
       });
     },

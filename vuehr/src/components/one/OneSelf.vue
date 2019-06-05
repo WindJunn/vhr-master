@@ -14,14 +14,14 @@
           class="demo-ruleForm"
         >
           <el-row>
-            <el-col style="width:30%">
+            <el-col style="width:40%">
               <div>
                 <el-form-item label="姓名:" prop="name">
                   <el-input
                     prefix-icon="el-icon-edit"
                     v-model="hr.name"
                     size="mini"
-                    style="width: 150px"
+                    style="width: 70%"
                     placeholder="请输入管理员姓名"
                   ></el-input>
                 </el-form-item>
@@ -29,7 +29,7 @@
             </el-col>
           </el-row>
           <el-row>
-            <el-col style="width:30%">
+            <el-col style="width:40%">
               <div>
                 <el-form-item label="性别:" prop="gender">
                   <el-radio-group v-model="hr.gender">
@@ -41,14 +41,14 @@
             </el-col>
           </el-row>
           <el-row>
-            <el-col style="width:30%">
+            <el-col style="width:40%">
               <div>
                 <el-form-item label="出生日期:" prop="birthday">
                   <el-date-picker
                     v-model="hr.birthday"
                     size="mini"
                     value-format="yyyy-MM-dd HH:mm:ss"
-                    style="width: 150px"
+                    style="width: 70%"
                     type="date"
                     placeholder="出生日期"
                   ></el-date-picker>
@@ -57,12 +57,12 @@
             </el-col>
           </el-row>
           <el-row>
-            <el-col style="width:30%">
+            <el-col style="width:40%">
               <div>
                 <el-form-item label="民族:" prop="nationId">
                   <el-select
                     v-model="hr.nationId"
-                    style="width: 150px"
+                    style="width: 70%"
                     size="mini"
                     placeholder="请选择民族"
                   >
@@ -78,14 +78,14 @@
             </el-col>
           </el-row>
           <el-row>
-            <el-col style="width:30%">
+            <el-col style="width:40%">
               <div>
                 <el-form-item label="联系地址:" prop="address">
                   <el-input
                     prefix-icon="el-icon-edit"
                     v-model="hr.address"
                     size="mini"
-                    style="width: 200px"
+                    style="width: 70%"
                     placeholder="联系地址..."
                   ></el-input>
                 </el-form-item>
@@ -93,15 +93,16 @@
             </el-col>
           </el-row>
           <el-row>
-            <el-col style="width:30%">
+            <el-col style="width:40%">
               <div>
-                <el-form-item label="所属部门:" prop="departmentId">
+                <el-form-item label="所属部门:" prop="departmentId" >
                   <el-popover
                     v-model="showOrHidePop"
                     placement="right"
                     title="请选择部门"
                     trigger="manual"
                     disabled
+                    
                   >
                     <el-tree
                       :data="deps"
@@ -112,7 +113,7 @@
                     ></el-tree>
                     <div
                       slot="reference"
-                      style="width: 150px;height: 26px;display: inline-flex;font-size:13px;border: 1px;border-radius: 5px;border-style: solid;padding-left: 13px;box-sizing:border-box;border-color: #dcdfe6;cursor: pointer;align-items: center"
+                      style="width: 70%;height: 26px;display: inline-flex;font-size:13px;border: 1px;border-radius: 5px;border-style: solid;padding-left: 13px;box-sizing:border-box;border-color: #dcdfe6;cursor: pointer;align-items: center"
                       @click.left="showDepTree"
                       v-bind:style="{color: depTextColor}"
                     >{{hr.department.name}}</div>
@@ -122,14 +123,14 @@
             </el-col>
           </el-row>
           <el-row>
-            <el-col style="width:30%">
+            <el-col style="width:40%">
               <div>
                 <el-form-item label="电话号码:" prop="phone">
                   <el-input
                     prefix-icon="el-icon-phone"
                     v-model="hr.phone"
                     size="mini"
-                    style="width: 200px"
+                    style="width: 70%"
                     placeholder="电话号码..."
                   ></el-input>
                 </el-form-item>
@@ -138,14 +139,14 @@
           </el-row>
 
           <el-row>
-            <el-col style="width:30%">
+            <el-col style="width:40%">
               <div>
                 <el-form-item label="身份证号码:" prop="idCard">
                   <el-input
                     prefix-icon="el-icon-edit"
                     v-model="hr.idCard"
                     size="mini"
-                    style="width: 180px"
+                    style="width: 70%"
                     placeholder="请输入员工身份证号码..."
                   ></el-input>
                 </el-form-item>
@@ -153,14 +154,14 @@
             </el-col>
           </el-row>
           <el-row>
-            <el-col style="width:30%">
+            <el-col style="width:40%">
               <div>
                 <el-form-item label="邮箱:" prop="email">
                   <el-input
                     prefix-icon="el-icon-edit"
                     v-model="hr.email"
                     size="mini"
-                    style="width: 180px"
+                    style="width: 70%"
                     placeholder="请输入邮箱..."
                   ></el-input>
                 </el-form-item>
