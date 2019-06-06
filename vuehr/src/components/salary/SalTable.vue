@@ -388,7 +388,7 @@
               <div>
                 <el-form-item label="授课日期:" prop="time">
                   <el-date-picker
-                    v-model="schedule.time"
+                    v-model="sch.time"
                     size="mini"
                     value-format="yyyy-MM-dd HH:mm:ss"
                     style="width: 150px"
@@ -429,7 +429,7 @@
                 <el-form-item label="授课状态:" prop="state">
                   <el-input
                     prefix-icon="el-icon-edit"
-                    v-model="schedule.state"
+                    v-model="sch.state"
                     size="mini"
                     style="width: 100px"
                     placeholder="授课状态..."
@@ -443,7 +443,7 @@
               <div>
                 <el-form-item label="授课主题:" prop="theme">
                   <el-input
-                    v-model="schedule.theme"
+                    v-model="sch.theme"
                     size="mini"
                     style="width: 300px"
                     placeholder="授课主题..."
@@ -455,7 +455,7 @@
               <div>
                 <el-form-item label="备注:" prop="des">
                   <el-input
-                    v-model="schedule.des"
+                    v-model="sch.des"
                     size="mini"
                     style="width: 300px"
                     placeholder="备注..."
@@ -563,7 +563,8 @@ export default {
         time: "",
         state: "",
         theme: "",
-        des: ""
+        des: "",
+        departmentName:"所属部门..."
       },
       rules: {
         name: [{ required: true, message: "必填:姓名", trigger: "blur" }],
@@ -768,6 +769,8 @@ export default {
     addSch() {
       //添加
       this.tableLoading = true;
+       var _this = this;
+
       this.postRequest("/schedules/sch", this.sch).then(resp => {
         _this.tableLoading = false;
         if (resp && resp.status == 200) {
@@ -854,7 +857,7 @@ export default {
     },
     showAddSchView(row) {
       console.log(row);
-      this.dialogTitle = "编辑排班";
+      this.dialogTitle = "添加排班";
       this.user = row;
       // this.schedule.userId = row.hr.id;
       // this.schedule.name = row.hr.name;
@@ -867,10 +870,10 @@ export default {
       this.sch.time = this.schedule.time;
       this.sch.userId = this.user.id;
       this.sch.departmentId = this.schedule.departmentId;
-      // this.sch.departmentName = this.user.departmentName;
+      // this.sch.departmentName = this.schedule.departmentName;
       this.sch.theme = this.schedule.theme;
       this.sch.state = this.schedule.state;
-      this.sch.des = schedule.des;
+      this.sch.des = this.schedule.des;
     },
     showAddEmpView() {
       this.dialogTitle = "添加管理员";

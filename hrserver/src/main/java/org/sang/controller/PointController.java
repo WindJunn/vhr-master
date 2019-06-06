@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -21,12 +23,17 @@ public class PointController {
     PointService pointService;
 
     @RequestMapping(value = "/all/{sid}", method = RequestMethod.GET)
-    public List<Point> getAllCategories(@PathVariable Long sid) {
-        return pointService.getPointsById(sid);
+    public Map<String, Object> getPointsById(@PathVariable Long sid) {
+        Map<String, Object> map = new HashMap<>();
+
+        List<Point> points = pointService.getPointsById(sid);
+        map.put("points",points);
+        return map;
+
     }
 
     @RequestMapping(value = "/{ids}", method = RequestMethod.DELETE)
-    public RespBean deleteById(@PathVariable String ids) {
+    public RespBean deletePointByIds(@PathVariable String ids) {
         boolean result = pointService.deletePointByIds(ids);
         if (result) {
             return  RespBean.ok( "删除成功!");
@@ -35,7 +42,7 @@ public class PointController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public RespBean addNewCate(Point point) {
+    public RespBean addPoint(Point point) {
         int result = pointService.addPoint(point);
         if (result == 1) {
             return  RespBean.ok( "添加成功!");
@@ -44,7 +51,7 @@ public class PointController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.PUT)
-    public RespBean updateCate(Point point) {
+    public RespBean updatePoint(Point point) {
         int i = pointService.updatePoint(point);
         if (i == 1) {
             return  RespBean.ok("修改成功!");

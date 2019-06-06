@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50725
 File Encoding         : 65001
 
-Date: 2019-06-05 18:23:53
+Date: 2019-06-06 18:17:35
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -473,7 +473,7 @@ CREATE TABLE `hr` (
 -- ----------------------------
 -- Records of hr
 -- ----------------------------
-INSERT INTO `hr` VALUES ('1', '系统管理员', '18829345027', '男', '深圳南山111', '1', '1', 'admin', '$2a$10$BccCXG0j72xYY78dSH/OsudPE6auOYhgQQ5ncdOM080ZN7RW2AhJC', '', '612328199412120316', '', '2019-05-06', '12223@qq.com', '3');
+INSERT INTO `hr` VALUES ('1', '系统管理员', '18829345027', '男', '深圳南山', '1', '1', 'admin', '$2a$10$BccCXG0j72xYY78dSH/OsudPE6auOYhgQQ5ncdOM080ZN7RW2AhJC', '', '612328199412120316', '', '2019-05-07', '12223@qq.com', '3');
 INSERT INTO `hr` VALUES ('2', '韩浩', '18568128881', '男', '广州越秀', '4', '1', '18568128881', '$10$oE39aG10kB/rFu2vQeCJTu/V/v4n6DRR0f8WyXRiAYvBpmadoOBE.', null, '612328199412120312', null, '2019-05-15', '123@qq.com', '3');
 INSERT INTO `hr` VALUES ('5', '李白', '18568123489', '男', '海口美兰', '1', '1', 'libai', '$2a$10$oE39aG10kB/rFu2vQeCJTu/V/v4n6DRR0f8WyXRiAYvBpmadoOBE.', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1514093920321&di=913e88c23f382933ef430024afd9128a&imgtype=0&src=http%3A%2F%2Fp.3761.com%2Fpic%2F9771429316733.jpg', '612328199412120315', '1', '2019-05-31', '123@qq.com', '1');
 INSERT INTO `hr` VALUES ('10', '韩愈', '18568123666', '男', '广州番禺', '4', '1', 'hanyu', '$2a$10$oE39aG10kB/rFu2vQeCJTu/V/v4n6DRR0f8WyXRiAYvBpmadoOBE.', 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1406745149,1563524794&fm=27&gp=0.jpg', '612328199412120319', '1', '2019-05-31', '123@qq.com', '1');
@@ -787,7 +787,7 @@ CREATE TABLE `point` (
   `poid` int(11) DEFAULT NULL,
   `sid` int(11) DEFAULT NULL,
   `pointuse` int(11) DEFAULT NULL,
-  `createTime` datetime DEFAULT NULL,
+  `pointTime` datetime DEFAULT NULL,
   `modifyTime` datetime DEFAULT NULL,
   `memo` varchar(255) DEFAULT NULL COMMENT '扩展字段',
   `des` varchar(255) DEFAULT NULL,
@@ -796,14 +796,20 @@ CREATE TABLE `point` (
   KEY `po_ibfk_2` (`poid`),
   CONSTRAINT `po_ibfk_1` FOREIGN KEY (`sid`) REFERENCES `student` (`id`),
   CONSTRAINT `po_ibfk_2` FOREIGN KEY (`poid`) REFERENCES `pointoption` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of point
 -- ----------------------------
-INSERT INTO `point` VALUES ('1', '1', '1', '3', '2019-05-29 12:03:19', '2019-05-29 12:03:21', null, null);
-INSERT INTO `point` VALUES ('2', '2', '1', '4', '2019-06-05 12:26:54', '2019-06-05 12:26:56', null, '1');
-INSERT INTO `point` VALUES ('3', '1', '1', '3', '2019-06-05 14:44:19', '2019-06-05 14:44:36', null, null);
+INSERT INTO `point` VALUES ('1', '1', '1', '3', '2019-05-29 00:00:00', '2019-05-29 12:03:21', null, '急急急');
+INSERT INTO `point` VALUES ('2', '2', '1', '4', '2019-06-05 00:00:00', '2019-06-05 12:26:56', null, '佛山市');
+INSERT INTO `point` VALUES ('3', '3', '1', '5', '2019-06-05 00:00:00', '2019-06-05 14:44:36', null, '冯绍峰是否');
+INSERT INTO `point` VALUES ('4', '4', '1', '3', '2019-06-06 07:00:00', '2019-06-06 12:00:48', null, null);
+INSERT INTO `point` VALUES ('5', '1', '1', '3', '2019-06-06 15:29:00', '2019-06-06 12:11:04', null, '21');
+INSERT INTO `point` VALUES ('12', '2', '4', '1', '2019-06-11 00:00:00', '2019-06-06 16:25:38', '', '1');
+INSERT INTO `point` VALUES ('13', '2', '3', '2', '2019-06-07 00:00:00', '2019-06-06 00:00:00', '', '2');
+INSERT INTO `point` VALUES ('14', '2', '4', '2', '2019-06-07 00:00:00', '2019-06-06 00:00:00', '', '3');
+INSERT INTO `point` VALUES ('15', '1', '4', '3', '2019-06-04 00:00:00', '2019-06-06 00:00:00', '', '');
 
 -- ----------------------------
 -- Table structure for pointoption
@@ -814,7 +820,7 @@ CREATE TABLE `pointoption` (
   `name` varchar(255) DEFAULT NULL,
   `point` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of pointoption
@@ -957,13 +963,16 @@ CREATE TABLE `schedules` (
   `state` int(1) DEFAULT '1' COMMENT '授课状态 1.未授课 2.已授课',
   `des` varchar(255) DEFAULT '' COMMENT '备注',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of schedules
 -- ----------------------------
-INSERT INTO `schedules` VALUES ('1', '5', '2019-05-28 00:00:00', '1', '水稻防害', '1', null);
+INSERT INTO `schedules` VALUES ('1', '5', '2019-05-28 00:00:00', '1', '水稻防害', '1', '12');
 INSERT INTO `schedules` VALUES ('2', '5', '2019-05-13 00:00:00', '1', '水稻', '2', '23');
+INSERT INTO `schedules` VALUES ('3', '12', null, null, '', null, '');
+INSERT INTO `schedules` VALUES ('4', '12', '2019-06-12 00:00:00', '1', '1', '1', '1');
+INSERT INTO `schedules` VALUES ('5', '12', '2019-06-11 00:00:00', null, '1', '1', '1');
 
 -- ----------------------------
 -- Table structure for student

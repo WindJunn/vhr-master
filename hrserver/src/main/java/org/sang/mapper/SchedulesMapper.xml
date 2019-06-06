@@ -56,11 +56,10 @@
     <insert id="addSchedules" parameterType="org.sang.bean.Schedules">
             insert into schedules (userId, time, state, theme, departmentId,des)
     values (#{userId,jdbcType=INTEGER}, #{time,jdbcType=DATE},
-      #{state,jdbcType=INTEGER}, #{theme,jdbcType=VARCHAR}, #{departmentId,jdbcType=INTEGER},#{des,jdbcType=VARCHAR},
+      #{state,jdbcType=INTEGER}, #{theme,jdbcType=VARCHAR},
+      #{departmentId,jdbcType=INTEGER},#{des,jdbcType=VARCHAR}
       )
     </insert>
-
-
 
     <update id="updateSchedules">
         update schedules

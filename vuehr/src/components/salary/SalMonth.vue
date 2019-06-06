@@ -117,6 +117,7 @@
             <el-table-column prop="state" label="授课状态" width="70" align="left"></el-table-column>
             <el-table-column prop="hr.phone" width="120" label="联系电话"></el-table-column>
             <el-table-column prop="department.name" align="left" width="100" label="所属部门"></el-table-column>
+            <el-table-column prop="des" label="备注" width="150" align="left"></el-table-column>
             <el-table-column fixed="right" label="操作" width="195">
               <template slot-scope="scope">
                 <el-button

@@ -33,7 +33,7 @@ public interface HrMapper {
 
     List<Hr> getAllHr(@Param("currentId") Long currentId);
 
-    int addHr(@Param("hr") Hr hr);
+    int addHr( Hr hr);
 
     int updateHreg(@Param("hr") Hr hr);
 

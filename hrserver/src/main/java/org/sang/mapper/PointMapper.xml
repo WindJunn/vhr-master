@@ -8,7 +8,7 @@
         <result column="poid" property="poid"/>
         <result column="sid" property="sid"/>
         <result column="pointuse" property="pointuse"/>
-        <result column="createTime" property="createTime"/>
+        <result column="pointTime" property="pointTime"/>
         <result column="modifyTime" property="modifyTime"/>
         <result column="memo" property="memo"/>
         <result column="des" property="des"/>
@@ -23,11 +23,11 @@
     <select id="getPointsById" resultMap="BaseResultMap">
         SELECT p.*,po.id as popid,po.`name` as poname,po.point as popoint
         FROM point p LEFT JOIN pointoption po ON p.poid = po.id
-        WHERE  sid = #{sid}
-        ORDER BY p.modifyTime DESC
-        <if test="start!=null and size!=null">
-            limit #{start},#{size}
-        </if>
+        WHERE sid = #{sid}
+        ORDER BY pointTime DESC
+        <!--        <if test="start!=null and size!=null">-->
+        <!--            limit #{start},#{size}-->
+        <!--        </if>-->
     </select>
 
     <update id="updatePoint">
@@ -58,8 +58,13 @@
     <update id="updatePoint1" parameterType="org.sang.bean.Point">
         UPDATE point SET name=#{name} WHERE id=#{id}
     </update>
-    <insert id="addPoint1" parameterType="org.sang.bean.Point">
-        INSERT INTO point SET name=#{name}
+
+    <insert id="addPoint" parameterType="org.sang.bean.Point">
+        insert into point (poid,sid,pointuse,pointTime,modifyTime,memo,des)
+        values (#{poid,jdbcType=INTEGER}, #{sid,jdbcType=INTEGER},
+      #{pointuse,jdbcType=INTEGER}, #{pointTime,jdbcType=DATE}, #{modifyTime,jdbcType=DATE},
+      #{memo,jdbcType=VARCHAR},#{des,jdbcType=VARCHAR}
+      )
     </insert>
 
 </mapper>

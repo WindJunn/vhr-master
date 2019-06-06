@@ -1,6 +1,6 @@
 package org.sang.bean;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * Created by sang on 2017/12/20.
@@ -10,8 +10,8 @@ public class Point {
     private Long poid;
     private Long sid;
     private Long pointuse;
-    private Timestamp createTime;
-    private Timestamp modifyTime;
+    private Date pointTime;
+    private Date modifyTime;
     private String memo;
     private String des;
     private Pointoption pointoption;
@@ -56,19 +56,19 @@ public class Point {
         this.pointuse = pointuse;
     }
 
-    public Timestamp getCreateTime() {
-        return createTime;
+    public Date getPointTime() {
+        return pointTime;
     }
 
-    public void setCreateTime(Timestamp createTime) {
-        this.createTime = createTime;
+    public void setPointTime(Date pointTime) {
+        this.pointTime = pointTime;
     }
 
-    public Timestamp getModifyTime() {
+    public Date getModifyTime() {
         return modifyTime;
     }
 
-    public void setModifyTime(Timestamp modifyTime) {
+    public void setModifyTime(Date modifyTime) {
         this.modifyTime = modifyTime;
     }
 

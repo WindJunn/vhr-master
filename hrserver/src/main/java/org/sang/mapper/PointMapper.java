@@ -12,9 +12,9 @@ public interface PointMapper {
 
     List<Point> getPointsById(Long sid);
 
-    int addPoint(@Param("point")Point point);
+    int addPoint( Point point);
 
-    int updatePoint(@Param("point") Point point);
+    int updatePoint(Point point);
 
     int deletePointByIds(@Param("ids") String[] ids);
 

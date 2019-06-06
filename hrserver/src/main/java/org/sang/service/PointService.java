@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -32,6 +33,7 @@ public class PointService {
     }
 
     public int addPoint(Point point) {
+        point.setModifyTime( new Date());
         return pointMapper.addPoint(point);
     }
 }

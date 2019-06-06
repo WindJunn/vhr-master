@@ -398,7 +398,7 @@
     </el-form>
 
     <el-form
-      :model="ruleForm"
+      :model="pointss"
       :rules="rules1"
       ref="ruleForm"
       class="demo-ruleForm"
@@ -412,20 +412,34 @@
           :visible.sync="dialogVisible1"
           width="85%"
         >
-          <el-tag>总积分</el-tag>:
+          <el-tag style>总积分</el-tag>:
           <el-tag>{{emp.points}}</el-tag>
-          <el-row>
-            <el-col style="width:25%">
+          <el-row ref="add">
+            <el-col style="width:20%">
               <div>
-                <el-form-item label="积分项目:" prop="name">
-                 <el-select
-                    v-model="emp.nationId"
-                    style="width: 150px"
+                <el-form-item label="积分时间:" prop="pointTime">
+                  <el-date-picker
+                    v-model="point.pointTime"
+                    size="mini"
+                    value-format="yyyy-MM-dd HH:mm:ss"
+                    style="width: 100%"
+                    type="date"
+                    placeholder="选择日期"
+                  ></el-date-picker>
+                </el-form-item>
+              </div>
+            </el-col>
+            <el-col style="width:20%">
+              <div>
+                <el-form-item label="积分项目:" prop="poid">
+                  <el-select
+                    v-model="point.poid"
+                    style="width: 100%"
                     size="mini"
                     placeholder="请选择积分项目"
                   >
                     <el-option
-                      v-for="item in nations"
+                      v-for="item in pointoption"
                       :key="item.id"
                       :label="item.name"
                       :value="item.id"
@@ -434,48 +448,105 @@
                 </el-form-item>
               </div>
             </el-col>
-            <el-col style="width:20%">
+            <el-col style="width:15%">
               <div>
-                <el-form-item label="积分分数:" prop="phone">
-                  <el-input
-                    v-model="emp.points"
-                    size="mini"
-                    style="width: 50%"
-                  ></el-input>
+                <el-form-item label="积分分数:" prop="pointuse">
+                  <el-input v-model="point.pointuse" size="mini" style="width: 100%"></el-input>
                 </el-form-item>
               </div>
             </el-col>
-            <el-col style="width:20%">
+
+            <el-col style="width:25%">
               <div>
-                <el-form-item label="积分时间:" prop="time">
-                  <el-date-picker
-                    v-model="emp.points"
-                    size="mini"
-                    value-format="yyyy-MM-dd"
-                    style="width: 50%"
-                    type="date"
-                    placeholder="选择日期"
-                  ></el-date-picker>
+                <el-form-item label="备注:" prop="des">
+                  <el-input v-model="point.des" size="mini" style="width: 100%"></el-input>
                 </el-form-item>
               </div>
             </el-col>
-            <el-col style="width:35%">
+            <el-col style="width:10%">
               <div>
-                <el-form-item label="积分描述:" prop="phone">
-                  <el-input
-                    v-model="emp.points"
-                    size="mini"
-                    style="width: 70%"
-                  ></el-input>
-                </el-form-item>
+                <el-button
+                  type="primary"
+                  @click="addPoint('add')"
+                  size="mini"
+                  style="width: 80%"
+                >增加积分</el-button>
+              </div>
+            </el-col>
+            <el-col style="width:10%">
+              <div>
+                <el-button style="width: 60%" @click="resetForm('ruleForm')" size="mini">重置</el-button>
               </div>
             </el-col>
           </el-row>
+          <el-form-item style="left"></el-form-item>
+          <div v-if="pointss.length>0">
+            <hr>
 
-          <el-form-item style="left">
-            <el-button type="primary" @click="submitForm('ruleForm')" size="mini">增加积分记录</el-button>
-            <el-button @click="resetForm('ruleForm')" size="mini">重置</el-button>
-          </el-form-item>
+            <div v-for="(item,index) in pointss">
+              <el-row>
+                <el-col style="width:20%">
+                  <div>
+                    <el-form-item label="积分时间:" prop="time">
+                      <el-date-picker
+                        v-model="pointss[index].pointTime"
+                        size="mini"
+                        value-format="yyyy-MM-dd"
+                        style="width: 100%"
+                        type="date"
+                      ></el-date-picker>
+                    </el-form-item>
+                  </div>
+                </el-col>
+                <el-col style="width:20%" border>
+                  <div>
+                    <el-form-item label="积分项目:" prop="name">
+                      <el-input
+                        v-model="pointss[index].pointoption.name"
+                        size="mini"
+                        style="width: 100%"
+                      ></el-input>
+                    </el-form-item>
+                  </div>
+                </el-col>
+                <el-col style="width:15%">
+                  <div>
+                    <el-form-item label="积分分数:" prop="phone">
+                      <el-input v-model="pointss[index].pointuse" size="mini" style="width: 100%"></el-input>
+                    </el-form-item>
+                  </div>
+                </el-col>
+
+                <el-col style="width:25%">
+                  <div>
+                    <el-form-item label="备注:" prop="phone">
+                      <el-input v-model="pointss[index].des" size="mini" style="width: 100%"></el-input>
+                    </el-form-item>
+                  </div>
+                </el-col>
+                <!-- <el-col style="width:9%">
+                  <div>
+                    <el-button
+                      type="primary"
+                      @click="submitForm('ruleForm')"
+                      size="mini"
+                      style="width: 80%"
+                    >修改</el-button>
+                  </div>
+                </el-col>-->
+                <el-col style="width:8%">
+                  <div>
+                    <el-button
+                      type="danger"
+                      style="width: 60%"
+                      @click="deletePoint(pointss[index].id)"
+                      size="mini"
+                    >删除</el-button>
+                  </div>
+                </el-col>
+              </el-row>
+            </div>
+          </div>
         </el-dialog>
       </div>
     </el-form>
@@ -642,6 +713,41 @@ export default {
         sid: ""
       },
       sid: "",
+
+      pointss: [
+        {
+          id: "",
+          poid: "",
+          sid: "",
+          pointuse: "",
+          pointTime: "",
+          modifyTime: "",
+          memo: "",
+          des: "",
+          pointoption: {
+            id: "",
+            name: "",
+            point: ""
+          }
+        }
+      ],
+      pointuse: "",
+      pointoption: {
+        id: "",
+        name: "",
+        point: ""
+      },
+
+      point: {
+        // id: "",
+        poid: "",
+        sid: "",
+        pointuse: "",
+        pointTime: "",
+        modifyTime: "",
+        memo: "",
+        des: ""
+      },
 
       rules1: {
         name: [
@@ -934,14 +1040,63 @@ export default {
     showEditPointView(row) {
       this.dialogTitle = "积分管理";
       this.emp = row;
-      this.emp.points = row.points;
-      // this.emp.conversionTime = this.formatDate(row.conversionTime);
-
-      this.emp.nationId = row.nation.id;
-      this.emp.departmentId = row.department.id;
-      this.emp.departmentName = row.department.name;
-
+      var _this = this;
+      _this.getAllpointById();
+      _this.getAllPointoption();
       this.dialogVisible1 = true;
+    },
+    getAllPointoption() {
+      var _this = this;
+      this.getRequest("/pointoption/all").then(resp => {
+        if (resp && resp.status == 200) {
+          _this.pointoption = resp.data;
+        }
+      });
+    },
+    getAllpointById() {
+      var _this = this;
+      this.getRequest("/point/all/" + this.emp.id).then(resp => {
+        if (resp && resp.status == 200) {
+          _this.pointss = resp.data.points;
+        }
+      });
+    },
+
+    addPoint(row) {
+      var _this = this;
+      this.point.sid = this.emp.id;
+      // this.point.modifyTime=this.formatDateTime(new Date());
+      // this.point.modifyTime=null;
+
+      this.postRequest("/point/", this.point).then(resp => {
+        if (resp && resp.status == 200) {
+          _this.counts = resp.data.counts;
+          _this.getAllpointById();
+        }
+      });
+    },
+    deletePoint(id) {
+      this.$confirm("确定删除[" + id+ "], 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          this.doDeletePoint(id);
+        })
+        .catch(() => {});
+    },
+    doDeletePoint(ids) {
+      this.tableLoading = true;
+      var _this = this;
+      this.deleteRequest("/point/" + ids).then(resp => {
+        _this.tableLoading = false;
+        if (resp && resp.status == 200) {
+          var data = resp.data;
+
+          _this.getAllpointById();
+        }
+      });
     },
 
     showAttendanceView(row) {
@@ -955,8 +1110,8 @@ export default {
       this.emp.departmentName = row.department.name;
 
       this.dialogVisible2 = true;
-
       var _this = this;
+
       this.getRequest("/attendance/count?sid=" + this.emp.id).then(resp => {
         if (resp && resp.status == 200) {
           _this.counts = resp.data.counts;
@@ -964,6 +1119,7 @@ export default {
         }
       });
     },
+
     emptyEmpData() {
       this.emp = {
         name: "",
@@ -980,6 +1136,18 @@ export default {
         posId: "",
         workID: "",
         points: 0
+      };
+    },
+
+    emptyPointData() {
+      this.point = {
+        poid: "",
+        sid: "",
+        pointuse: "",
+        pointTime: "",
+        modifyTime: "",
+        memo: "",
+        des: ""
       };
     }
   }
