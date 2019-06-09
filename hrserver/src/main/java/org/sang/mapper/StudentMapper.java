@@ -27,5 +27,7 @@ public interface StudentMapper {
 
     int addStudents(@Param("emps") List<Student> students);
 
+    int updatePoint(Long id);
+
 //    List<Student> getStudentByPageShort(@Param("start") int start, @Param("size") Integer size);
 }

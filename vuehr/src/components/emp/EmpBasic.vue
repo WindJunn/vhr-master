@@ -940,6 +940,26 @@ export default {
         }
       });
     },
+    loadTab() {
+      var _this = this;
+      this.tableLoading = true;
+      this.getRequest(
+        "/student/basic/emp?page=" +
+          this.currentPage +
+          "&size=10&keywords=" +
+          this.keywords +
+          "&departmentId=" +""
+          // this.emp.departmentId
+      ).then(resp => {
+        this.tableLoading = false;
+        if (resp && resp.status == 200) {
+          var data = resp.data;
+          _this.emps = data.emps;
+          _this.totalCount = data.count;
+          //            _this.emptyEmpData();
+        }
+      });
+    },
     addEmp(formName) {
       var _this = this;
       this.$refs[formName].validate(valid => {
@@ -1072,6 +1092,10 @@ export default {
         if (resp && resp.status == 200) {
           _this.counts = resp.data.counts;
           _this.getAllpointById();
+          _this.nationId="";
+          _this.departmentId="";
+          this.loadEmps();
+
         }
       });
     },

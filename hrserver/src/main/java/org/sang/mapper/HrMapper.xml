@@ -110,9 +110,10 @@
             <if test="hr.enabled != null">
                 enabled = #{hr.enabled,jdbcType=BIT},
             </if>
-            <!--<if test="hr.username != null">
+            <if test="hr.username != null">
                 username = #{hr.username,jdbcType=VARCHAR},
             </if>
+            <!--
             <if test="hr.password != null">
                 password = #{hr.password,jdbcType=VARCHAR},
             </if>-->
@@ -157,14 +158,15 @@
         </if>
     </select>
 
-    <insert id="addHrs" parameterType="org.sang.bean.Hr">
-            insert into hr (name,phone,gender,address,departmentId,enabled,username,password,
+    <insert id="addHrs" >
+        insert into hr (name,phone,gender,address,departmentId,enabled,username,password,
         userface,idCard,remark,birthday,email,nationId
       )
-    values (#{name,jdbcType=VARCHAR}, #{phone,jdbcType=CHAR},#{gender,jdbcType=CHAR},
+    values (#{name,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},#{gender,jdbcType=VARCHAR},
     #{address,jdbcType=VARCHAR},#{departmentId,jdbcType=INTEGER},#{enabled,jdbcType=BIT},
-    #{username,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR},#{userface,jdbcType=VARCHAR},
-       #{idCard,jdbcType=CHAR}, #{remark,jdbcType=VARCHAR},#{birthday,jdbcType=DATE},
+    #{username,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR},
+    #{userface,jdbcType=VARCHAR},
+       #{idCard,jdbcType=VARCHAR},#{birthday,jdbcType=DATE},
         #{email,jdbcType=VARCHAR}, #{nationId,jdbcType=INTEGER}
 
       )
@@ -174,20 +176,20 @@
         INSERT INTO hr(name,phone,gender,address,departmentId,enabled,username,password,
         userface,idCard,remark,birthday,email,nationId)
         values (
-            name = #{hr.name,jdbcType=VARCHAR},
-            phone = #{hr.phone,jdbcType=CHAR},
-            gender = #{hr.gender,jdbcType=CHAR},
-            address = #{hr.address,jdbcType=VARCHAR},
-            departmentId = #{hr.departmentId,jdbcType=INTEGER},
-            enabled = #{hr.enabled,jdbcType=BIT},
-            username = #{hr.username,jdbcType=VARCHAR},
-            password = #{hr.password,jdbcType=VARCHAR},
-            userface = #{hr.userface,jdbcType=VARCHAR},
-            idCard = #{hr.idCard,jdbcType=CHAR},
-            remark = #{hr.remark,jdbcType=VARCHAR},
-            birthday = #{hr.birthday,jdbcType=DATE},
-            email = #{hr.email,jdbcType=VARCHAR},
-            nationId = #{hr.nationId,jdbcType=INTEGER}
+              #{hr.name},
+             #{hr.phone},
+             #{hr.gender},
+             #{hr.address},
+              #{hr.departmentId},
+             #{hr.enabled},
+              #{hr.username},
+              #{hr.password},
+             #{hr.userface},
+             #{hr.idCard},
+             #{hr.remark},
+              #{hr.birthday},
+            #{hr.email},
+         #{hr.nationId}
         )
     </insert>
 

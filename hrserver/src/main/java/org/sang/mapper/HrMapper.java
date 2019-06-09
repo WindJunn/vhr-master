@@ -18,7 +18,7 @@ public interface HrMapper {
 
     List<Hr> getHrsByKeywords(@Param("start") Integer start, @Param("size") Integer size,
                               @Param("keywords") String keywords, @Param("nationId") Long nationId,
-                              @Param("departmentId")Long  departmentId,@Param("nameZh") String nameZh);
+                              @Param("departmentId") Long departmentId, @Param("nameZh") String nameZh);
 
 
     int updateHr(@Param("hr") Hr hr);
@@ -33,7 +33,7 @@ public interface HrMapper {
 
     List<Hr> getAllHr(@Param("currentId") Long currentId);
 
-    int addHr( Hr hr);
+    int addHr(@Param("hr") Hr hr);
 
     int updateHreg(@Param("hr") Hr hr);
 

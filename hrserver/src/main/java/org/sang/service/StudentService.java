@@ -68,6 +68,10 @@ public class StudentService {
         return studentMapper.addStudents(students);
     }
 
+    public int updatePoint(Long id) {
+        return studentMapper.updatePoint(id);
+    }
+
    /* public List<Student> getEmplStudentByPageShort(Integer page, Integer size) {
         int start = (page - 1) * size;
         return studentMapper.getEmplStudentByPageShort(start,size);

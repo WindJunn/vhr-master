@@ -20,21 +20,23 @@ public class Hr implements UserDetails, Serializable {
     private String phone;
     private String gender;
     private String address;
+    private Long departmentId;
+
     private boolean enabled;
     private String username;
     private String password;
     private String remark;
-    private List<Role> roles;
     private String userface;
-
-    private Long departmentId;
-    private Department department;
-
+    private String idCard;
     private Date birthday;
     private String email;
     private Long nationId;
+
     private String nationName;
     private Nation nation;
+    private List<Role> roles;
+    private Department department;
+
 
     public Nation getNation() {
         return nation;
@@ -84,7 +86,6 @@ public class Hr implements UserDetails, Serializable {
         this.idCard = idCard;
     }
 
-    private String idCard;
     @JsonIgnore
     public Long getDepartmentId() {
         return departmentId;

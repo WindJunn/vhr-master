@@ -152,6 +152,7 @@
                   size="mini"
                 >编辑</el-button>
                 <el-button
+                  @click="showaddRoleView(scope.row)"
                   style="padding: 3px 4px 3px 4px;margin: 2px"
                   type="primary"
                   size="mini"
@@ -503,13 +504,106 @@
           </el-row>
           <span slot="footer" class="dialog-footer">
             <el-button size="mini" @click="cancelEidt">取 消</el-button>
-            <el-button size="mini" type="primary" @click="addEmp('addUserForm')">确 定</el-button>
+            <el-button size="mini" type="primary" @click="addUser()">确 定</el-button>
           </span>
         </el-dialog>
       </div>
     </el-form>
 
-    <el-button @click="reg()">注册</el-button>
+    <div style="text-align: left">
+      <el-dialog title="角色管理" :visible.sync="dialogVisible3" width="25%">
+        <div>
+          <span>选择角色</span>
+          <el-select v-model="roles" style="width: 200px" placeholder="请选择" size="mini">
+            <el-option v-for="item in role" :key="item.id" :label="item.nameZh" :value="item.id"></el-option>
+          </el-select>
+        </div>
+        <!-- <div style="margin-top: 10px">
+          <span>部门名称</span>
+          <el-input
+            size="mini"
+            style="width: 200px;"
+            v-model="depName"
+            placeholder="请输入部门名称..."
+            @keyup.enter.native="addDep"
+          ></el-input>
+        </div>-->
+        <span slot="footer" class="dialog-footer">
+          <el-button size="small" @click="dialogVisible3 = false">取消</el-button>
+          <el-button size="small" type="primary" @click="addRole">确定</el-button>
+        </span>
+      </el-dialog>
+    </div>
+
+    <div style="display: flex;justify-content: space-around;flex-wrap: wrap;text-align: left">
+      <el-card
+        style="width: 350px;margin-bottom: 20px"
+        v-loading="cardLoading[0]"
+        :visible.sync="dialogVisible3"
+      >
+        <div slot="header" class="clearfix">
+          <span>{{hr.name}}</span>
+          <el-button
+            type="text"
+            style="color: #f6061b;margin: 0px;float: right; padding: 3px 0;width: 15px;height:15px"
+            icon="el-icon-delete"
+            @click="deleteHr(hr.id)"
+          ></el-button>
+        </div>
+        <!-- <div>
+          <div style="margin-top: 20px">
+            <div class="user-info" style="display: flex;align-items: center;margin-bottom: 3px">
+              用户状态:
+              <el-switch
+                style="display: inline;margin-left: 5px"
+                v-model="hr.enabled"
+                active-color="#13ce66"
+                inactive-color="#aaaaaa"
+                active-text="启用"
+                :key="hr.id"
+                @change="switchChange(hr.enabled,hr.id,index)"
+                inactive-text="禁用"
+              ></el-switch>
+            </div>
+            <div class="user-info">
+              用户角色:
+              <el-tag
+                v-for="role in hr.roles"
+                :key="role.id"
+                type="success"
+                size="mini"
+                style="margin-right: 5px"
+                :disable-transitions="false"
+              >{{role.nameZh}}</el-tag>
+              <el-popover
+                v-loading="eploading[index]"
+                placement="right"
+                title="角色列表"
+                width="200"
+                @hide="updateHrRoles(hr.id,index)"
+                :key="hr.id"
+                trigger="click"
+              >
+                <el-select v-model="selRoles" multiple placeholder="请选择角色">
+                  <el-option v-for="ar in allRoles" :key="ar.id" :label="ar.nameZh" :value="ar.id"></el-option>
+                </el-select>
+                <el-button
+                  type="text"
+                  icon="el-icon-more"
+                  style="color: #09c0f6;padding-top: 0px"
+                  slot="reference"
+                  @click="loadSelRoles(hr.roles,index)"
+                  :disabled="moreBtnState"
+                ></el-button>
+              </el-popover>
+            </div>
+            <div>
+              <span class="user-info">备注:{{hr.remark}}</span>
+            </div>
+          </div>
+        </div> -->
+      </el-card>
+    </div>
   </div>
 </template>
 <script>
@@ -530,8 +624,9 @@ export default {
       politics: [],
       positions: [],
       joblevels: [],
+      cardLoading: [],
       totalCount: -1,
-      currentPage: 1,
+      currentPage: 0,
 
       deps: [],
       roles: [],
@@ -542,6 +637,7 @@ export default {
       },
       dialogVisible: false,
       dialogVisible1: false,
+      dialogVisible3: false,
       tableLoading: false,
       advanceSearchViewVisible: false,
       showOrHidePop: false,
@@ -560,8 +656,8 @@ export default {
         idCard: "",
         remark: "",
         birthday: "",
-        nationId: "",
         email: "",
+        nationId: "",
         departmentName: "所属部门..."
       },
       user: {
@@ -747,11 +843,14 @@ export default {
             this.tableLoading = true;
             this.putRequest("/system/hr/", this.user).then(resp => {
               _this.tableLoading = false;
+              this.loadEmps();
               if (resp && resp.status == 200) {
                 var data = resp.data;
+
                 _this.dialogVisible = false;
-                _this.emptyEmpData();
-                _this.loadEmps();
+                this.emptyEmpData();
+
+                this.loadEmps();
               }
             });
           } else {
@@ -773,6 +872,45 @@ export default {
         }
       });
     },
+    addUser() {
+      var _this = this;
+      this.tableLoading = true;
+      this.postRequest("/system/hr/", this.hr).then(resp => {
+        _this.tableLoading = false;
+        if (resp && resp.status == 200) {
+          var data = resp.data;
+
+          _this.dialogVisible1 = false;
+          _this.emptyEmpData();
+          _this.loadEmps();
+        }
+      });
+    },
+    addRole() {
+      var _this = this;
+      this.dialogVisible3 = false;
+      this.treeLoading = true;
+      this.postRequest("/system/basic/dep", {
+        name: this.depName,
+        parentId: this.pDep
+      }).then(resp => {
+        _this.treeLoading = false;
+        if (resp && resp.status == 200) {
+          var respData = resp.data;
+          _this.depName = "";
+          _this.setDataToTree(_this.treeData, _this.pDep, respData.msg);
+        }
+      });
+    },
+    showaddRoleView(row) {
+      var _this = this;
+      // this.loadAllDeps();
+      this.dialogVisible3 = true;
+      //  this.role = roles.;
+
+      event.stopPropagation();
+    },
+
     reg() {
       this.postRequest("/system/hr/hr/reg", {
         username: 123,
@@ -818,7 +956,7 @@ export default {
           _this.politics = data.politics;
           _this.deps = data.deps;
           _this.positions = data.positions;
-          _this.roles = data.roles;
+          _this.role = data.roles;
         }
       });
     },
@@ -845,6 +983,7 @@ export default {
       this.user.email = this.hr.email;
       this.user.birthday = this.hr.birthday;
       this.user.nationId = this.hr.nationId;
+      this.user.username = this.hr.phone;
     },
     showAddEmpView() {
       this.dialogTitle = "添加管理员";
@@ -852,10 +991,10 @@ export default {
       var _this = this;
 
       _this.hr.enabled = true;
-      _this.hr.username = "1212";
+      _this.hr.username = "123";
       _this.hr.password = "123";
       _this.hr.remark = "1";
-      _this.hr.userface = "1";
+      _this.hr.userface = "";
     },
     emptyEmpData() {
       this.hr = {
@@ -866,14 +1005,15 @@ export default {
         address: "",
         departmentId: "",
         enabled: true,
-        username: phone,
-        password: 123,
+        username: "",
+        password: "",
         userface: "",
         idCard: "",
         remark: "",
         birthday: "",
-        nationId: "",
         email: "",
+        nationId: "",
+
         departmentName: "所属部门..."
       };
       this.user = {

@@ -37,9 +37,9 @@
             ></i>高级搜索
           </el-button>
         </div>
-        <div style="margin-left: 5px;margin-right: 20px;display: inline">
+        <!-- <div style="margin-left: 5px;margin-right: 20px;display: inline">
           <el-button type="primary" size="mini" icon="el-icon-plus" @click="showAddEmpView">添加排班</el-button>
-        </div>
+        </div> -->
       </el-header>
       <el-main style="padding-left: 0px;padding-top: 0px">
         <div>
@@ -500,7 +500,7 @@ export default {
       var _this = this;
       this.$refs[formName].validate(valid => {
         // debugger;
-
+  
         if (valid) {
           if (this.schedule.id) {
             //更新

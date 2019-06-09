@@ -6,6 +6,7 @@ import org.sang.bean.Student;
 import org.sang.common.poi.StudentPoiUtils;
 import org.sang.service.DepartmentService;
 import org.sang.service.HrService;
+import org.sang.service.RoleService;
 import org.sang.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -30,11 +31,15 @@ public class SystemHrController {
     @Autowired
     DepartmentService departmentService;
 
+    @Autowired
+    RoleService roleService;
+
     @RequestMapping(value = "/basicdata", method = RequestMethod.GET)
     public Map<String, Object> getAllNations() {
         Map<String, Object> map = new HashMap<>();
         map.put("nations", studentService.getAllNations());
         map.put("deps", departmentService.getDepByPid(-1L));
+        map.put("roles", roleService.roles());
         return map;
     }
 

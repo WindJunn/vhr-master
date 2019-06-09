@@ -87,6 +87,7 @@ public class HrService implements UserDetailsService {
     }
 
     public int addHr(Hr hr){
+        hr.setUsername(hr.getPhone());
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String encode = encoder.encode(hr.getPassword());
         hr.setPassword(encode);

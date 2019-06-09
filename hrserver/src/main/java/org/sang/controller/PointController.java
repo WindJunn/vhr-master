@@ -3,6 +3,7 @@ package org.sang.controller;
 import org.sang.bean.Point;
 import org.sang.bean.RespBean;
 import org.sang.service.PointService;
+import org.sang.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,9 @@ public class PointController {
     @Autowired
     PointService pointService;
 
+    @Autowired
+    StudentService studentService;
+
     @RequestMapping(value = "/all/{sid}", method = RequestMethod.GET)
     public Map<String, Object> getPointsById(@PathVariable Long sid) {
         Map<String, Object> map = new HashMap<>();
@@ -36,6 +40,7 @@ public class PointController {
     public RespBean deletePointByIds(@PathVariable String ids) {
         boolean result = pointService.deletePointByIds(ids);
         if (result) {
+
             return  RespBean.ok( "删除成功!");
         }
         return  RespBean.error("删除失败!");

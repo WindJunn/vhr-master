@@ -51,23 +51,6 @@
             >
               <el-row></el-row>
               <el-row style="margin-top: 10px">
-                <el-col :span="4">
-                  民族:
-                  <el-select
-                    v-model="hr.nationId"
-                    style="width: 130px"
-                    size="mini"
-                    placeholder="请选择民族"
-                  >
-                    <el-option
-                      v-for="item in nations"
-                      :key="item.id"
-                      :label="item.name"
-                      :value="item.id"
-                    ></el-option>
-                  </el-select>
-                </el-col>
-
                 <el-col :span="5">
                   所属部门:
                   <el-popover
@@ -402,7 +385,7 @@
               <div>
                 <el-form-item label="授课地点:" prop="departmentId">
                   <el-popover
-                    v-model="showOrHidePop"
+                    v-model="showOrHidePop3"
                     placement="right"
                     title="授课地点"
                     trigger="manual"
@@ -412,14 +395,14 @@
                       :default-expand-all="true"
                       :props="defaultProps"
                       :expand-on-click-node="false"
-                      @node-click="handleNodeClick"
+                      @node-click="handleNodeClick3"
                     ></el-tree>
                     <div
                       slot="reference"
                       style="width: 150px;height: 26px;display: inline-flex;font-size:13px;border: 1px;border-radius: 5px;border-style: solid;padding-left: 13px;box-sizing:border-box;border-color: #dcdfe6;cursor: pointer;align-items: center"
-                      @click.left="showDepTree"
+                      @click.left="showDepTree3"
                       v-bind:style="{color: depTextColor}"
-                    >{{schedule.departmentName}}</div>
+                    >{{sch.departmentName}}</div>
                   </el-popover>
                 </el-form-item>
               </div>
@@ -454,12 +437,7 @@
             <el-col :span="9">
               <div>
                 <el-form-item label="备注:" prop="des">
-                  <el-input
-                    v-model="sch.des"
-                    size="mini"
-                    style="width: 300px"
-                    placeholder="备注..."
-                  ></el-input>
+                  <el-input v-model="sch.des" size="mini" style="width: 300px" placeholder="备注..."></el-input>
                 </el-form-item>
               </div>
             </el-col>
@@ -508,6 +486,7 @@ export default {
       advanceSearchViewVisible: false,
       showOrHidePop: false,
       showOrHidePop2: false,
+      showOrHidePop3: false,
       hr: {
         id: "",
         name: "",
@@ -564,7 +543,7 @@ export default {
         state: "",
         theme: "",
         des: "",
-        departmentName:"所属部门..."
+        departmentName: "所属部门..."
       },
       rules: {
         name: [{ required: true, message: "必填:姓名", trigger: "blur" }],
@@ -769,14 +748,14 @@ export default {
     addSch() {
       //添加
       this.tableLoading = true;
-       var _this = this;
+      var _this = this;
 
       this.postRequest("/schedules/sch", this.sch).then(resp => {
         _this.tableLoading = false;
         if (resp && resp.status == 200) {
           var data = resp.data;
 
-          _this.dialogVisible = false;
+          _this.dialogVisible1 = false;
           _this.emptyEmpData();
           _this.loadEmps();
         }
@@ -804,6 +783,9 @@ export default {
     showDepTree2() {
       this.showOrHidePop2 = !this.showOrHidePop2;
     },
+    showDepTree3() {
+      this.showOrHidePop3 = !this.showOrHidePop3;
+    },
     handleNodeClick(data) {
       this.hr.departmentName = data.name;
       this.hr.departmentId = data.id;
@@ -816,6 +798,12 @@ export default {
       this.hr.departmentName = data.name;
       this.hr.departmentId = data.id;
       this.showOrHidePop2 = false;
+      this.depTextColor = "#606266";
+    },
+    handleNodeClick3(data) {
+      this.sch.departmentName = data.name;
+      this.sch.departmentId = data.id;
+      this.showOrHidePop3 = false;
       this.depTextColor = "#606266";
     },
     initData() {
@@ -870,7 +858,7 @@ export default {
       this.sch.time = this.schedule.time;
       this.sch.userId = this.user.id;
       this.sch.departmentId = this.schedule.departmentId;
-      // this.sch.departmentName = this.schedule.departmentName;
+      // this.sch.departmentName = this.user.departmentName;
       this.sch.theme = this.schedule.theme;
       this.sch.state = this.schedule.state;
       this.sch.des = this.schedule.des;
