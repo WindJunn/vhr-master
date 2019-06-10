@@ -1060,6 +1060,7 @@ export default {
     showEditPointView(row) {
       this.dialogTitle = "积分管理";
       this.emp = row;
+      this.id=this.emp.id;
       var _this = this;
       _this.getAllpointById();
       _this.getAllPointoption();
@@ -1087,28 +1088,30 @@ export default {
       this.point.sid = this.emp.id;
       // this.point.modifyTime=this.formatDateTime(new Date());
       // this.point.modifyTime=null;
+          _this.emp.nationId="";
+          _this.emp.departmentId="";
 
       this.postRequest("/point/", this.point).then(resp => {
         if (resp && resp.status == 200) {
           _this.counts = resp.data.counts;
           _this.getAllpointById();
-          _this.nationId="";
-          _this.departmentId="";
-          this.loadEmps();
+          _this.loadEmps();
 
         }
       });
     },
-    upPoint(id) {
+    upPoint() {
        var _this = this;
-
-      this.putRequest("/student/basic/updatePoint", id).then(resp => {
+      this.putRequest("/student/basic/updatePoint", {
+        id:this.id
+      }).then(resp => {
         if (resp && resp.status == 200) {
         }
       });
 
     },
     deletePoint(id) {
+       var _this = this;
       this.$confirm("确定删除[" + id+ "], 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -1128,6 +1131,11 @@ export default {
           var data = resp.data;
 
           _this.getAllpointById();
+          _this.upPoint();
+          _this.emp.nationId="";
+          _this.emp.departmentId="";
+          _this.loadEmps();
+
         }
       });
     },

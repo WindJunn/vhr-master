@@ -131,7 +131,7 @@
             <el-table-column prop="gender" label="性别" width="50"></el-table-column>
 
             <el-table-column prop="idCard" width="150" align="left" label="身份证号码"></el-table-column>
-           
+
             <el-table-column width="60" prop="nation.name" label="民族"></el-table-column>
 
             <el-table-column prop="phone" width="100" label="电话号码"></el-table-column>
@@ -139,7 +139,7 @@
             <el-table-column prop="department.name" align="left" width="100" label="所属部门"></el-table-column>
             <el-table-column width="100" align="left" prop="roles[0].nameZh" label="角色"></el-table-column>
 
-             <el-table-column width="85" align="left" label="出生日期">
+            <el-table-column width="85" align="left" label="出生日期">
               <template slot-scope="scope">{{ scope.row.birthday | formatDate}}</template>
             </el-table-column>
             <el-table-column prop="address" width="220" align="left" label="联系地址"></el-table-column>
@@ -513,6 +513,38 @@
 
     <div style="text-align: left">
       <el-dialog title="角色管理" :visible.sync="dialogVisible3" width="25%">
+        <div class="user-info">
+          用户角色:
+          <el-tag
+            v-for="role in role"
+            :key="role.id"
+            type="success"
+            size="mini"
+            style="margin-right: 5px"
+            :disable-transitions="false"
+          >{{role.nameZh}}</el-tag>
+          <el-popover
+            v-loading="eploading[0]"
+            placement="right"
+            title="角色列表"
+            width="200"
+            @hide="updateHrRoles()"
+            :key="role.id"
+            trigger="click"
+          >
+            <el-select v-model="selRoles" multiple placeholder="请选择角色">
+              <el-option v-for="ar in role" :key="ar.id" :label="ar.nameZh" :value="ar.id"></el-option>
+            </el-select>
+            <el-button
+              type="text"
+              icon="el-icon-more"
+              style="color: #09c0f6;padding-top: 0px"
+              slot="reference"
+              @click="loadSelRoles()"
+              :disabled="moreBtnState"
+            ></el-button>
+          </el-popover>
+        </div>
         <div>
           <span>选择角色</span>
           <el-select
@@ -525,16 +557,7 @@
             <el-option v-for="item in role" :key="item.id" :label="item.nameZh" :value="item.id"></el-option>
           </el-select>
         </div>
-        <!-- <div style="margin-top: 10px">
-          <span>部门名称</span>
-          <el-input
-            size="mini"
-            style="width: 200px;"
-            v-model="depName"
-            placeholder="请输入部门名称..."
-            @keyup.enter.native="addDep"
-          ></el-input>
-        </div>-->
+
         <span slot="footer" class="dialog-footer">
           <el-button size="small" @click="dialogVisible3 = false">取消</el-button>
           <el-button size="small" type="primary" @click="addRole(rid)">确定</el-button>
@@ -869,7 +892,7 @@ export default {
       var _this = this;
       // this.loadAllDeps();
       this.dialogVisible3 = true;
-      //  this.role = roles.;
+       _this.role = this.row.roles;
       _this.hrId = row.id;
       // _this.rids = []
 
