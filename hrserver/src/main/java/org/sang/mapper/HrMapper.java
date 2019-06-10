@@ -31,9 +31,13 @@ public interface HrMapper {
 
     int deleteHr(Long hrId);
 
+    int deleteHrs(@Param("ids") String[] ids);
+
     List<Hr> getAllHr(@Param("currentId") Long currentId);
 
     int addHr(@Param("hr") Hr hr);
+
+    int addHrs(@Param("hrs") List<Hr> hrs);
 
     int updateHreg(@Param("hr") Hr hr);
 

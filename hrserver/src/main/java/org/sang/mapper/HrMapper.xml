@@ -151,6 +151,12 @@
     <delete id="deleteHr" parameterType="Long">
         DELETE FROM hr WHERE id=#{hrId}
     </delete>
+    <delete id="deleteHrs">
+        DELETE FROM hr WHERE id IN
+        <foreach collection="ids" separator="," open="(" close=")" item="id">
+            #{id}
+        </foreach>
+    </delete>
     <select id="getAllHr" resultType="org.sang.bean.Hr">
         select * from hr
         <if test="currentId!=null">
@@ -162,14 +168,18 @@
         insert into hr (name,phone,gender,address,departmentId,enabled,username,password,
         userface,idCard,remark,birthday,email,nationId
       )
-    values (#{name,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},#{gender,jdbcType=VARCHAR},
-    #{address,jdbcType=VARCHAR},#{departmentId,jdbcType=INTEGER},#{enabled,jdbcType=BIT},
-    #{username,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR},
-    #{userface,jdbcType=VARCHAR},
-       #{idCard,jdbcType=VARCHAR},#{birthday,jdbcType=DATE},
-        #{email,jdbcType=VARCHAR}, #{nationId,jdbcType=INTEGER}
+    values
+        <foreach collection="hrs" item="hr" separator=",">
+            (#{hr.name,jdbcType=VARCHAR}, #{hr.phone,jdbcType=VARCHAR},#{hr.gender,jdbcType=VARCHAR},
+            #{hr.address,jdbcType=VARCHAR},#{hr.departmentId,jdbcType=INTEGER},#{hr.enabled,jdbcType=BIT},
+            #{hr.username,jdbcType=VARCHAR},#{hr.password,jdbcType=VARCHAR},
+            #{hr.userface,jdbcType=VARCHAR},
+            #{hr.idCard,jdbcType=VARCHAR},#{hr.remark,jdbcType=VARCHAR},#{hr.birthday,jdbcType=DATE},
+            #{hr.email,jdbcType=VARCHAR}, #{hr.nationId,jdbcType=INTEGER}
+            )
+        </foreach>
 
-      )
+
     </insert>
 
     <insert id="addHr" parameterType="org.sang.bean.Hr">

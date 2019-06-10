@@ -1099,6 +1099,15 @@ export default {
         }
       });
     },
+    upPoint(id) {
+       var _this = this;
+
+      this.putRequest("/student/basic/updatePoint", id).then(resp => {
+        if (resp && resp.status == 200) {
+        }
+      });
+
+    },
     deletePoint(id) {
       this.$confirm("确定删除[" + id+ "], 是否继续?", "提示", {
         confirmButtonText: "确定",

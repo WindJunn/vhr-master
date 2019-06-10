@@ -106,4 +106,14 @@ public class StudentController {
         }
         return RespBean.error("导入失败!");
     }
+
+
+    @RequestMapping(value = "/updatePoint", method = RequestMethod.PUT)
+    public RespBean updatePoint(Long id) {
+        if (studentService.updatePoint(id) == 1) {
+            return RespBean.ok("更新积分成功!");
+        }
+        return RespBean.error("更新积分失败!");
+    }
+
 }

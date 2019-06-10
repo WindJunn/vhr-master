@@ -56,5 +56,11 @@ export default new Router({
         }
       ]
     }
+    // , {
+    //   path: '/home/per/salary',
+    //   name: '文章详情',
+    //   component: PerSalary,
+    //   hidden: true
+    // }
   ]
 })

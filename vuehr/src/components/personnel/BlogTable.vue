@@ -191,7 +191,7 @@ export default {
     },
     handleEdit(index, row) {
       this.$router.push({
-        path: "/editBlog",
+        path: "/per/train",
         query: { from: this.activeName, id: row.id }
       });
     },

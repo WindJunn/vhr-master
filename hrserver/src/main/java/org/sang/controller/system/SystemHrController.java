@@ -1,9 +1,9 @@
 package org.sang.controller.system;
 
+import org.sang.bean.Department;
 import org.sang.bean.Hr;
 import org.sang.bean.RespBean;
-import org.sang.bean.Student;
-import org.sang.common.poi.StudentPoiUtils;
+import org.sang.common.poi.UserPoiUtils;
 import org.sang.service.DepartmentService;
 import org.sang.service.HrService;
 import org.sang.service.RoleService;
@@ -53,9 +53,9 @@ public class SystemHrController {
         return hrService.getHrByUsername(username);
     }
 
-    @RequestMapping(value = "/{hrId}", method = RequestMethod.DELETE)
-    public RespBean deleteHr(@PathVariable Long hrId) {
-        if (hrService.deleteHr(hrId) == 1) {
+    @RequestMapping(value = "/{ids}", method = RequestMethod.DELETE)
+    public RespBean deleteHrs(@PathVariable String ids) {
+        if (hrService.deleteHrs(ids)) {
             return RespBean.ok("删除成功!");
         }
         return RespBean.error("删除失败!");
@@ -124,16 +124,22 @@ public class SystemHrController {
         return RespBean.error("添加失败!");
     }
 
-    @RequestMapping(value = "/exportEmp", method = RequestMethod.GET)
+    @RequestMapping(value = "/exportUsers", method = RequestMethod.GET)
     public ResponseEntity<byte[]> exportEmp() {
-        return StudentPoiUtils.exportEmp2Excel(studentService.getAllStudents());
+        Map<String, Object> map = getAllNations();
+        List<Hr> hrs = hrService.getAllHr();
+        List<Department> depss = departmentService.getAllDeps();
+        map.put("depss",depss);
+        map.put("hrs",hrs);
+
+        return UserPoiUtils.exportUser2Excel(map);
     }
 
-    @RequestMapping(value = "/importEmp", method = RequestMethod.POST)
+    @RequestMapping(value = "/importUsers", method = RequestMethod.POST)
     public RespBean importEmp(MultipartFile file) {
-        List<Student> emps = StudentPoiUtils.importEmp2List(file,
+        List<Hr> hrs = UserPoiUtils.importUser2List(file,
                 studentService.getAllNations(), departmentService.getAllDeps());
-        if (studentService.addStudents(emps) == emps.size()) {
+        if (hrService.addHrs(hrs) == hrs.size()) {
             return RespBean.ok("导入成功!");
         }
         return RespBean.error("导入失败!");

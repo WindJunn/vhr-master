@@ -9,7 +9,7 @@
 
         <div style="display: inline">
           <el-input
-            placeholder="通过姓名搜索管理员,记得回车哦..."
+            placeholder="通过姓名搜索教员,记得回车哦..."
             clearable
             @change="keywordsChange"
             style="width: 300px;margin: 0px;padding: 0px;"
@@ -686,7 +686,7 @@ export default {
       }
       this.getRequest(
         "/system/hr/?page=" +
-          this.currentPage +
+          (this.currentPage-1) +
           "&size=10&keywords=" +
           this.keywords +
           "&nationId=" +
@@ -694,7 +694,8 @@ export default {
           "&departmentId=" +
           this.hr.departmentId +
           "&nameZh=" +
-          ""
+          "教员"
+          
       ).then(resp => {
         this.tableLoading = false;
         if (resp && resp.status == 200) {

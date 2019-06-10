@@ -41,7 +41,7 @@
           <el-upload
             :show-file-list="false"
             accept="application/vnd.ms-excel"
-            action="/system/hr/importEmp"
+            action="/system/hr/importUsers"
             :on-success="fileUploadSuccess"
             :on-error="fileUploadError"
             :disabled="fileUploadBtnText=='正在导入'"
@@ -53,7 +53,7 @@
               {{fileUploadBtnText}}
             </el-button>
           </el-upload>
-          <el-button type="success" size="mini" @click="exportEmps">
+          <el-button type="success" size="mini" @click="exportUsers">
             <i class="fa fa-lg fa-level-down" style="margin-right: 5px"></i>导出数据
           </el-button>
           <el-button type="primary" size="mini" icon="el-icon-plus" @click="showAddEmpView">添加管理员</el-button>
@@ -131,17 +131,18 @@
             <el-table-column prop="gender" label="性别" width="50"></el-table-column>
 
             <el-table-column prop="idCard" width="150" align="left" label="身份证号码"></el-table-column>
-            <el-table-column width="85" align="left" label="出生日期">
-              <template slot-scope="scope">{{ scope.row.birthday | formatDate}}</template>
-            </el-table-column>
+           
             <el-table-column width="60" prop="nation.name" label="民族"></el-table-column>
 
             <el-table-column prop="phone" width="100" label="电话号码"></el-table-column>
-            <el-table-column prop="address" width="220" align="left" label="联系地址"></el-table-column>
 
             <el-table-column prop="department.name" align="left" width="100" label="所属部门"></el-table-column>
             <el-table-column width="100" align="left" prop="roles[0].nameZh" label="角色"></el-table-column>
 
+             <el-table-column width="85" align="left" label="出生日期">
+              <template slot-scope="scope">{{ scope.row.birthday | formatDate}}</template>
+            </el-table-column>
+            <el-table-column prop="address" width="220" align="left" label="联系地址"></el-table-column>
             <el-table-column prop="email" width="180" align="left" label="电子邮件"></el-table-column>
 
             <el-table-column fixed="right" label="操作" width="195">
@@ -514,7 +515,13 @@
       <el-dialog title="角色管理" :visible.sync="dialogVisible3" width="25%">
         <div>
           <span>选择角色</span>
-          <el-select v-model="roles" style="width: 200px" placeholder="请选择" size="mini">
+          <el-select
+            @change="selectGet"
+            v-model="rid"
+            style="width: 200px"
+            placeholder="请选择"
+            size="mini"
+          >
             <el-option v-for="item in role" :key="item.id" :label="item.nameZh" :value="item.id"></el-option>
           </el-select>
         </div>
@@ -530,79 +537,9 @@
         </div>-->
         <span slot="footer" class="dialog-footer">
           <el-button size="small" @click="dialogVisible3 = false">取消</el-button>
-          <el-button size="small" type="primary" @click="addRole">确定</el-button>
+          <el-button size="small" type="primary" @click="addRole(rid)">确定</el-button>
         </span>
       </el-dialog>
-    </div>
-
-    <div style="display: flex;justify-content: space-around;flex-wrap: wrap;text-align: left">
-      <el-card
-        style="width: 350px;margin-bottom: 20px"
-        v-loading="cardLoading[0]"
-        :visible.sync="dialogVisible3"
-      >
-        <div slot="header" class="clearfix">
-          <span>{{hr.name}}</span>
-          <el-button
-            type="text"
-            style="color: #f6061b;margin: 0px;float: right; padding: 3px 0;width: 15px;height:15px"
-            icon="el-icon-delete"
-            @click="deleteHr(hr.id)"
-          ></el-button>
-        </div>
-        <!-- <div>
-          <div style="margin-top: 20px">
-            <div class="user-info" style="display: flex;align-items: center;margin-bottom: 3px">
-              用户状态:
-              <el-switch
-                style="display: inline;margin-left: 5px"
-                v-model="hr.enabled"
-                active-color="#13ce66"
-                inactive-color="#aaaaaa"
-                active-text="启用"
-                :key="hr.id"
-                @change="switchChange(hr.enabled,hr.id,index)"
-                inactive-text="禁用"
-              ></el-switch>
-            </div>
-            <div class="user-info">
-              用户角色:
-              <el-tag
-                v-for="role in hr.roles"
-                :key="role.id"
-                type="success"
-                size="mini"
-                style="margin-right: 5px"
-                :disable-transitions="false"
-              >{{role.nameZh}}</el-tag>
-              <el-popover
-                v-loading="eploading[index]"
-                placement="right"
-                title="角色列表"
-                width="200"
-                @hide="updateHrRoles(hr.id,index)"
-                :key="hr.id"
-                trigger="click"
-              >
-                <el-select v-model="selRoles" multiple placeholder="请选择角色">
-                  <el-option v-for="ar in allRoles" :key="ar.id" :label="ar.nameZh" :value="ar.id"></el-option>
-                </el-select>
-                <el-button
-                  type="text"
-                  icon="el-icon-more"
-                  style="color: #09c0f6;padding-top: 0px"
-                  slot="reference"
-                  @click="loadSelRoles(hr.roles,index)"
-                  :disabled="moreBtnState"
-                ></el-button>
-              </el-popover>
-            </div>
-            <div>
-              <span class="user-info">备注:{{hr.remark}}</span>
-            </div>
-          </div>
-        </div> -->
-      </el-card>
     </div>
   </div>
 </template>
@@ -627,6 +564,16 @@ export default {
       cardLoading: [],
       totalCount: -1,
       currentPage: 0,
+      obj: {},
+
+      fullloading: false,
+      cardLoading: [],
+      eploading: [],
+      allRoles: [],
+      moreBtnState: false,
+      selRoles: [],
+      selRolesBak: [],
+      rid: "",
 
       deps: [],
       roles: [],
@@ -710,8 +657,14 @@ export default {
   mounted: function() {
     this.initData();
     this.loadEmps();
+    this.initCards();
+    this.loadAllRoles();
   },
   methods: {
+    searchClick() {
+      this.initCards();
+      this.loadAllRoles();
+    },
     fileUploadSuccess(response, file, fileList) {
       if (response) {
         this.$message({ type: response.status, message: response.msg });
@@ -726,8 +679,8 @@ export default {
     beforeFileUpload(file) {
       this.fileUploadBtnText = "正在导入";
     },
-    exportEmps() {
-      window.open("/system/hr/exportEmp", "_parent");
+    exportUsers() {
+      window.open("/system/hr/exportUsers", "_parent");
     },
     cancelSearch() {
       this.advanceSearchViewVisible = false;
@@ -886,27 +839,39 @@ export default {
         }
       });
     },
-    addRole() {
+    addRole(rid) {
       var _this = this;
       this.dialogVisible3 = false;
       this.treeLoading = true;
-      this.postRequest("/system/basic/dep", {
-        name: this.depName,
-        parentId: this.pDep
+      this.putRequest("/system/hr/roles", {
+        hrId: this.hrId,
+        rids: [rid]
       }).then(resp => {
-        _this.treeLoading = false;
+        // _this.eploading.splice(index, 1, false);
         if (resp && resp.status == 200) {
-          var respData = resp.data;
-          _this.depName = "";
-          _this.setDataToTree(_this.treeData, _this.pDep, respData.msg);
+          var data = resp.data;
+          this.emptyEmpData();
+          _this.loadEmps();
         }
       });
+    },
+    selectGet(vId) {
+      let obj = {};
+      obj = this.role.find(item => {
+        //这里的selectList就是上面遍历的数据源
+        return item.id === vId; //筛选出匹配数据
+      });
+      return obj.id;
+      console.log(obj.name); //我这边的name就是对应label的
+      console.log(obj.id);
     },
     showaddRoleView(row) {
       var _this = this;
       // this.loadAllDeps();
       this.dialogVisible3 = true;
       //  this.role = roles.;
+      _this.hrId = row.id;
+      // _this.rids = []
 
       event.stopPropagation();
     },

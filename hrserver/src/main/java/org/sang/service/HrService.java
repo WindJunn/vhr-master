@@ -78,6 +78,10 @@ public class HrService implements UserDetailsService {
     public int deleteHr(Long hrId) {
         return hrMapper.deleteHr(hrId);
     }
+    public boolean deleteHrs(String ids) {
+        String[] split = ids.split(",");
+        return hrMapper.deleteHrs(split) == split.length;
+    }
 
     public List<Hr> getAllHrExceptAdmin() {
         return hrMapper.getAllHr(HrUtils.getCurrentHr().getId());
@@ -92,6 +96,10 @@ public class HrService implements UserDetailsService {
         String encode = encoder.encode(hr.getPassword());
         hr.setPassword(encode);
         return hrMapper.addHr(hr);
+    }
+
+    public int addHrs(List<Hr> hrs) {
+        return hrMapper.addHrs(hrs);
     }
     public int updateHreg(Hr hr){
         return hrMapper.updateHreg(hr);
