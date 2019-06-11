@@ -516,7 +516,7 @@
         <div class="user-info">
           用户角色:
           <el-tag
-            v-for="role in role"
+            v-for="role in roleAll"
             :key="role.id"
             type="success"
             size="mini"
@@ -629,6 +629,11 @@ export default {
         email: "",
         nationId: "",
         departmentName: "所属部门..."
+      },
+      role:{
+        id:"",
+        name:"",
+        nameZh:""
       },
       user: {
         id: "",
@@ -867,7 +872,7 @@ export default {
       this.dialogVisible3 = false;
       this.treeLoading = true;
       this.putRequest("/system/hr/roles", {
-        hrId: this.hrId,
+        hrId: _this.hrId,
         rids: [rid]
       }).then(resp => {
         // _this.eploading.splice(index, 1, false);
@@ -892,8 +897,12 @@ export default {
       var _this = this;
       // this.loadAllDeps();
       this.dialogVisible3 = true;
-       _this.role = this.row.roles;
+      console.log(row);
+
       _this.hrId = row.id;
+      this.roleAll = row.roles;
+      console.log(role);
+
       // _this.rids = []
 
       event.stopPropagation();
@@ -1044,5 +1053,9 @@ export default {
 .slide-fade-leave-to {
   transform: translateX(10px);
   opacity: 0;
+}
+.user-info {
+  font-size: 12px;
+  color: #09c0f6;
 }
 </style>

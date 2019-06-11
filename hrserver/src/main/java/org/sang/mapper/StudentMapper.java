@@ -17,7 +17,8 @@ public interface StudentMapper {
 
     Long getMaxWorkID();
 
-    List<Student> getStudentByPage(@Param("start") Integer start, @Param("size") Integer size, @Param("keywords") String keywords, @Param("nationId") Long nationId, @Param("departmentId") Long departmentId);
+    List<Student> getStudentByPage(@Param("start") Integer start, @Param("size") Integer size, @Param("keywords") String keywords, @Param("nationId") Long nationId,
+                                   @Param("departmentId") Long departmentId,@Param("depList") List depList);
 
     Long getCountByKeywords(@Param("keywords") String keywords,  @Param("nationId") Long nationId, @Param("departmentId") Long departmentId);
 

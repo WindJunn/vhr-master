@@ -16,6 +16,7 @@ import java.util.List;
 public class DepartmentService {
     @Autowired
     DepartmentMapper departmentMapper;
+
     public int addDep(Department department) {
         department.setEnabled(true);
         departmentMapper.addDep(department);
@@ -31,6 +32,13 @@ public class DepartmentService {
 
     public List<Department> getDepByPid(Long pid) {
         return departmentMapper.getDepByPid(pid);
+    }
+
+    public List<Department> getDepChildByPid(Long id) {
+
+        List<Department> depChild = departmentMapper.getDepChildByPid(id);
+
+        return depChild;
     }
 
     public List<Department> getAllDeps() {

@@ -9,6 +9,8 @@
           </el-badge>
           <el-dropdown @command="handleCommand">
             <span class="el-dropdown-link home_userinfo" style="display: flex;align-items: center">
+              {{user.departmentId}}
+              {{user.phone}}
               {{user.name}}
               <i>
                 <img
@@ -20,6 +22,7 @@
             </span>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item>个人中心</el-dropdown-item>
+
               <el-dropdown-item>设置</el-dropdown-item>
               <el-dropdown-item command="logout" divided>注销</el-dropdown-item>
             </el-dropdown-menu>
@@ -30,14 +33,6 @@
         <el-aside width="180px" class="home-aside">
           <div style="display: flex;justify-content: flex-start;width: 180px;text-align: left;">
             <el-menu style="background: #ececec;width: 180px;" unique-opened router>
-              <!-- <template>
-                <el-menu-item index="PersonalCenter">
-                  <template slot="title">
-                    <i class="el-icon-user-solid" style="color: #20a0ff;width: 14px;"></i>
-                    <span slot="title">个人中心</span>
-                  </template>
-                </el-menu-item>
-              </template> -->
               <template v-for="(item,index) in this.routes" v-if="!item.hidden">
                 <el-submenu :key="index" :index="index+''">
                   <template slot="title">
@@ -66,19 +61,15 @@
           </keep-alive>
           <router-view v-if="!this.$route.meta.keepAlive"></router-view>
         </el-main>
-
-    
       </el-container>
-      
     </el-container>
-   
   </div>
 </template>
 <script>
 export default {
   mounted: function() {
-        //  this.devMsg();
-    this.loadNF();
+    //  this.devMsg();
+    // this.loadNF();
   },
   methods: {
     loadNF() {

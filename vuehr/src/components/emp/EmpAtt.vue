@@ -41,7 +41,7 @@
           <el-upload
             :show-file-list="false"
             accept="application/vnd.ms-excel"
-            action="/attendance/importEmp"
+            action="/attendance/importAtt"
             :on-success="fileUploadSuccess"
             :on-error="fileUploadError"
             :disabled="fileUploadBtnText=='正在导入'"
@@ -53,10 +53,10 @@
               {{fileUploadBtnText}}
             </el-button>
           </el-upload>
-          <el-button type="success" size="mini" @click="exportEmps">
+          <el-button type="success" size="mini" @click="exportAtt">
             <i class="fa fa-lg fa-level-down" style="margin-right: 5px"></i>导出数据
           </el-button>
-          <el-button type="primary" size="mini" icon="el-icon-plus" @click="showAddEmpView">添加考勤</el-button>
+          <!-- <el-button type="primary" size="mini" icon="el-icon-plus" @click="showAddEmpView">添加考勤</el-button> -->
         </div>
       </el-header>
       <el-main style="padding-left: 0px;padding-top: 0px">
@@ -127,7 +127,6 @@
           >
             <el-table-column type="selection" align="left" width="30"></el-table-column>
             <el-table-column prop="student.name" align="left" fixed label="姓名" width="90"></el-table-column>
-            <el-table-column prop="student.workID" width="95" align="left" label="学号"></el-table-column>
             <el-table-column prop="student.gender" label="性别" width="50"></el-table-column>
 
             <el-table-column prop="student.idCard" width="150" align="left" label="身份证号码"></el-table-column>
@@ -138,6 +137,7 @@
               <template slot-scope="scope">{{ scope.row.atime | formatDate}}</template>
             </el-table-column>
             <el-table-column prop="attname.name" width="100" label="考勤状态"></el-table-column>
+            <!-- <el-table-column prop="student.workID" width="95" align="left" label="学号"></el-table-column> -->
 
             <el-table-column fixed="right" label="操作" width="250">
               <template slot-scope="scope">
@@ -524,8 +524,8 @@ export default {
     beforeFileUpload(file) {
       this.fileUploadBtnText = "正在导入";
     },
-    exportEmps() {
-      window.open("/attendance/exportEmp", "_parent");
+    exportAtt() {
+      window.open("/attendance/exportAtt", "_parent");
     },
     cancelSearch() {
       this.advanceSearchViewVisible = false;

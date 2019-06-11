@@ -7,6 +7,13 @@ public class Attname implements Serializable {
     private Long id;
     private String name;
 
+    public Attname() {
+    }
+
+    public Attname(String name) {
+        this.name = name;
+    }
+
     public Long getId() {
         return id;
     }

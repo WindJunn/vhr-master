@@ -58,8 +58,12 @@
         </if>
 
         <if test="departmentId!=null and departmentId!=''">
-            AND e.departmentId=#{departmentId}
+            AND e.departmentId in
+            <foreach collection="depList" index="index" item="did" separator="," open="(" close=")" >
+                #{did}
+            </foreach>
         </if>
+
         <if test="start!=null and size!=null">
             order by e.id limit #{start},#{size}
         </if>

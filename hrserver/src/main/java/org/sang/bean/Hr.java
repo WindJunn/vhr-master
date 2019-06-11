@@ -86,7 +86,7 @@ public class Hr implements UserDetails, Serializable {
         this.idCard = idCard;
     }
 
-    @JsonIgnore
+
     public Long getDepartmentId() {
         return departmentId;
     }

@@ -127,31 +127,30 @@
           >
             <el-table-column type="selection" align="left" width="30"></el-table-column>
             <el-table-column prop="name" align="left" fixed label="姓名" width="90"></el-table-column>
-            <el-table-column prop="workID" width="95" align="left" label="学号"></el-table-column>
+            <!-- <el-table-column prop="workID" width="95" align="left" label="学号"></el-table-column> -->
             <el-table-column prop="gender" label="性别" width="50"></el-table-column>
-            <el-table-column width="85" align="left" label="出生日期">
-              <template slot-scope="scope">{{ scope.row.birthday | formatDate}}</template>
-            </el-table-column>
+
             <el-table-column prop="idCard" width="150" align="left" label="身份证号码"></el-table-column>
-            <el-table-column prop="wedlock" width="70" label="婚姻状况"></el-table-column>
-            <el-table-column width="60" prop="nation.name" label="民族"></el-table-column>
-            <el-table-column prop="nativePlace" width="80" label="籍贯"></el-table-column>
 
             <el-table-column prop="phone" width="100" label="电话号码"></el-table-column>
-            <el-table-column prop="address" width="220" align="left" label="联系地址"></el-table-column>
             <el-table-column prop="department.name" align="left" width="100" label="所属部门"></el-table-column>
             <el-table-column prop="points" align="left" width="70" label="积分">
               <template slot-scope="scope">
-                <el-popover trigger="hover" placement="top">
-                  <p>积分记录：</p>
-                  <p>积分: {{ scope.row.name }}</p>
-                  <p>住址: {{ scope.row.address }}</p>
-                  <div slot="reference" class="name-wrapper">
-                    <el-tag size="medium">{{ scope.row.points }}</el-tag>
-                  </div>
-                </el-popover>
+                <div slot="reference" class="name-wrapper">
+                  <el-tag size="medium">{{ scope.row.points }}</el-tag>
+                </div>
               </template>
             </el-table-column>
+            <el-table-column width="60" prop="nation.name" label="民族"></el-table-column>
+            <el-table-column prop="nativePlace" width="80" label="籍贯"></el-table-column>
+            <el-table-column prop="wedlock" width="70" label="婚姻状况"></el-table-column>
+
+            <el-table-column width="85" align="left" label="出生日期">
+              <template slot-scope="scope">{{ scope.row.birthday | formatDate}}</template>
+            </el-table-column>
+
+            <el-table-column prop="address" width="220" align="left" label="联系地址"></el-table-column>
+
             <el-table-column fixed="right" label="操作" width="250">
               <template slot-scope="scope">
                 <el-button
@@ -411,9 +410,10 @@
           :close-on-click-modal="false"
           :visible.sync="dialogVisible1"
           width="85%"
+          height="80%"
         >
           <el-tag style>总积分</el-tag>:
-          <el-tag>{{emp.points}}</el-tag>
+          <el-tag>{{emp.point}}</el-tag>
           <el-row ref="add">
             <el-col style="width:20%">
               <div>
@@ -810,6 +810,14 @@ export default {
       }
     };
   },
+  computed: {
+    userhr() {
+      return this.$store.state.user;
+    },
+    routes() {
+      return this.$store.state.routes;
+    }
+  },
   mounted: function() {
     this.initData();
     this.loadEmps();
@@ -928,8 +936,8 @@ export default {
           this.keywords +
           "&nationId=" +
           this.emp.nationId +
-          "&departmentId=" +
-          this.emp.departmentId
+          "&departmentId="+
+          this.userhr.departmentId
       ).then(resp => {
         this.tableLoading = false;
         if (resp && resp.status == 200) {
@@ -948,8 +956,9 @@ export default {
           this.currentPage +
           "&size=10&keywords=" +
           this.keywords +
-          "&departmentId=" +""
-          // this.emp.departmentId
+          "&departmentId=" +
+          ""
+        // this.emp.departmentId
       ).then(resp => {
         this.tableLoading = false;
         if (resp && resp.status == 200) {
@@ -1058,10 +1067,12 @@ export default {
       });
     },
     showEditPointView(row) {
+      var _this = this;
+
       this.dialogTitle = "积分管理";
       this.emp = row;
-      this.id=this.emp.id;
-      var _this = this;
+      _this.emp.point = row.points;
+      this.id = this.emp.id;
       _this.getAllpointById();
       _this.getAllPointoption();
       this.dialogVisible1 = true;
@@ -1088,31 +1099,29 @@ export default {
       this.point.sid = this.emp.id;
       // this.point.modifyTime=this.formatDateTime(new Date());
       // this.point.modifyTime=null;
-          _this.emp.nationId="";
-          _this.emp.departmentId="";
+      _this.emp.nationId = "";
+      _this.emp.departmentId = "";
 
       this.postRequest("/point/", this.point).then(resp => {
         if (resp && resp.status == 200) {
           _this.counts = resp.data.counts;
           _this.getAllpointById();
           _this.loadEmps();
-
         }
       });
     },
     upPoint() {
-       var _this = this;
+      var _this = this;
       this.putRequest("/student/basic/updatePoint", {
-        id:this.id
+        id: this.id
       }).then(resp => {
         if (resp && resp.status == 200) {
         }
       });
-
     },
     deletePoint(id) {
-       var _this = this;
-      this.$confirm("确定删除[" + id+ "], 是否继续?", "提示", {
+      var _this = this;
+      this.$confirm("确定删除[" + id + "], 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
@@ -1132,10 +1141,9 @@ export default {
 
           _this.getAllpointById();
           _this.upPoint();
-          _this.emp.nationId="";
-          _this.emp.departmentId="";
+          _this.emp.nationId = "";
+          _this.emp.departmentId = "";
           _this.loadEmps();
-
         }
       });
     },

@@ -12,8 +12,8 @@
             #{id}
         </foreach>
     </delete>
-    <update id="updatePointoptionById" parameterType="org.sang.bean.Pointoption">
-        UPDATE pointoption SET name=#{name},point=#{point} WHERE id=#{id}
+    <update id="updatePointoption" parameterType="org.sang.bean.Pointoption">
+        UPDATE pointoption SET name=#{pointoption.name},point=#{pointoption.point} WHERE id=#{pointoption.id}
     </update>
     <insert id="addPointoption" parameterType="org.sang.bean.Pointoption">
         INSERT INTO pointoption SET name=#{name},point=#{point}

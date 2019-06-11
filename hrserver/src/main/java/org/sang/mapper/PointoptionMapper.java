@@ -14,7 +14,7 @@ public interface PointoptionMapper {
 
     int addPointoption(Pointoption pointoption);
 
-    int updatePointoption(Pointoption pointoption);
+    int updatePointoption(@Param("pointoption")Pointoption pointoption);
 
     int deletePointoptionByIds(@Param("ids") String[] ids);
 

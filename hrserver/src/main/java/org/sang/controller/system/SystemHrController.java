@@ -43,6 +43,15 @@ public class SystemHrController {
         return map;
     }
 
+    @RequestMapping(value = "/dep", method = RequestMethod.GET)
+    public Map<String, Object> getAllDeps(Long id) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("deps", departmentService.getDepByPid(id));
+        return map;
+    }
+
+
+
     @RequestMapping("/id/{hrId}")
     public Hr getHrById(@PathVariable Long hrId) {
         return hrService.getHrById(hrId);

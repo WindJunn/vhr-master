@@ -3,10 +3,14 @@ package org.sang.controller;
 import org.sang.bean.Attendance;
 import org.sang.bean.Attname;
 import org.sang.bean.RespBean;
+import org.sang.common.poi.StudentAttPoiUtils;
 import org.sang.service.AttendanceService;
+import org.sang.service.AttnameService;
 import org.sang.service.DepartmentService;
+import org.sang.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +29,12 @@ public class AttendanceController {
     DepartmentService departmentService;
     @Autowired
     ExecutorService executorService;
+
+    @Autowired
+    StudentService studentService;
+
+    @Autowired
+    AttnameService attnameService;
 
 
     @RequestMapping(value = "/basicdata", method = RequestMethod.GET)
@@ -88,20 +98,18 @@ public class AttendanceController {
         return map;
     }
 
-/*    @RequestMapping(value = "/exportEmp", method = RequestMethod.GET)
+  /*  @RequestMapping(value = "/exportAtt", method = RequestMethod.GET)
     public ResponseEntity<byte[]> exportEmp() {
         return PoiUtils.exportEmp2Excel(attendanceService.getAllEmployees());
-    }
+    }*/
 
-    @RequestMapping(value = "/importEmp", method = RequestMethod.POST)
+    @RequestMapping(value = "/importAtt", method = RequestMethod.POST)
     public RespBean importEmp(MultipartFile file) {
-        List<Employee> emps = PoiUtils.importEmp2List(file,
-                attendanceService.getAllNations(), attendanceService.getAllPolitics(),
-                departmentService.getAllDeps(), positionService.getAllPos(),
-                jobLevelService.getAllJobLevels());
-        if (attendanceService.addStudents(emps) == emps.size()) {
+        List<Attendance> atts = StudentAttPoiUtils.importAtt2List(file,
+                studentService.getAllStudents(), attnameService.getAllCategories());
+        if (attendanceService.addAtts(atts) == atts.size()) {
             return RespBean.ok("导入成功!");
         }
         return RespBean.error("导入失败!");
-    }*/
+    }
 }

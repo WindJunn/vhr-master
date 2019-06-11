@@ -22,6 +22,13 @@ public class Student {
     private Department department;
     private Nation nation;
     private Long points;
+
+    public Student() {
+    }
+
+    public Student(String idCard) {
+        this.idCard = idCard;
+    }
     public Long getPoints() {
         return points;
     }

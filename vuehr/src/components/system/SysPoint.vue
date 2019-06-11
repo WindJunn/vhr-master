@@ -3,18 +3,8 @@
     <span></span>
     <hr>
     <div style="text-align: left">
-      <el-input
-        :placeholder="'输入积分项目...'"
-        size="mini"
-        style="width: 15%;"
-        v-model="name"
-      ></el-input>
-      <el-input
-        :placeholder="'输入积分项目分数...'"
-        size="mini"
-        style="width: 12%;"
-        v-model="point"
-      ></el-input>
+      <el-input :placeholder="'输入积分项目...'" size="mini" style="width: 15%;" v-model="name"></el-input>
+      <el-input :placeholder="'输入积分项目分数...'" size="mini" style="width: 12%;" v-model="point"></el-input>
 
       <el-button type="primary" icon="el-icon-plus" size="mini" @click="addPosition">添加</el-button>
     </div>
@@ -52,12 +42,12 @@
     </div>
     <div style="text-align: left">
       <el-dialog :title="'编辑名称'" :visible.sync="dialogVisible" width="25%">
-        <el-input v-model="name" size="" placeholder="请输入新的名称..."></el-input>
+        <el-input v-model="pointoption.name" size placeholder="请输入新的名称..."></el-input>
         <hr style="width:20%">
-        <el-input v-model="point" size="" placeholder="请输入新的分数..."></el-input>
+        <el-input v-model="pointoption.point" size placeholder="请输入新的分数..."></el-input>
 
         <span slot="footer" class="dialog-footer">
-          <el-button size="mini"   @click="cancelEidt">取 消</el-button>
+          <el-button size="mini" @click="cancelEidt">取 消</el-button>
           <el-button type="primary" size="mini" @click="updatePosNameExec">确 定</el-button>
         </span>
       </el-dialog>
@@ -71,17 +61,16 @@ export default {
   },
   methods: {
     updatePosNameExec() {
-      if (!this.isNotNullORBlank(this.name)) {
+      if (!this.isNotNullORBlank(this.pointoption.name)) {
         this.$message.warning("名称不能为空!");
         return;
       }
       this.loading = true;
       var _this = this;
       this.putRequest("/pointoption/", {
-        id: this.id,
-        name: this.name,
-        point: this.point,
-        
+        id:this.pointoption.id,
+        name:this.pointoption.name,
+        point:this.pointoption.point
       }).then(resp => {
         _this.loading = false;
         if (resp && resp.status == 200) {
@@ -127,7 +116,7 @@ export default {
       this.loading = true;
       this.postRequest("/pointoption/", {
         name: this.name,
-        point:this.point
+        point: this.point
       }).then(resp => {
         _this.loading = false;
         if (resp && resp.status == 200) {
@@ -147,9 +136,9 @@ export default {
       this.emptyEmpData();
     },
     handleEdit(index, row) {
-      this.name = row.name;
-      this.id = row.id;
-      this.point = row.point;
+      this.pointoption.name = row.name;
+      this.pointoption.id = row.id;
+      this.pointoption.point = row.point;
       this.dialogVisible = true;
     },
     handleDelete(index, row) {
@@ -180,9 +169,9 @@ export default {
         }
       });
     },
-    emptyEmpData(){
-      this.point="";
-      this.name="";
+    emptyEmpData() {
+      this.point = "";
+      this.name = "";
     },
     loadTableData() {
       var _this = this;
@@ -199,7 +188,7 @@ export default {
     return {
       id: "",
       name: "",
-      point:"",
+      point: "",
       updatePosId: -1,
       loading: false,
       dialogVisible: false,
@@ -207,7 +196,12 @@ export default {
       type: [],
       nameLabelName: "分类名称",
       catData: [],
-      pointoption:[]
+      pointoption: [],
+      pointoption: {
+        id: "",
+        name: "",
+        point: ""
+      }
     };
   },
   props: ["state"]
