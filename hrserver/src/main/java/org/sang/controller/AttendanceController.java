@@ -87,10 +87,10 @@ public class AttendanceController {
             @RequestParam(defaultValue = "10") Integer size,
             @RequestParam(defaultValue = "") String keywords,
             String atime, Long stateId,
-            Long sid, Long departmentId) {
+            Long sid, Long departmentId,Long upid) {
         Map<String, Object> map = new HashMap<>();
         List<Attendance> atts = attendanceService.getAttByPage(page, size,
-                keywords, atime, stateId, sid, departmentId);
+                keywords, atime, stateId, sid, departmentId,upid);
 //        Long count = attendanceService.getCountByKeywords(keywords, atime,
 //                stateId, sid, departmentId);
         map.put("atts", atts);

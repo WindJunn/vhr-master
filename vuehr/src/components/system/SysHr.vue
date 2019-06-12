@@ -524,11 +524,10 @@
             :disable-transitions="false"
           >{{role.nameZh}}</el-tag>
           <el-popover
-            v-loading="eploading[0]"
             placement="right"
             title="角色列表"
-            width="200"
-            @hide="updateHrRoles()"
+            width="300"
+            @hide="updateHrRoles(userId)"
             :key="role.id"
             trigger="click"
           >
@@ -540,12 +539,12 @@
               icon="el-icon-more"
               style="color: #09c0f6;padding-top: 0px"
               slot="reference"
-              @click="loadSelRoles()"
+              @click="loadSelRoles(role,userId)"
               :disabled="moreBtnState"
             ></el-button>
           </el-popover>
         </div>
-        <div>
+        <!-- <div>
           <span>选择角色</span>
           <el-select
             @change="selectGet"
@@ -561,7 +560,7 @@
         <span slot="footer" class="dialog-footer">
           <el-button size="small" @click="dialogVisible3 = false">取消</el-button>
           <el-button size="small" type="primary" @click="addRole(rid)">确定</el-button>
-        </span>
+        </span>-->
       </el-dialog>
     </div>
   </div>
@@ -586,7 +585,7 @@ export default {
       joblevels: [],
       cardLoading: [],
       totalCount: -1,
-      currentPage: 0,
+      currentPage: 1,
       obj: {},
 
       fullloading: false,
@@ -597,6 +596,8 @@ export default {
       selRoles: [],
       selRolesBak: [],
       rid: "",
+
+      rolelist: "",
 
       deps: [],
       roles: [],
@@ -630,10 +631,10 @@ export default {
         nationId: "",
         departmentName: "所属部门..."
       },
-      role:{
-        id:"",
-        name:"",
-        nameZh:""
+      role: {
+        id: "",
+        name: "",
+        nameZh: ""
       },
       user: {
         id: "",
@@ -682,6 +683,11 @@ export default {
       }
     };
   },
+  computed: {
+    userhr() {
+      return this.$store.state.user;
+    }
+  },
   mounted: function() {
     this.initData();
     this.loadEmps();
@@ -689,6 +695,62 @@ export default {
     this.loadAllRoles();
   },
   methods: {
+    updateHrRoles(hrId) {
+      this.moreBtnState = false;
+      var _this = this;
+      if (this.selRolesBak.length == this.selRoles.length) {
+        for (var i = 0; i < this.selRoles.length; i++) {
+          for (var j = 0; j < this.selRolesBak.length; j++) {
+            if (this.selRoles[i] == this.selRolesBak[j]) {
+              this.selRolesBak.splice(j, 1);
+              break;
+            }
+          }
+        }
+        if (this.selRolesBak.length == 0) {
+          return;
+        }
+      }
+      this.putRequest("/system/hr/roles", {
+        hrId: hrId,
+        rids: this.selRoles
+      }).then(resp => {
+        // _this.eploading.splice(index, 1, false);
+        if (resp && resp.status == 200) {
+          var data = resp.data;
+
+          if (data.status == "success") {
+            this.loadEmps();
+          }
+        }
+      });
+    },
+    refreshHr(hrId) {
+      var _this = this;
+      // _this.cardLoading.splice(index, 1, true);
+      this.putRequest("/system/hr/id/" + hrId).then(resp => {
+        // _this.cardLoading.splice(index, 1, false);
+        // _this.hrs.splice(index, 1, resp.data);
+      });
+    },
+    loadSelRoles(hrRoles, index) {
+      this.moreBtnState = true;
+      this.selRoles = [];
+      this.selRolesBak = [];
+      hrRoles.forEach(role => {
+        this.selRoles.push(role.id);
+        this.selRolesBak.push(role.id);
+      });
+    },
+    loadAllRoles() {
+      var _this = this;
+      this.getRequest("/system/basic/roles").then(resp => {
+        _this.fullloading = false;
+        if (resp && resp.status == 200) {
+          _this.allRoles = resp.data;
+        }
+      });
+    },
     searchClick() {
       this.initCards();
       this.loadAllRoles();
@@ -794,19 +856,29 @@ export default {
       }
       this.getRequest(
         "/system/hr/?page=" +
-          this.currentPage +
+          (this.currentPage - 1) +
           "&size=10&keywords=" +
           this.keywords +
           "&nationId=" +
           this.hr.nationId +
           "&departmentId=" +
-          this.hr.departmentId
+          this.hr.departmentId +
+          "&upid=" +
+          this.userhr.departmentId +
+          "&nameZh=" +
+          ""
       ).then(resp => {
         this.tableLoading = false;
+        var i;
         if (resp && resp.status == 200) {
           var data = resp.data;
           _this.hrs = data.hrs;
           _this.roles = data.roles;
+
+          for (i = 0; i < _this.roles.length; i++) {
+            _this.rolelist += _this.roles[i].nameZh;
+          }
+          console.log(_this.rolelist)
           _this.nation = data.nation;
           _this.totalCount = data.count;
           //            _this.emptyEmpData();
@@ -900,6 +972,7 @@ export default {
       console.log(row);
 
       _this.hrId = row.id;
+      this.userId = row.id;
       this.roleAll = row.roles;
       console.log(role);
 

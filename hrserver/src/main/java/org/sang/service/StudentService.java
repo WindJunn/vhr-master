@@ -3,6 +3,8 @@ package org.sang.service;
 import org.sang.bean.Department;
 import org.sang.bean.Nation;
 import org.sang.bean.Student;
+import org.sang.common.DepartmentUtil;
+import org.sang.mapper.DepartmentMapper;
 import org.sang.mapper.StudentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +26,7 @@ public class StudentService {
     StudentMapper studentMapper;
 
     @Autowired
-    DepartmentService departmentService;
+    DepartmentMapper departmentMapper;
 
 
     SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
@@ -46,29 +48,19 @@ public class StudentService {
         return maxWorkID == null ? 0 : maxWorkID;
     }
 
-    public List<Student> getStudentByPage(Integer page, Integer size, String keywords, Long nationId, Long departmentId) {
+    public List<Student> getStudentByPage(Integer page, Integer size, String keywords, Long nationId, Long departmentId,Long upid) {
         int start = (page - 1) * size;
-        List<Long> depList=null;
-//        List<Department> allDeps = departmentService.getAllDeps();
-//        for (Department dep : allDeps) {
-//            if (dep.getId().equals(departmentId)){
-//                departmentId=dep.getParentId();
-//                break;
-//            }
-//        }
-        if (departmentId != null && departmentId != 0){
-            List<Department> deps = departmentService.getDepByPid(departmentId);
-             depList = new ArrayList<>();
-            depList.add(departmentId);
-            for (int i = 0; i < deps.size(); i++) {
-                depList.add(deps.get(i).getId());
-                while (deps.get(i).getChildren().size()>0){
+        List<Long> depList = null;
 
-                }
-            }
+        if (upid != null && upid != 0) {
+            List<Department> deps = departmentMapper.getDepByPid(upid);
+            depList = new ArrayList<>();
+            depList.add(upid);
+            DepartmentUtil.findDep(deps, depList);
         }
-        return studentMapper.getStudentByPage(start, size, keywords, nationId, departmentId,depList);
+        return studentMapper.getStudentByPage(start, size, keywords, nationId, departmentId, depList);
     }
+
 
     public Long getCountByKeywords(String keywords, Long nationId, Long departmentId) {
 
@@ -85,7 +77,7 @@ public class StudentService {
     }
 
     public List<Student> getAllStudents() {
-        return studentMapper.getStudentByPage(null, null, "", null, null,null);
+        return studentMapper.getStudentByPage(null, null, "", null, null, null);
     }
 
     public int addStudents(List<Student> students) {

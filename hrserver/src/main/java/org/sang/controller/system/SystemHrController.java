@@ -90,8 +90,8 @@ public class SystemHrController {
     public Map<String, Object> getHrsByKeywords(@RequestParam(defaultValue = "1") Integer page,
                                                 @RequestParam(defaultValue = "10") Integer size,
                                                 @RequestParam(defaultValue = "") String keywords,
-                                                Long nationId,Long departmentId,String nameZh) {
-        List<Hr> hrs = hrService.getHrsByKeywords(page,size,keywords,nationId,departmentId,nameZh);
+                                                Long nationId,Long departmentId,Long upid,String nameZh) {
+        List<Hr> hrs = hrService.getHrsByKeywords(page,size,keywords,nationId,departmentId,upid,nameZh);
         Map<String, Object> map = new HashMap<>();
         map.put("hrs",hrs);
         return map;

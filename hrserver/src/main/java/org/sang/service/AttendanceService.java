@@ -2,13 +2,17 @@ package org.sang.service;
 
 import org.sang.bean.Attendance;
 import org.sang.bean.Attname;
+import org.sang.bean.Department;
+import org.sang.common.DepartmentUtil;
 import org.sang.mapper.AttendanceMapper;
+import org.sang.mapper.DepartmentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,6 +23,9 @@ import java.util.List;
 public class AttendanceService {
     @Autowired
     AttendanceMapper attendanceMapper;
+
+    @Autowired
+    DepartmentMapper departmentMapper;
     SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
     SimpleDateFormat monthFormat = new SimpleDateFormat("MM");
     SimpleDateFormat birthdayFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -34,10 +41,19 @@ public class AttendanceService {
 
 
     public List<Attendance> getAttByPage(Integer page, Integer size, String keywords, String atime,
-                                         Long stateId, Long sid, Long departmentId) {
+                                         Long stateId, Long sid, Long departmentId,Long upid) {
         int start = (page - 1) * size;
+        List<Long> depList = null;
 
-        List<Attendance> attByPage = attendanceMapper.getAttByPage(start, size, keywords, atime, stateId, sid, departmentId);
+        if (upid != null && upid != 0) {
+            List<Department> deps = departmentMapper.getDepByPid(upid);
+            depList = new ArrayList<>();
+            depList.add(upid);
+            DepartmentUtil.findDep(deps, depList);
+        }
+
+
+        List<Attendance> attByPage = attendanceMapper.getAttByPage(start, size, keywords, atime, stateId, sid, departmentId,depList);
         return attByPage;
     }
 
@@ -57,7 +73,7 @@ public class AttendanceService {
     }
 
     public List<Attendance> getAllEmployees() {
-        return attendanceMapper.getAttByPage(null, null, "", null, null, null, null);
+        return attendanceMapper.getAttByPage(null, null, "", null, null,null, null, null);
     }
 
     public int addAtts(List<Attendance> atts) {

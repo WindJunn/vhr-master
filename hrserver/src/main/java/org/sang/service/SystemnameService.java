@@ -17,12 +17,12 @@ public class SystemnameService {
     @Autowired
     SystemnameMapper systemnameMapper;
 
-    public List<SystemName> getAllCategories() {
+    public List<SystemName> getAllSysName() {
         return systemnameMapper.getAllSysName();
     }
 
-    public int updateCategoryById(SystemName systemName) {
-        return systemnameMapper.updateSysNameById(systemName);
+    public int updateSysNameById(String title, String leftname) {
+        return systemnameMapper.updateSysNameById(title, leftname);
     }
 
 }

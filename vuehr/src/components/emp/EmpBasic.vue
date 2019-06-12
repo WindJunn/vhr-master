@@ -814,9 +814,7 @@ export default {
     userhr() {
       return this.$store.state.user;
     },
-    routes() {
-      return this.$store.state.routes;
-    }
+    
   },
   mounted: function() {
     this.initData();
@@ -937,6 +935,8 @@ export default {
           "&nationId=" +
           this.emp.nationId +
           "&departmentId="+
+          this.emp.departmentId+
+          "&upid=" +
           this.userhr.departmentId
       ).then(resp => {
         this.tableLoading = false;

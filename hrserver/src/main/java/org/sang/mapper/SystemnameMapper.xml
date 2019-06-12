@@ -7,8 +7,10 @@
         SELECT * FROM systemname
     </select>
 
-    <update id="updateCategoryById" parameterType="org.sang.bean.SystemName">
-        UPDATE systemname SET title=#{title},leftname=#{leftname} WHERE id=#{id}
+    <update id="updateSysNameById">
+        UPDATE systemname
+        SET title=#{title},leftname=#{leftname}
+        WHERE id=1
     </update>
 
 </mapper>

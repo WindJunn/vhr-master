@@ -64,8 +64,14 @@
         <if test="nationId!=null and nationId!=''">
             AND h.nationId=#{nationId}
         </if>
+        <if test="depList!=null and depList.size()>0">
+            AND h.departmentId in
+            <foreach collection="depList" index="index" item="did" separator="," open="(" close=")" >
+                #{did}
+            </foreach>
+        </if>
         <if test="departmentId!=null and departmentId!=''">
-            AND h.departmentId=#{departmentId}
+            AND h.departmentId = #{departmentId}
         </if>
         <if test="nameZh!=null and nameZh!=''">
             AND r.nameZh=#{nameZh}

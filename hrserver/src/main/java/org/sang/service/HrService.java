@@ -1,7 +1,10 @@
 package org.sang.service;
 
+import org.sang.bean.Department;
 import org.sang.bean.Hr;
+import org.sang.common.DepartmentUtil;
 import org.sang.common.HrUtils;
+import org.sang.mapper.DepartmentMapper;
 import org.sang.mapper.HrMapper;
 import org.sang.mapper.RoleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,6 +30,9 @@ public class HrService implements UserDetailsService {
 
     @Autowired
     RoleMapper roleMapper;
+
+    @Autowired
+    DepartmentMapper departmentMapper;
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
@@ -53,8 +60,18 @@ public class HrService implements UserDetailsService {
         return hrMapper.updateHrPassword(username, encode);
     }
 
-    public List<Hr> getHrsByKeywords(Integer page,Integer size,String keywords,Long nationId,Long departmentId,String nameZh) {
-        return hrMapper.getHrsByKeywords(page,size,keywords,nationId,departmentId,nameZh);
+    public List<Hr> getHrsByKeywords(Integer page,Integer size,String keywords,Long nationId,Long departmentId,Long upid,String nameZh) {
+
+        List<Long> depList = null;
+
+        if (upid != null && upid != 0) {
+            List<Department> deps = departmentMapper.getDepByPid(upid);
+            depList = new ArrayList<>();
+            depList.add(upid);
+            DepartmentUtil.findDep(deps, depList);
+        }
+
+        return hrMapper.getHrsByKeywords(page,size,keywords,nationId,departmentId,nameZh,depList);
     }
 
     public int updateHr(Hr hr) {

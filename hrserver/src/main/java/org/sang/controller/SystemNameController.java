@@ -20,17 +20,17 @@ public class SystemNameController {
     SystemnameService systemnameService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public List<SystemName> getAllCategories() {
-        return systemnameService.getAllCategories();
+    public List<SystemName> getAllSysName() {
+        return systemnameService.getAllSysName();
     }
 
 
     @RequestMapping(value = "/", method = RequestMethod.PUT)
-    public RespBean updateCate(SystemName systemName) {
-        int i = systemnameService.updateCategoryById(systemName);
+    public RespBean updateSysNameById(String title, String leftname) {
+        int i = systemnameService.updateSysNameById(title, leftname);
         if (i == 1) {
-            return  RespBean.ok("修改成功!");
+            return RespBean.ok("修改成功!");
         }
-        return  RespBean.error("修改失败!");
+        return RespBean.error("修改失败!");
     }
 }

@@ -18,7 +18,8 @@ public interface HrMapper {
 
     List<Hr> getHrsByKeywords(@Param("start") Integer start, @Param("size") Integer size,
                               @Param("keywords") String keywords, @Param("nationId") Long nationId,
-                              @Param("departmentId") Long departmentId, @Param("nameZh") String nameZh);
+                              @Param("departmentId") Long departmentId, @Param("nameZh") String nameZh
+    ,@Param("depList") List depList);
 
 
     int updateHr(@Param("hr") Hr hr);

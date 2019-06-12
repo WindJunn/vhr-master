@@ -82,10 +82,10 @@ public class StudentController {
             @RequestParam(defaultValue = "1") Integer page,
             @RequestParam(defaultValue = "10") Integer size,
             @RequestParam(defaultValue = "") String keywords,
-            Long politicId, Long nationId, Long departmentId) {
+            Long politicId, Long nationId, Long departmentId,Long upid) {
         Map<String, Object> map = new HashMap<>();
         List<Student> employeeByPage = studentService.getStudentByPage(page, size,
-                keywords, nationId, departmentId);
+                keywords, nationId, departmentId,upid);
         Long count = studentService.getCountByKeywords(keywords, politicId, nationId);
         map.put("emps", employeeByPage);
         map.put("count", count);

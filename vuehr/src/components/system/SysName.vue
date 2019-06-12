@@ -2,13 +2,7 @@
   <el-container>
     <el-header style="padding: 0px;display:flex;justify-content:space-between;align-items: center"></el-header>
     <div style="width:40%">
-      <el-form
-        :model="ruleForm"
-        status-icon
-        ref="ruleForm"
-        label-width="100px"
-        class="demo-ruleForm"
-      >
+      <el-form :model="sys" status-icon ref="ruleForm" label-width="100px" class="demo-ruleForm">
         <el-form-item label="系统标题">
           <el-input v-model="sys.title"></el-input>
         </el-form-item>
@@ -18,7 +12,7 @@
 
         <el-form-item>
           <el-button type="primary" @click="updatePassword('ruleForm')">确认修改</el-button>
-          <el-button @click="resetForm('ruleForm')">重置</el-button>
+          <!-- <el-button @click="resetForm('ruleForm')">重置</el-button> -->
         </el-form-item>
       </el-form>
     </div>
@@ -46,10 +40,10 @@ export default {
       type: []
     };
   },
+  mounted: function() {
+    this.loadTableData();
+  },
   methods: {
-    mounted: function() {
-      this.loadTableData();
-    },
     loadTableData() {
       var _this = this;
       this.loading = true;
@@ -63,15 +57,13 @@ export default {
     updatePassword() {
       var _this = this;
       // debugger;
-      this.postRequest(
-        "/system/name?username=" +
-          this.users.username +
-          "&password=" +
-          this.ruleForm.pass
-      ).then(resp => {
+      this.putRequest("/system/name/", {
+        title: this.sys.title,
+        leftname: this.sys.leftname
+      }).then(resp => {
         if (resp && resp.status == 200) {
           // alert("修改成功!");
-          this.$refs["ruleForm"].resetFields();
+          // this.$refs["ruleForm"].resetFields();
           //            _this.emptyEmpData();
         }
       });

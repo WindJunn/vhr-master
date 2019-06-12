@@ -406,7 +406,6 @@
         </el-dialog>
       </div>
     </el-form>
-    
   </div>
 </template>
 <script>
@@ -504,6 +503,11 @@ export default {
         points: [{ required: true, message: "积分", trigger: "change" }]
       }
     };
+  },
+  computed: {
+    userhr() {
+      return this.$store.state.user;
+    }
   },
   mounted: function() {
     this.initData();
@@ -618,7 +622,9 @@ export default {
           "&sid=" +
           this.att.sid +
           "&departmentId=" +
-          this.att.departmentId
+          this.att.departmentId +
+          "&upid=" +
+          this.userhr.departmentId
       ).then(resp => {
         this.tableLoading = false;
         if (resp && resp.status == 200) {

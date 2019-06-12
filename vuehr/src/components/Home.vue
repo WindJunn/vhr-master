@@ -2,14 +2,13 @@
   <div>
     <el-container class="home-container">
       <el-header class="home-header">
-        <span class="home_title">新时代农民讲习所</span>
+        <span class="home_title">{{sys.leftname}}</span>
         <div style="display: flex;align-items: center;margin-right: 7px">
           <el-badge style="margin-right: 30px" :is-dot="this.$store.state.nfDot">
             <i class="fa fa-bell-o" @click="goChat" style="cursor: pointer"></i>
           </el-badge>
           <el-dropdown @command="handleCommand">
             <span class="el-dropdown-link home_userinfo" style="display: flex;align-items: center">
-              {{user.departmentId}}
               {{user.phone}}
               {{user.name}}
               <i>
@@ -70,8 +69,19 @@ export default {
   mounted: function() {
     //  this.devMsg();
     // this.loadNF();
+    this.loadTableData();
   },
   methods: {
+    loadTableData() {
+      var _this = this;
+      this.loading = true;
+      this.getRequest("/system/name/").then(resp => {
+        _this.loading = false;
+        if (resp && resp.status == 200) {
+          _this.sys = resp.data[0];
+        }
+      });
+    },
     loadNF() {
       var _this = this;
       this.getRequest("/chat/sysmsgs").then(resp => {
@@ -129,7 +139,11 @@ export default {
   },
   data() {
     return {
-      isDot: false
+      isDot: false,
+      sys: {
+        title: "",
+        leftname: ""
+      }
     };
   },
   computed: {
