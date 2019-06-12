@@ -94,7 +94,8 @@
                   >
                     <el-tree
                       :data="deps"
-                      :default-expand-all="true"
+                      accordion
+                      :default-expand-all="false"
                       :props="defaultProps"
                       :expand-on-click-node="false"
                       @node-click="handleNodeClick2"
@@ -106,6 +107,26 @@
                       v-bind:style="{color: depTextColor}"
                     >{{emp.departmentName}}</div>
                   </el-popover>
+
+                  <!-- <el-cascader
+                    :options="showOrHidePop2"
+                    :props="{ multiple: true, checkStrictly: true }"
+                    clearable
+                  >
+                    <el-tree
+                      :data="deps"
+                      :default-expand-all="true"
+                      :props="defaultProps"
+                      :expand-on-click-node="false"
+                      @node-click="handleNodeClick2"
+                    ></el-tree>
+                    <div
+                      slot="reference"
+                      style="width: 130px;height: 26px;display: inline-flex;font-size:13px;border: 1px;border-radius: 5px;border-style: solid;padding-left: 13px;box-sizing:border-box;border-color: #dcdfe6;cursor: pointer;align-items: center"
+                      @click="showDepTree2"
+                      v-bind:style="{color: depTextColor}"
+                    >{{emp.departmentName}}</div>
+                  </el-cascader> -->
                 </el-col>
               </el-row>
               <el-row style="margin-top: 10px">
@@ -306,7 +327,7 @@
                   >
                     <el-tree
                       :data="deps"
-                      :default-expand-all="true"
+                      :default-expand-all="false"
                       :props="defaultProps"
                       :expand-on-click-node="false"
                       @node-click="handleNodeClick"
@@ -602,7 +623,7 @@
                   >
                     <el-tree
                       :data="deps"
-                      :default-expand-all="true"
+                      :default-expand-all="false"
                       :props="defaultProps"
                       :expand-on-click-node="false"
                       @node-click="handleNodeClick"
@@ -813,8 +834,7 @@ export default {
   computed: {
     userhr() {
       return this.$store.state.user;
-    },
-    
+    }
   },
   mounted: function() {
     this.initData();
@@ -934,8 +954,8 @@ export default {
           this.keywords +
           "&nationId=" +
           this.emp.nationId +
-          "&departmentId="+
-          this.emp.departmentId+
+          "&departmentId=" +
+          this.emp.departmentId +
           "&upid=" +
           this.userhr.departmentId
       ).then(resp => {

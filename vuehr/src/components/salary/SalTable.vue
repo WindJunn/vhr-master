@@ -61,7 +61,7 @@
                   >
                     <el-tree
                       :data="deps"
-                      :default-expand-all="true"
+                      :default-expand-all="false"
                       :props="defaultProps"
                       :expand-on-click-node="false"
                       @node-click="handleNodeClick2"
@@ -248,7 +248,7 @@
                   >
                     <el-tree
                       :data="deps"
-                      :default-expand-all="true"
+                      :default-expand-all="false"
                       :props="defaultProps"
                       :expand-on-click-node="false"
                       @node-click="handleNodeClick"
@@ -367,16 +367,18 @@
             </el-col>
           </el-row>
           <el-row>
-            <el-col :span="6">
+            <el-col :span="7">
               <div>
                 <el-form-item label="授课日期:" prop="time">
                   <el-date-picker
-                    v-model="sch.time"
+                     v-model="sch.time"
                     size="mini"
                     value-format="yyyy-MM-dd HH:mm:ss"
-                    style="width: 150px"
-                    type="date"
-                    placeholder="授课日期"
+                    style="width: 65%"
+                    type="datetime"
+                    align="right"
+                    placeholder="选择授课日期时间"
+                    :picker-options="pickerOptions"
                   ></el-date-picker>
                 </el-form-item>
               </div>
@@ -392,7 +394,7 @@
                   >
                     <el-tree
                       :data="deps"
-                      :default-expand-all="true"
+                      :default-expand-all="false"
                       :props="defaultProps"
                       :expand-on-click-node="false"
                       @node-click="handleNodeClick3"
@@ -455,6 +457,32 @@
 export default {
   data() {
     return {
+       pickerOptions: {
+        shortcuts: [
+          {
+            text: "今天",
+            onClick(picker) {
+              picker.$emit("pick", new Date());
+            }
+          },
+          {
+            text: "昨天",
+            onClick(picker) {
+              const date = new Date();
+              date.setTime(date.getTime() - 3600 * 1000 * 24);
+              picker.$emit("pick", date);
+            }
+          },
+          {
+            text: "一周前",
+            onClick(picker) {
+              const date = new Date();
+              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit("pick", date);
+            }
+          }
+        ]
+      },
       depId: 1,
       deps: [],
       emps: [],

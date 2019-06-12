@@ -110,7 +110,7 @@
                     placement="right"
                     title="请选择部门"
                     trigger="manual">
-                    <el-tree :data="deps" :default-expand-all="true" :props="defaultProps" :expand-on-click-node="false"
+                    <el-tree :data="deps" :default-expand-all="false" :props="defaultProps" :expand-on-click-node="false"
                              @node-click="handleNodeClick2"></el-tree>
                     <div slot="reference"
                          style="width: 130px;height: 26px;display: inline-flex;font-size:13px;border: 1px;border-radius: 5px;border-style: solid;padding-left: 13px;box-sizing:border-box;border-color: #dcdfe6;cursor: pointer;align-items: center"
@@ -439,7 +439,7 @@
                     placement="right"
                     title="请选择部门"
                     trigger="manual">
-                    <el-tree :data="deps" :default-expand-all="true" :props="defaultProps" :expand-on-click-node="false"
+                    <el-tree :data="deps" :default-expand-all="false" :props="defaultProps" :expand-on-click-node="false"
                              @node-click="handleNodeClick"></el-tree>
                     <div slot="reference"
                          style="width: 150px;height: 26px;display: inline-flex;font-size:13px;border: 1px;border-radius: 5px;border-style: solid;padding-left: 13px;box-sizing:border-box;border-color: #dcdfe6;cursor: pointer;align-items: center"

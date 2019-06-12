@@ -21,6 +21,7 @@ Vue.filter("formatDateTime", function formatDateTime(value) {
   var day = date.getDate();
   var hours = date.getHours();
   var minutes = date.getMinutes();
+  var seconds = date.getSeconds();
   if (month < 10) {
     month = "0" + month;
   }
@@ -33,6 +34,9 @@ Vue.filter("formatDateTime", function formatDateTime(value) {
   if (hours < 10) {
     hours = "0" + hours;
   }
-  return year + "-" + month + "-" + day + " " + hours + ":" + minutes;
+  if (seconds < 10) {
+    seconds = "0" + seconds;
+  }
+  return year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds;
 });
 

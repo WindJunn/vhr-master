@@ -94,7 +94,7 @@
                   >
                     <el-tree
                       :data="deps"
-                      :default-expand-all="true"
+                      :default-expand-all="false"
                       :props="defaultProps"
                       :expand-on-click-node="false"
                       @node-click="handleNodeClick2"
@@ -218,7 +218,7 @@
                   >
                     <el-tree
                       :data="deps"
-                      :default-expand-all="true"
+                      :default-expand-all="false"
                       :props="defaultProps"
                       :expand-on-click-node="false"
                       @node-click="handleNodeClick"
@@ -345,7 +345,7 @@
                   >
                     <el-tree
                       :data="deps"
-                      :default-expand-all="true"
+                      :default-expand-all="false"
                       :props="defaultProps"
                       :expand-on-click-node="false"
                       @node-click="handleNodeClick"

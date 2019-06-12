@@ -39,7 +39,7 @@
         </div>
         <!-- <div style="margin-left: 5px;margin-right: 20px;display: inline">
           <el-button type="primary" size="mini" icon="el-icon-plus" @click="showAddEmpView">添加排班</el-button>
-        </div> -->
+        </div>-->
       </el-header>
       <el-main style="padding-left: 0px;padding-top: 0px">
         <div>
@@ -76,7 +76,7 @@
                   >
                     <el-tree
                       :data="deps"
-                      :default-expand-all="true"
+                      :default-expand-all="false"
                       :props="defaultProps"
                       :expand-on-click-node="false"
                       @node-click="handleNodeClick2"
@@ -204,7 +204,7 @@
                   >
                     <el-tree
                       :data="deps"
-                      :default-expand-all="true"
+                      :default-expand-all="false"
                       :props="defaultProps"
                       :expand-on-click-node="false"
                       @node-click="handleNodeClick"
@@ -221,21 +221,22 @@
             </el-col>
           </el-row>
           <el-row>
-            <el-col :span="6">
-              <div>
+            <el-col :span="8">
+              <div class="block">
                 <el-form-item label="授课日期:" prop="time">
                   <el-date-picker
                     v-model="sch.time"
                     size="mini"
                     value-format="yyyy-MM-dd HH:mm:ss"
-                    style="width: 150px"
-                    type="date"
-                    placeholder="授课日期"
+                    style="width: 65%"
+                    type="datetime"
+                    placeholder="选择授课日期时间"
+                    :picker-options="pickerOptions"
                   ></el-date-picker>
                 </el-form-item>
               </div>
             </el-col>
-             <el-col :span="6">
+            <el-col :span="6">
               <div>
                 <el-form-item label="授课地点:" prop="departmentId">
                   <el-popover
@@ -246,7 +247,7 @@
                   >
                     <el-tree
                       :data="deps"
-                      :default-expand-all="true"
+                      :default-expand-all="false"
                       :props="defaultProps"
                       :expand-on-click-node="false"
                       @node-click="handleNodeClick"
@@ -274,8 +275,6 @@
                 </el-form-item>
               </div>
             </el-col>
-
-
           </el-row>
           <el-row>
             <el-col :span="9">
@@ -290,15 +289,10 @@
                 </el-form-item>
               </div>
             </el-col>
-              <el-col :span="9">
+            <el-col :span="9">
               <div>
                 <el-form-item label="备注:" prop="des">
-                  <el-input
-                    v-model="sch.des"
-                    size="mini"
-                    style="width: 300px"
-                    placeholder="备注..."
-                  ></el-input>
+                  <el-input v-model="sch.des" size="mini" style="width: 300px" placeholder="备注..."></el-input>
                 </el-form-item>
               </div>
             </el-col>
@@ -317,6 +311,32 @@
 export default {
   data() {
     return {
+      pickerOptions: {
+        shortcuts: [
+          {
+            text: "今天",
+            onClick(picker) {
+              picker.$emit("pick", new Date());
+            }
+          },
+          {
+            text: "昨天",
+            onClick(picker) {
+              const date = new Date();
+              date.setTime(date.getTime() - 3600 * 1000 * 24);
+              picker.$emit("pick", date);
+            }
+          },
+          {
+            text: "一周前",
+            onClick(picker) {
+              const date = new Date();
+              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit("pick", date);
+            }
+          }
+        ]
+      },
       emps: [],
       schedules: [],
       keywords: "",
@@ -500,7 +520,7 @@ export default {
       var _this = this;
       this.$refs[formName].validate(valid => {
         // debugger;
-  
+
         if (valid) {
           if (this.schedule.id) {
             //更新
@@ -583,13 +603,14 @@ export default {
       this.dialogVisible = true;
 
       this.sch.id = row.id;
-      this.sch.time = this.formatDate(row.time);
       this.sch.userId = this.schedule.userId;
       this.sch.departmentId = this.schedule.departmentId;
       this.sch.departmentName = this.schedule.departmentName;
       this.sch.theme = row.theme;
       this.sch.state = row.state;
       this.sch.des = row.des;
+      this.sch.time = this.formatDateTime(this.schedule.time);
+
     },
     showAddEmpView() {
       this.dialogTitle = "添加排班";
