@@ -25,11 +25,17 @@ import Chat from '@/components/chat/Chat'
 // import SysHr from '@/components/system/SysHr'
 // import SysInit from '@/components/system/SysInit'
 // import SysLog from '@/components/system/SysLog'
+import BlogDetail from '@/components/personnel/BlogDetail'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
+    {
+      path: '/detail',
+      name: 'BlogDetail',
+      component: BlogDetail
+    },
     {
       path: '/',
       name: 'Login',

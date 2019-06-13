@@ -1,12 +1,12 @@
 package org.sang.bean;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 public class Schedules {
 
     private Long id;
     private Long userId;
-    private Date time;
+    private Timestamp time;
     private Long state;
     private String theme;
     private String des;
@@ -62,14 +62,13 @@ public class Schedules {
         this.userId = userId;
     }
 
-    public Date getTime() {
+    public Timestamp getTime() {
         return time;
     }
 
-    public void setTime(Date time) {
+    public void setTime(Timestamp time) {
         this.time = time;
     }
-
 
     public Long getDepartmentId() {
         return departmentId;

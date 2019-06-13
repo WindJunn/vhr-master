@@ -128,12 +128,15 @@
                     >{{emp.departmentName}}</div>
                   </el-cascader> -->
                 </el-col>
-              </el-row>
-              <el-row style="margin-top: 10px">
+
                 <el-col :span="5" :offset="4">
                   <el-button size="mini" @click="cancelSearch">取消</el-button>
                   <el-button icon="el-icon-search" type="primary" size="mini" @click="searchEmp">搜索</el-button>
                 </el-col>
+
+              </el-row>
+              <el-row style="margin-top: 10px">
+                
               </el-row>
             </div>
           </transition>
@@ -442,7 +445,7 @@
                   <el-date-picker
                     v-model="point.pointTime"
                     size="mini"
-                    value-format="yyyy-MM-dd HH:mm:ss"
+                    value-format="yyyy-MM-dd"
                     style="width: 100%"
                     type="date"
                     placeholder="选择日期"
@@ -509,13 +512,8 @@
                 <el-col style="width:20%">
                   <div>
                     <el-form-item label="积分时间:" prop="time">
-                      <el-date-picker
-                        v-model="pointss[index].pointTime"
-                        size="mini"
-                        value-format="yyyy-MM-dd"
-                        style="width: 100%"
-                        type="date"
-                      ></el-date-picker>
+                     
+                      <template style="width: 100%">{{ pointss[index].pointTime | formatDate}}</template>
                     </el-form-item>
                   </div>
                 </el-col>

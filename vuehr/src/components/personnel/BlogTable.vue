@@ -45,6 +45,7 @@
             style="color: #409eff;cursor: pointer"
             @click="itemClick(scope.row)"
           >{{ scope.row.title}}</span>
+          <!-- <router-link to="/detail" style="color: #409eff;cursor: pointer">{{ scope.row.title}}</router-link> -->
         </template>
       </el-table-column>
       <el-table-column label="最近编辑时间" width="140" align="left">

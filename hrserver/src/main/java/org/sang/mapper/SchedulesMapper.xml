@@ -89,7 +89,7 @@
     <delete id="deleteSchedulesById">
         DELETE FROM schedules WHERE id IN
         <foreach collection="ids" item="id" open="(" close=")" separator=",">
-            #{ids}
+            #{id}
         </foreach>
     </delete>
 </mapper>

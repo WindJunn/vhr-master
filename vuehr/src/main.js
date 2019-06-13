@@ -16,6 +16,13 @@ import './utils/filter_utils'
 import 'font-awesome/css/font-awesome.min.css'
 
 
+import VueRouter from 'vue-router'
+ 
+// 1. 定义（路由）组件。
+// 加载组件
+import BlogDetail from '@/components/personnel/BlogDetail'
+
+
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 
@@ -25,7 +32,20 @@ Vue.prototype.deleteRequest = deleteRequest;
 Vue.prototype.putRequest = putRequest;
 Vue.prototype.isNotNullORBlank = isNotNullORBlank;
 
-
+Vue.use(VueRouter)
+//全局安装路由功能
+ 
+// 2. 定义路由
+// 每个路由应该映射一个组件。 
+const routes = [
+  { path: '/1', component: BlogDetail } 
+  //前面to指定的地方 path  /1
+]
+ 
+// 3. 创建 router 实例，然后传 `routes` 配置
+// const router = new VueRouter({
+//   routes
+// })
 
 
 router.beforeEach((to, from, next)=> {

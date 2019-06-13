@@ -2,9 +2,8 @@
   <div>
     <el-container class="home-container">
       <el-header class="home-header">
-        <span class="home_title">新时代农民讲习所</span>
+        <!-- <span class="home_title">新时代农民讲习所</span>
         <div style="display: flex;align-items: center;margin-right: 7px">
-          
           <div>
             <span
               @click="login()"
@@ -13,62 +12,144 @@
             >点击登录</span>
           </div>
           <el-dropdown @command="handleCommand">
-            <span class="el-dropdown-link home_userinfo" style="display: flex;align-items: center">
-              {{user.name}}
-              <i>
-                <img
-                  v-if="user.userface!=''"
-                  :src="user.userface"
-                  style="width: 40px;height: 40px;margin-right: 5px;margin-left: 5px;border-radius: 40px"
-                >
-              </i>
-            </span>
+            <span
+              class="el-dropdown-link home_userinfo"
+              style="display: flex;align-items: center"
+            >{{user.name}}</span>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item>个人中心</el-dropdown-item>
               <el-dropdown-item>设置</el-dropdown-item>
               <el-dropdown-item command="logout" divided>注销</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
+        </div>-->
+
+        <div class="section">
+          <!-- <div class="head-logo">
+            <div class="bg"></div>
+          </div> -->
+          <ul class="login">
+            <li class="log-item">
+              <ul>
+                <li>讲思想&nbsp;&nbsp;&nbsp;千有方向</li>
+                <li>讲技术&nbsp;&nbsp;&nbsp;千有本领</li>
+              </ul>
+            </li>
+            <li class="log-item">
+              <ul>
+                <li>讲感恩&nbsp;&nbsp;&nbsp;千有激情</li>
+                <li>讲比武&nbsp;&nbsp;&nbsp;千有榜样</li>
+              </ul>
+            </li>
+            <li class="log-item">
+              <ul>
+                <li>讲政策&nbsp;&nbsp;&nbsp;千有思路</li>
+                <li>讲道德&nbsp;&nbsp;&nbsp;千有精神</li>
+              </ul>
+            </li>
+            <li class="search gy-flex">
+              <input type="text" placeholder="请输入关键字">
+              <i class="iconfont icon-iconfontzhizuobiaozhun22"></i>
+              <a href="./index.html">登录</a>
+            </li>
+            <li>
+                <button
+                  @click="login()"
+                >点击登录</button>
+            </li>
+          </ul>
         </div>
       </el-header>
 
-        <el-form
-          :rules="rules"
-          
-          label-position="left"
-          label-width="0px"
-          v-loading="loading"
-        >
-            <el-dialog
-              style="padding: 0px;"
-              :close-on-click-modal="false"
-              :visible.sync="dialogVisible"
-              width="35%"
-            >
-              <h3 class="login_title">系统登录</h3>
-              <el-form-item prop="account">
-                <el-input
-                  type="text"
-                  v-model="loginForm.username"
-                  auto-complete="off"
-                  placeholder="账号"
-                ></el-input>
-              </el-form-item>
-              <el-form-item prop="checkPass">
-                <el-input
-                  type="password"
-                  v-model="loginForm.password"
-                  auto-complete="off"
-                  placeholder="密码"
-                ></el-input>
-              </el-form-item>
-              <el-checkbox class="login_remember" v-model="checked" label-position="left">记住密码</el-checkbox>
-              <el-form-item style="width: 100%">
-                <el-button type="primary" style="width: 100%" @click="submitClick">登录</el-button>
-              </el-form-item>
-            </el-dialog>
-        </el-form>
+      <el-main>
+        <hr>
+        <hr>
+        
+      </el-main>
 
+      <el-footer>
+        <div class="fo-top">
+          <div class="section pad-left bianm">便民服务：</div>
+          <div class="section gy-flex pad-left fo-sec">
+            <ul class="foot-list">
+              <li>
+                <img src="images/logo.jpg" alt>
+              </li>
+              <li class="banquan">
+                <p>版权所有：</p>
+                <sapn>宁夏固原市宣传部</sapn>
+              </li>
+              <li>
+                <p>联系电话：</p>
+                <span>(0954)2088900</span>
+              </li>
+              <li>
+                <p>电子邮箱：</p>
+                <span>gydzzw@126.com</span>
+              </li>
+              <li>
+                <p>网站标识码：</p>
+                <span>6404000021|Copyright@ all rights reserved 宁 ICP 备 05001237号</span>
+              </li>
+            </ul>
+            <div class="right-line"></div>
+            <ul class="foot-right">
+              <li>网站导航</li>
+              <li>
+                <a href="##">固原市人民政府官网</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+                <a href="##">固原党建网</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+                <a href="##">固原市人民信息网</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+                <a href="##">固原市人民信息网</a>
+              </li>
+              <li>
+                <a href="##">固原市人民政府官网</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+                <a href="##">固原市人民信息网</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+                <a href="##">固原市人民信息网</a>
+              </li>
+              <li>
+                <a href="##">固原市人民政府官网</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+                <a href="##">固原党建网</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+                <a href="##">固原市人民信息网</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+                <a href="##">固原市人民信息网</a>
+              </li>
+              <li>
+                <a href="##">固原市人民政府官网</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+                <a href="##">固原党建网</a>
+              </li>
+              <li>
+                <img class="zf" src="images/zf.jpg" alt>
+                <img class="jg" src="images/jg.jpg" alt>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </el-footer>
+
+      <el-form :rules="rules" label-position="left" label-width="0px" v-loading="loading">
+        <el-dialog
+          style="padding: 0px;"
+          :close-on-click-modal="false"
+          :visible.sync="dialogVisible"
+          width="35%"
+        >
+          <h3 class="login_title">系统登录</h3>
+          <el-form-item prop="account">
+            <el-input type="text" v-model="loginForm.username" auto-complete="off" placeholder="账号"></el-input>
+          </el-form-item>
+          <el-form-item prop="checkPass">
+            <el-input
+              type="password"
+              v-model="loginForm.password"
+              auto-complete="off"
+              placeholder="密码"
+            ></el-input>
+          </el-form-item>
+          <el-checkbox class="login_remember" v-model="checked" label-position="left">记住密码</el-checkbox>
+          <el-form-item style="width: 100%">
+            <el-button type="primary" style="width: 100%" @click="submitClick">登录</el-button>
+          </el-form-item>
+        </el-dialog>
+      </el-form>
     </el-container>
   </div>
 </template>
@@ -117,24 +198,7 @@ export default {
     goChat() {
       this.$router.push({ path: "/chat" });
     },
-    devMsg() {
-      this.$alert(
-        "为了确保所有的小伙伴都能看到完整的数据演示，数据库只开放了查询权限和部分字段的更新权限，其他权限都不具备，完整权限的演示需要大家在自己本地部署后，换一个正常的数据库用户后即可查看，这点请大家悉知!",
-        "友情提示",
-        {
-          confirmButtonText: "确定",
-          callback: action => {
-            this.$notify({
-              title: "重要重要!",
-              type: "warning",
-              message:
-                "小伙伴们需要注意的是，目前只有权限管理模块完工了，因此这个项目中你无法看到所有的功能，除了权限管理相关的模块。权限管理相关的模块主要有两个，分别是 [系统管理->基础信息设置->权限组] 可以管理角色和资源的关系， [系统管理->操作员管理] 可以管理用户和角色的关系。",
-              duration: 0
-            });
-          }
-        }
-      );
-    },
+
     handleCommand(cmd) {
       var _this = this;
       if (cmd == "logout") {
@@ -178,13 +242,45 @@ export default {
 };
 </script>
 <style>
+/* @import "css/iconfont.css"; */
+/* @import "./css/public.css"; */
+/* @import "css/swiper.min.css"; */
+/* @import "css/index.css"; */
+
+.section {
+  width: 1200px;
+  margin: 0 auto;
+}
+.head-logo {
+  width: 100%;
+  border-bottom: 4px double #20a0ff;
+}
+.bg {
+  width: 755px;
+  margin: 56px auto 40px;
+  height: 60px;
+  background: #20a0ff;
+}
+
+.login {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 132px;
+}
+.log-item {
+  color: #f80707;
+  font-style: italic;
+  line-height: 32px;
+}
+
 .login-container {
   border-radius: 15px;
   background-clip: padding-box;
   margin: 180px auto;
   width: 350px;
   padding: 35px 35px 15px 35px;
-  background: #fff;
+  background: #20a0ff;
   border: 1px solid #eaeaea;
   box-shadow: 0 0 25px #cac6c6;
 }
@@ -213,7 +309,7 @@ export default {
   align-items: center;
   justify-content: space-between;
   box-sizing: content-box;
-  padding: 0px;
+  padding: 2px;
 }
 
 .home-aside {

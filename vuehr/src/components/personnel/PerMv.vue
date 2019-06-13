@@ -9,7 +9,7 @@
         prefix-icon="el-icon-plus"
         v-model="cateName"
       ></el-input>
-      
+
       <el-button type="primary" icon="el-icon-plus" size="mini" @click="addPosition">添加</el-button>
     </div>
     <div style="margin-top: 10px">
@@ -24,13 +24,8 @@
       >
         <el-table-column type="selection" width="55" align="left"></el-table-column>
         <el-table-column prop="id" label="编号" width="80" align="left"></el-table-column>
-        <el-table-column
-          prop="cateName"
-          :label="'文章分类名称'"
-          width="180"
-          align="left"
-        ></el-table-column>
-  
+        <el-table-column prop="cateName" :label="'文章分类名称'" width="180" align="left"></el-table-column>
+
         <el-table-column width="180" label="创建时间" align="left">
           <template slot-scope="scope">{{ scope.row.date | formatDate}}</template>
         </el-table-column>
@@ -52,13 +47,9 @@
       >批量删除</el-button>
     </div>
     <div style="text-align: left">
-      <el-dialog
-        :title="'编辑名称'"
-        :visible.sync="dialogVisible"
-        width="25%"
-      >
+      <el-dialog :title="'编辑名称'" :visible.sync="dialogVisible" width="25%">
         <el-input v-model="cateName" size="mini" placeholder="请输入新的名称..."></el-input>
-       
+
         <span slot="footer" class="dialog-footer">
           <el-button size="mini" @click="dialogVisible = false">取 消</el-button>
           <el-button type="primary" size="mini" @click="updatePosNameExec">确 定</el-button>
@@ -75,19 +66,15 @@ export default {
   methods: {
     updatePosNameExec() {
       if (!this.isNotNullORBlank(this.cateName)) {
-        this.$message.warning(
-          "名称不能为空!"
-        );
+        this.$message.warning("名称不能为空!");
         return;
       }
       this.loading = true;
       var _this = this;
-      this.putRequest( "/admin/category/",
-        {
-          cateName: this.cateName,
-          id: this.cateId,
-        }
-      ).then(resp => {
+      this.putRequest("/admin/category/", {
+        cateName: this.cateName,
+        id: this.cateId
+      }).then(resp => {
         _this.loading = false;
         if (resp && resp.status == 200) {
           this.dialogVisible = false;
@@ -124,19 +111,15 @@ export default {
     },
     addPosition() {
       if (!this.isNotNullORBlank(this.cateName)) {
-        this.$message.warning(
-          "名称不能为空!"
-        );
+        this.$message.warning("名称不能为空!");
         return;
       }
-      
+
       var _this = this;
       this.loading = true;
-      this.postRequest("/admin/category/",
-        {
-          cateName: this.cateName,
-        }
-      ).then(resp => {
+      this.postRequest("/admin/category/", {
+        cateName: this.cateName
+      }).then(resp => {
         _this.loading = false;
         if (resp && resp.status == 200) {
           var data = resp.data;
@@ -174,7 +157,7 @@ export default {
     doDelete(ids) {
       var _this = this;
       _this.loading = true;
-      var url ="/admin/category/";
+      var url = "/admin/category/";
       this.deleteRequest(url + ids).then(resp => {
         _this.loading = false;
         if (resp && resp.status == 200) {
@@ -197,7 +180,7 @@ export default {
     return {
       cateId: -1,
       cateName: "",
-      date:"",
+      date: "",
       updatePosId: -1,
       loading: false,
       dialogVisible: false,

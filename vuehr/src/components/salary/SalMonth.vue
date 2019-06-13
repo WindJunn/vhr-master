@@ -320,18 +320,18 @@ export default {
             }
           },
           {
-            text: "昨天",
+            text: "明天",
             onClick(picker) {
               const date = new Date();
-              date.setTime(date.getTime() - 3600 * 1000 * 24);
+              date.setTime(date.getTime() + 3600 * 1000 * 24);
               picker.$emit("pick", date);
             }
           },
           {
-            text: "一周前",
+            text: "一周后",
             onClick(picker) {
               const date = new Date();
-              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+              date.setTime(date.getTime() + 3600 * 1000 * 24 * 7);
               picker.$emit("pick", date);
             }
           }
@@ -396,6 +396,7 @@ export default {
         theme: "",
         des: ""
       },
+      schtime:"",
       rules: {
         name: [{ required: true, message: "必填:姓名", trigger: "blur" }],
         birthday: [
@@ -591,9 +592,11 @@ export default {
     },
     showEditEmpView(row) {
       console.log(row);
+      var _this = this;
       this.dialogTitle = "编辑排班";
       this.schedule = row;
-      this.schedule.time = this.formatDate(row.time);
+      // this.sch.time = this.formatDateTime(row.time);
+
 
       this.schedule.userId = row.hr.id;
       this.schedule.name = row.hr.name;
@@ -602,6 +605,8 @@ export default {
       this.schedule.phone = row.hr.phone;
       this.dialogVisible = true;
 
+      
+
       this.sch.id = row.id;
       this.sch.userId = this.schedule.userId;
       this.sch.departmentId = this.schedule.departmentId;
@@ -609,7 +614,9 @@ export default {
       this.sch.theme = row.theme;
       this.sch.state = row.state;
       this.sch.des = row.des;
-      this.sch.time = this.formatDateTime(this.schedule.time);
+      // this.schtime = row.time;
+      this.sch.time = this.formatDateTime(row.time);
+
 
     },
     showAddEmpView() {
