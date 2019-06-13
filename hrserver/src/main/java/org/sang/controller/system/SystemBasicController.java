@@ -57,6 +57,23 @@ public class SystemBasicController {
         return map;
     }
 
+    @RequestMapping(value = "/menu", method = RequestMethod.GET)
+    public Map<String, Object> getAllMenu() {
+        Map<String, Object> map = new HashMap<>();
+        List<Menu> menus = menuService.getAllMenus();
+        map.put("menus", menus);
+        return map;
+    }
+
+    @RequestMapping(value = "/menu", method = RequestMethod.PUT)
+    public RespBean updateCate(String name,Long id) {
+        int i = menuService.updateMenuName(name,id);
+        if (i == 1) {
+            return  RespBean.ok("修改成功!");
+        }
+        return  RespBean.error("修改失败!");
+    }
+
     @RequestMapping(value = "/updateMenuRole", method = RequestMethod.PUT)
     public RespBean updateMenuRole(Long rid, Long[] mids) {
         if (menuRoleService.updateMenuRole(rid, mids) == mids.length) {

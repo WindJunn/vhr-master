@@ -1,5 +1,6 @@
 package org.sang.mapper;
 
+import org.apache.ibatis.annotations.Param;
 import org.sang.bean.Menu;
 
 import java.util.List;
@@ -15,4 +16,8 @@ public interface MenuMapper {
     List<Menu> menuTree();
 
     List<Long> getMenusByRid(Long rid);
+
+    List<Menu> getAllMenus();
+
+    int updateMenuName(@Param("name")String name, @Param("id")Long id);
 }

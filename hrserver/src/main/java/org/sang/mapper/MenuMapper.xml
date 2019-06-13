@@ -49,4 +49,14 @@
     <select id="getMenusByRid" resultType="Long">
         SELECT mid from menu_role WHERE rid=#{rid}
     </select>
+
+    <select id="getAllMenus" resultType="org.sang.bean.Menu">
+        SELECT * from menu where id != 1 AND enabled = true
+    </select>
+
+    <update id="updateMenuName" parameterType="org.sang.bean.Menu">
+        UPDATE menu SET name=#{name} WHERE id=#{id}
+    </update>
+
+
 </mapper>

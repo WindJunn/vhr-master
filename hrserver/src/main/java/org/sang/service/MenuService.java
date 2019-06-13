@@ -25,6 +25,9 @@ public class MenuService {
     public List<Menu> getAllMenu(){
         return menuMapper.getAllMenu();
     }
+    public List<Menu> getAllMenus(){
+        return menuMapper.getAllMenus();
+    }
 
     public List<Menu> getMenusByHrId() {
         return menuMapper.getMenusByHrId(HrUtils.getCurrentHr().getId());
@@ -36,5 +39,9 @@ public class MenuService {
 
     public List<Long> getMenusByRid(Long rid) {
         return menuMapper.getMenusByRid(rid);
+    }
+
+    public int updateMenuName(String name,Long id) {
+        return menuMapper.updateMenuName(name,id);
     }
 }
