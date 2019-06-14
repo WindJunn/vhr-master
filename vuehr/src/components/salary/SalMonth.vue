@@ -143,12 +143,14 @@
               :disabled="multipleSelection.length==0"
               @click="deleteManyEmps"
             >批量删除</el-button>
-            <el-pagination
+           <el-pagination
               background
-              :page-size="10"
-              :current-page="currentPage"
+              @size-change="handleSizeChange"
               @current-change="currentChange"
-              layout="prev, pager, next"
+              :current-page="currentPage"
+              :page-sizes="[10, 15, 20, 30, 50]"
+              :page-size="10"
+              layout="total, sizes, prev, pager, next, jumper"
               :total="totalCount"
             ></el-pagination>
           </div>

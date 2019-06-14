@@ -51,9 +51,9 @@ public class AttendanceController {
         Map<String, Long> att = new HashMap<>();
         List<Attname> allAttname = attendanceService.getAllAttname();
         for (int i = 0; i < allAttname.size(); i++) {
-            att.put(allAttname.get(i).getName(), attendanceService.getAttCountBySidAndStateId(sid,allAttname.get(i).getId()));
+            att.put(allAttname.get(i).getName(), attendanceService.getAttCountBySidAndStateId(sid, allAttname.get(i).getId()));
         }
-        map.put("counts",att);
+        map.put("counts", att);
         return map;
     }
 
@@ -87,14 +87,16 @@ public class AttendanceController {
             @RequestParam(defaultValue = "10") Integer size,
             @RequestParam(defaultValue = "") String keywords,
             String atime, Long stateId,
-            Long sid, Long departmentId,Long upid) {
+            Long sid, Long departmentId, Long upid) {
         Map<String, Object> map = new HashMap<>();
         List<Attendance> atts = attendanceService.getAttByPage(page, size,
-                keywords, atime, stateId, sid, departmentId,upid);
-//        Long count = attendanceService.getCountByKeywords(keywords, atime,
-//                stateId, sid, departmentId);
+                keywords, atime, stateId, sid, departmentId, upid);
+        List<Attendance> att = attendanceService.getAttByPage(null, null,
+                keywords, atime, stateId, sid, departmentId, upid);
+
+        int count = att.size();
         map.put("atts", atts);
-//        map.put("count", count);
+        map.put("count", count);
         return map;
     }
 

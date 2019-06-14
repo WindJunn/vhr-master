@@ -31,9 +31,9 @@ public class SchedulesController {
         Map<String, Object> map = new HashMap<>();
         List<Schedules> schedules = schedulesService.getSchedulesByPage(page, size,
                 keywords, userId, departmentId);
-//        Long count = schedulesService.getCountByKeywords(keywords, politicId, userId);
+        int count = schedules.size();
         map.put("schedules", schedules);
-//        map.put("count", count);
+        map.put("count", count);
         return map;
     }
 

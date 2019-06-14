@@ -1,0 +1,231 @@
+
+
+.breadcrumbs{
+    justify-content: left;
+}
+.icon-shouye2{
+    font-size: 16px;
+    color: #c00;
+}
+.video-del{
+    width: 100%;
+    height: 600px;
+    margin-top: 54px;
+    background: #000;
+    margin-bottom: 20px;
+}
+.video-del iframe{
+    width: 770px;
+    height: 460px;
+}
+.video-top{
+    justify-content: left;
+}
+.video-list{
+    width: 35%;
+    margin-left: 50px;
+}
+.video-sc{
+    padding-left: 28px;
+}
+.video-sc .gy-tit{
+    width: 80%;
+    font-size: 22px;
+    color: #fff;
+    font-weight: 600;
+    margin: 28px 0;
+}
+.video-sc .imgs{
+    display: block;
+    width: 32px;
+    height: 32px;
+    margin-right: 14px;
+}
+.video-sc img{
+    width: 100%;
+    height: 100%;
+    border: 1px solid #fff;
+    border-radius: 8px;
+}
+.video-sc .gy-text {
+    justify-content: left;
+    align-items: center;
+    color: #ccc;
+}
+.video-sc .time{
+    margin:0 40px;
+}
+.video-item{
+    width: 100%;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #666;
+}
+.video-item .gy-tit{
+    color: #fff;
+    margin: 28px 0;
+}
+.video-item .gy-text {
+    font-size: 16px;
+    color: #999;
+    line-height: 20px;
+}
+.video-item .icon-bofang{
+    font-size: 20px;
+    margin-right: 10px;
+}
+.video-item .time{
+    float: right;
+    margin-right: 85px;
+}
+
+/*视频简介*/
+.shsm,.xuexi,.xxjl-item,.ship{
+    margin-left: 30px;
+}
+.shsm .gy-tit {
+     line-height: 30px;
+ }
+.shsm .text-2-hidden{
+    width: 60%;
+    line-height: 25px;
+    margin-bottom: 20px;
+}
+
+/*学习交流*/
+.xxjl{
+    margin-top: 45px;
+    margin-bottom: 30px;
+}
+.xxjl .gy-tit,.model-tit{
+    font-size: 22px;
+    color: #c33;
+    line-height: 40px;
+    padding-left:20px ;
+    border-left: 5px solid #c33;
+}
+.guand{
+    display: block;
+    width: 100px;
+    height: 40px;
+    color: #fff;
+    background: #f93;
+    border-radius: 10px;
+    text-align: center;
+    line-height: 40px;
+    cursor: pointer;
+}
+.xxjl-list{
+    margin-left: 26px;
+}
+.xxjl-item{
+    margin-top: 30px;
+}
+.xxjl-item .gy-flex{
+    justify-content: left;
+    align-items: center;
+}
+.xxjl-item .imgs{
+    width: 45px;
+    height: 45px;
+}
+.xxjl-item .imgs img{
+    margin-right: 20px;
+    border-radius: 10px;
+    margin-top: 6px;
+}
+.xxjl-item .gy-sm-tit{
+    color: #666;
+    line-height: 40px;
+    margin-left: 45px;
+}
+.xxjl-item .gy-sm-tit:nth-of-type(2){
+    margin-bottom: 40px;
+}
+.xxjl-item .line{
+    width: 90%;
+    margin-left:30px ;
+}
+/*交流学习弹出框*/
+.xxjl_model{
+    width: 100%;
+    height: 100%;
+    background: rgba(40,40,40,.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: none;
+}
+.xxjl_model-body{
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+.model-body{
+    width: 1172px;
+    height: 570px;
+    background: #fff;
+    position: absolute;
+    top: 15%;
+    left:7.9% ;
+    padding-left: 30px;
+}
+.model-tit{
+    margin: 40px 0;
+}
+.model-text{
+    width: 90%;
+    height: 250px;
+    margin:0 50px 0 20px;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+    resize: none;
+    padding: 20px;
+    background: #f4f4f4;
+}
+.model-body .guand{
+    margin: 50px auto;
+}
+.guanbi{
+    position: absolute;
+    right: 5%;
+    top: 14%;
+}
+.icon-guanbi1{
+    font-size: 18px;
+    color: #fff;
+}
+/*视频列表*/
+.ship-list{
+    margin-left: 40px;
+}
+.lists{
+    width: 45%;
+}
+.ship-item{
+    width: 80%;
+    margin: 35px 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

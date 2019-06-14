@@ -1,4 +1,4 @@
-package org.sang.controller.system;
+package org.sang.controller.noLogin;
 
 import org.sang.bean.Department;
 import org.sang.bean.Hr;
@@ -21,8 +21,8 @@ import java.util.Map;
  * Created by sang on 2018/1/2.
  */
 @RestController
-@RequestMapping("/system/hr")
-public class SystemHrController {
+@RequestMapping("/hr")
+public class HrController {
     @Autowired
     HrService hrService;
 
@@ -93,9 +93,7 @@ public class SystemHrController {
                                                 Long nationId,Long departmentId,Long upid,String nameZh) {
         List<Hr> hrs = hrService.getHrsByKeywords(page,size,keywords,nationId,departmentId,upid,nameZh);
         Map<String, Object> map = new HashMap<>();
-        int count = hrs.size();
         map.put("hrs",hrs);
-        map.put("count",count);
         return map;
     }
 

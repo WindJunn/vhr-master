@@ -53,6 +53,11 @@ img{
     background: #cc0000;
     margin-right: 15px;
 }
+.line{
+    width: 100%;
+    height: 1px;
+    border-top:1px solid #ccc;
+}
 .gy-big-tit{
     font-size: 36px;
     color: #cc0000;

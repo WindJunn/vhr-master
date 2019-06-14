@@ -39,7 +39,7 @@
       v-loading="loading"
     >
       <el-table-column type="selection" width="35" align="left" v-if="showEdit || showDelete"></el-table-column>
-      <el-table-column fixed="" label="标题" width="300" align="left">
+      <el-table-column fixed label="标题" width="300" align="left">
         <template slot-scope="scope">
           <span
             style="color: #409eff;cursor: pointer"
@@ -54,16 +54,12 @@
       <el-table-column prop="nickname" label="作者" width="120" align="left"></el-table-column>
       <el-table-column prop="cateName" label="所属分类" width="100" align="left"></el-table-column>
       <el-table-column prop="pageView" label="点击量" width="100" align="left"></el-table-column>
-      <el-table-column fixed="right" label="操作" width="290" >
+      <el-table-column fixed="right" label="操作" width="290">
         <template slot-scope="scope">
-          <el-button size="mini" @click="handleEdit(scope.$index, scope.row)" >编辑</el-button>
-          <el-button size="mini" type="primary" @click="handleEdit(scope.$index, scope.row)" >置顶</el-button>
-          <el-button size="mini" type="danger" @click="handleEdit(scope.$index, scope.row)" >屏蔽</el-button>
-          <el-button
-            size="mini"
-            type="danger"
-            @click="handleDelete(scope.$index, scope.row)"
-          >删除</el-button>
+          <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+          <!-- <el-button size="mini" type="primary" @click="handleEdit(scope.$index, scope.row)">置顶</el-button>
+          <el-button size="mini" type="danger" @click="handleEdit(scope.$index, scope.row)">屏蔽</el-button> -->
+          <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -79,11 +75,13 @@
       <span></span>
       <el-pagination
         background
-        :page-size="pageSize"
-        layout="prev, pager, next"
-        :total="totalCount"
+        @size-change="handleSizeChange"
         @current-change="currentChange"
-        v-show="this.articles.length>0"
+        :current-page="currentPage"
+        :page-sizes="[10, 15, 20, 30, 50]"
+        :page-size="10"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="totalCount"
       ></el-pagination>
     </div>
   </div>
@@ -103,7 +101,7 @@ export default {
       loading: false,
       currentPage: 1,
       totalCount: -1,
-      pageSize: 6,
+      pageSize: 10,
       keywords: "",
       dustbinData: []
     };

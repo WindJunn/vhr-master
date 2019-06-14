@@ -170,12 +170,23 @@
               :disabled="multipleSelection.length==0"
               @click="deleteManyEmps"
             >批量删除</el-button>
-            <el-pagination
+            <!-- <el-pagination
               background
               :page-size="10"
               :current-page="currentPage"
               @current-change="currentChange"
               layout="prev, pager, next"
+              :total="totalCount"
+            ></el-pagination>-->
+
+            <el-pagination
+              background
+              @size-change="handleSizeChange"
+              @current-change="currentChange"
+              :current-page="currentPage"
+              :page-sizes="[10, 15, 20, 30,50]"
+              :page-size="pageSize"
+              layout="total, sizes, prev, pager, next, jumper"
               :total="totalCount"
             ></el-pagination>
           </div>
@@ -429,6 +440,7 @@ export default {
       joblevels: [],
       totalCount: -1,
       currentPage: 1,
+      pageSize: 10,
       deps: [],
       defaultProps: {
         label: "name",
@@ -607,13 +619,19 @@ export default {
       this.currentPage = currentChange;
       this.loadEmps();
     },
+    handleSizeChange(pageSize) {
+      this.pageSize = pageSize;
+      this.loadEmps();
+    },
     loadEmps() {
       var _this = this;
       this.tableLoading = true;
       this.getRequest(
         "/attendance/att?page=" +
           this.currentPage +
-          "&size=10&keywords=" +
+          "&size="+
+          this.pageSize+ 
+          "&keywords=" +
           this.keywords +
           "&atime=" +
           this.att.atime +

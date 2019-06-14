@@ -126,18 +126,15 @@
                       @click="showDepTree2"
                       v-bind:style="{color: depTextColor}"
                     >{{emp.departmentName}}</div>
-                  </el-cascader> -->
+                  </el-cascader>-->
                 </el-col>
 
                 <el-col :span="5" :offset="4">
                   <el-button size="mini" @click="cancelSearch">取消</el-button>
                   <el-button icon="el-icon-search" type="primary" size="mini" @click="searchEmp">搜索</el-button>
                 </el-col>
-
               </el-row>
-              <el-row style="margin-top: 10px">
-                
-              </el-row>
+              <el-row style="margin-top: 10px"></el-row>
             </div>
           </transition>
           <el-table
@@ -211,12 +208,22 @@
               :disabled="multipleSelection.length==0"
               @click="deleteManyEmps"
             >批量删除</el-button>
-            <el-pagination
+            <!-- <el-pagination
               background
               :page-size="10"
               :current-page="currentPage"
               @current-change="currentChange"
               layout="prev, pager, next"
+              :total="totalCount"
+            ></el-pagination>-->
+            <el-pagination
+              background
+              @size-change="handleSizeChange"
+              @current-change="currentChange"
+              :current-page="currentPage"
+              :page-sizes="[10, 15, 20, 30, 50]"
+              :page-size="pageSize"
+              layout="total, sizes, prev, pager, next, jumper"
               :total="totalCount"
             ></el-pagination>
           </div>
@@ -512,7 +519,6 @@
                 <el-col style="width:20%">
                   <div>
                     <el-form-item label="积分时间:" prop="time">
-                     
                       <template style="width: 100%">{{ pointss[index].pointTime | formatDate}}</template>
                     </el-form-item>
                   </div>
@@ -675,6 +681,7 @@ export default {
       joblevels: [],
       totalCount: -1,
       currentPage: 1,
+      pageSize: 10,
       deps: [],
       counts: [],
       defaultProps: {
@@ -942,13 +949,19 @@ export default {
       this.currentPage = currentChange;
       this.loadEmps();
     },
+    handleSizeChange(pageSize) {
+      this.pageSize = pageSize;
+      this.loadEmps();
+    },
     loadEmps() {
       var _this = this;
       this.tableLoading = true;
       this.getRequest(
         "/student/basic/emp?page=" +
           this.currentPage +
-          "&size=10&keywords=" +
+          "&size="+
+          this.pageSize
+          +"&keywords=" +
           this.keywords +
           "&nationId=" +
           this.emp.nationId +

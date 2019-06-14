@@ -25,7 +25,7 @@
         style="width: 80%"
       >
         <el-table-column type="selection" width="55" align="left"></el-table-column>
-        <el-table-column prop="id" label="编号" width="80" align="left"></el-table-column>
+        <!-- <el-table-column prop="id" label="编号" width="80" align="left"></el-table-column> -->
         <el-table-column
           prop="name"
           :label="'考勤状态'"

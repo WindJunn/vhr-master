@@ -1,5 +1,6 @@
 <template>
   <div>
+    <hr>
     <div style="text-align: left">
       <el-input
         :placeholder="'添加文章分类...'"
@@ -23,7 +24,7 @@
         style="width: 80%"
       >
         <el-table-column type="selection" width="55" align="left"></el-table-column>
-        <el-table-column prop="id" label="编号" width="80" align="left"></el-table-column>
+        <!-- <el-table-column prop="id" label="编号" width="80" align="left"></el-table-column> -->
         <el-table-column prop="cateName" :label="'文章分类名称'" width="180" align="left"></el-table-column>
 
         <el-table-column width="180" label="创建时间" align="left">
@@ -31,8 +32,8 @@
         </el-table-column>
         <el-table-column label="操作" align="left">
           <template slot-scope="scope">
-            <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-            <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+            <el-button type="primary" size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+            <!-- <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button> -->
           </template>
         </el-table-column>
       </el-table>

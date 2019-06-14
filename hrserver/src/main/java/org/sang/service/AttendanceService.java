@@ -31,6 +31,7 @@ public class AttendanceService {
     SimpleDateFormat birthdayFormat = new SimpleDateFormat("yyyy-MM-dd");
     DecimalFormat decimalFormat = new DecimalFormat("##.00");
 
+
     public List<Attname> getAllAttname() {
         return attendanceMapper.getAllAttname();
     }
@@ -42,7 +43,12 @@ public class AttendanceService {
 
     public List<Attendance> getAttByPage(Integer page, Integer size, String keywords, String atime,
                                          Long stateId, Long sid, Long departmentId,Long upid) {
-        int start = (page - 1) * size;
+
+        Integer start = null;
+        if (page != null || size != null) {
+             start = (page - 1) * size;
+
+        }
         List<Long> depList = null;
 
         if (upid != null && upid != 0) {
@@ -51,16 +57,18 @@ public class AttendanceService {
             depList.add(upid);
             DepartmentUtil.findDep(deps, depList);
         }
-
-
         List<Attendance> attByPage = attendanceMapper.getAttByPage(start, size, keywords, atime, stateId, sid, departmentId,depList);
+
         return attByPage;
     }
 
     public Long getCountByKeywords(String keywords, String atime,
-                                   Long stateId, Long sid, Long departmentId) {
+                                   Long stateId, Long sid, Long departmentId,Long upid) {
 
-        return attendanceMapper.getCountByKeywords(keywords, atime, stateId, sid, departmentId);
+        Long count ;
+        List<Long> depList = null;
+
+        return attendanceMapper.getCountByKeywords(keywords, atime, stateId, sid, departmentId,depList);
     }
 
     public int updateAtt(Attendance att) {

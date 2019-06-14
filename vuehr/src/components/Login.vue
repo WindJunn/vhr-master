@@ -1,33 +1,11 @@
 <template>
   <div>
     <el-container class="home-container">
-      <el-header class="home-header">
-        <!-- <span class="home_title">新时代农民讲习所</span>
-        <div style="display: flex;align-items: center;margin-right: 7px">
-          <div>
-            <span
-              @click="login()"
-              class="el-dropdown-link home_userinfo"
-              style="display: flex;align-items: center;width: 40px;height: 40px;margin-right: 5px;margin-left: 5px;border-radius: 40px"
-            >点击登录</span>
-          </div>
-          <el-dropdown @command="handleCommand">
-            <span
-              class="el-dropdown-link home_userinfo"
-              style="display: flex;align-items: center"
-            >{{user.name}}</span>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>个人中心</el-dropdown-item>
-              <el-dropdown-item>设置</el-dropdown-item>
-              <el-dropdown-item command="logout" divided>注销</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
-        </div>-->
+      <!-- <el-header class="home-header">
+       
 
         <div class="section">
-          <!-- <div class="head-logo">
-            <div class="bg"></div>
-          </div> -->
+       
           <ul class="login">
             <li class="log-item">
               <ul>
@@ -59,14 +37,14 @@
             </li>
           </ul>
         </div>
-      </el-header>
+      </el-header> -->
 
-      <el-main>
+      <!-- <el-main>
         <hr>
         <hr>
         
-      </el-main>
-
+      </el-main> -->
+<!-- 
       <el-footer>
         <div class="fo-top">
           <div class="section pad-left bianm">便民服务：</div>
@@ -123,7 +101,7 @@
             </ul>
           </div>
         </div>
-      </el-footer>
+      </el-footer> -->
 
       <el-form :rules="rules" label-position="left" label-width="0px" v-loading="loading">
         <el-dialog
@@ -166,7 +144,7 @@ export default {
   data() {
     return {
       isDot: false,
-      dialogVisible: false,
+      dialogVisible: true,
       rules: {
         account: [{ required: true, message: "请输入用户名", trigger: "blur" }],
         checkPass: [{ required: true, message: "请输入密码", trigger: "blur" }]

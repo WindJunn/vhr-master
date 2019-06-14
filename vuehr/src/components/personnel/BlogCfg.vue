@@ -1,64 +1,60 @@
 <template>
-  <el-card style="width: 500px" v-loading="loading">
-    <div>
-      <div style="text-align: left">
-        <el-form :model="emailValidateForm" label-position="top" ref="emailValidateForm"
-                 style="color:#20a0ff;font-size: 14px;">
-          <el-form-item
-            prop="email"
-            label="开启博客评论通知"
-            :rules="[{type: 'email', message: '邮箱格式不对哦!'}]">
-            <el-input type="email" v-model.email="emailValidateForm.email" auto-complete="off" style="width: 300px"
-                      placeholder="请输入邮箱地址..." size="mini"></el-input>
-            <el-button type="primary" @click="submitForm('emailValidateForm')" size="mini">确定</el-button>
-          </el-form-item>
-        </el-form>
+  <el-row v-loading="loading">
+    <el-col :span="24">
+      <div style="text-align: left;">
+        <el-button type="text" icon="el-icon-back" @click="goBack" style="padding-bottom: 0px;">返回</el-button>
       </div>
-    </div>
-  </el-card>
+    </el-col>
+    <el-col :span="24">
+      <div>
+        <div><h3 style="margin-top: 0px;margin-bottom: 0px">{{article.title}}</h3></div>
+        <div style="width: 100%;margin-top: 5px;display: flex;justify-content: flex-end;align-items: center">
+          <div style="display: inline; color: #20a0ff;margin-left: 50px;margin-right:20px;font-size: 12px;">
+            {{article.nickname}}
+          </div>
+          <span style="color: #20a0ff;margin-right:20px;font-size: 12px;">浏览 {{article.pageView==null?0:article.pageView}}</span>
+          <span style="color: #20a0ff;margin-right:20px;font-size: 12px;"> {{article.editTime | formatDateTime}}</span>
+          <el-tag type="success" v-for="(item,index) in article.tags" :key="index" size="small"
+                  style="margin-left: 8px">{{item.tagName}}
+          </el-tag>
+          <span style="margin:0px 50px 0px 0px"></span>
+        </div>
+      </div>
+    </el-col>
+    <el-col>
+      <div style="text-align: left" v-html="article.htmlContent">
+      </div>
+    </el-col>
+  </el-row>
 </template>
 <script>
   import {getRequest} from '../../utils/api'
-  import {putRequest} from '../../utils/api'
   export default{
-    data(){
-      return {
-        emailValidateForm: {
-          email: ''
-        },
-        loading: false
+    methods: {
+      goBack(){
+        this.$router.go(-1);
       }
     },
     mounted: function () {
+      var aid = this.$route.query.aid;
+      this.activeName = this.$route.query.an
       var _this = this;
-      getRequest("/currentUserEmail").then(resp=> {
+      this.loading = true;
+      getRequest("/article/" + aid).then(resp=> {
         if (resp.status == 200) {
-          _this.emailValidateForm.email = resp.data;
+          _this.article = resp.data;
         }
+        _this.loading = false;
+      }, resp=> {
+        _this.loading = false;
+        _this.$message({type: 'error', message: '页面加载失败!'});
       });
     },
-    methods: {
-      submitForm(formName) {
-        var _this = this;
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            _this.loading = true;
-            putRequest("/updateUserEmail", {email: _this.emailValidateForm.email}).then(resp=> {
-              _this.loading = false;
-              if (resp.status == 200) {
-                _this.$message({type: resp.data.status, message: resp.data.msg});
-              } else {
-                _this.$message({type: 'error', message: '开启失败!'});
-              }
-            }, resp=> {
-              _this.loading = false;
-              _this.$message({type: 'error', message: '开启失败!'});
-            });
-          } else {
-            _this.$message({type: 'error', message: '邮箱格式不对哦!'})
-            return false;
-          }
-        });
+    data(){
+      return {
+        article: {},
+        loading: false,
+        activeName: ''
       }
     }
   }

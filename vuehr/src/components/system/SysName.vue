@@ -3,9 +3,9 @@
     <el-header style="padding: 0px;display:flex;justify-content:space-between;align-items: center"></el-header>
     <div style="width:40%">
       <el-form :model="sys" status-icon ref="ruleForm" label-width="100px" class="demo-ruleForm">
-        <el-form-item label="系统标题">
+        <!-- <el-form-item label="系统标题">
           <el-input v-model="sys.title"></el-input>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="系统名称" prop="pass">
           <el-input v-model="sys.leftname"></el-input>
         </el-form-item>

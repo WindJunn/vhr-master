@@ -19,8 +19,9 @@ public interface AttendanceMapper {
                                   @Param("stateId") Long stateId, @Param("sid") Long sid,
                                   @Param("departmentId") Long departmentId,@Param("depList") List depList);
 
-    Long getCountByKeywords(@Param("keywords") String keywords, @Param("atime") String atime,@Param("sid") Long sid,
-                            @Param("stateId") Long stateId,  @Param("departmentId") Long departmentId);
+    Long getCountByKeywords(@Param("keywords") String keywords,@Param("atime") String atime,
+                            @Param("stateId") Long stateId, @Param("sid") Long sid,
+                            @Param("departmentId") Long departmentId,@Param("depList") List depList);
 
     int updateAtt(@Param("att") Attendance att);
 

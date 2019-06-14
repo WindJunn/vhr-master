@@ -28,14 +28,14 @@
         <el-table-column prop="id" label="编号" width="80" align="left"></el-table-column>
         <el-table-column
           prop="name"
-          :label="'菜单编号'"
+          :label="'菜单名称'"
           width="180"
           align="left"
         ></el-table-column>
   
         <el-table-column label="操作" align="left">
           <template slot-scope="scope">
-            <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+            <el-button type="primary" size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
           </template>
         </el-table-column>
       </el-table>
