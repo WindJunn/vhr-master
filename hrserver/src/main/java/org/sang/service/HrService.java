@@ -64,11 +64,10 @@ public class HrService implements UserDetailsService {
 
         List<Long> depList = null;
 
-        if (upid != null && upid != 0) {
+        if (upid != null && upid > 0) {
             List<Department> deps = departmentMapper.getDepByPid(upid);
-            depList = new ArrayList<>();
-            depList.add(upid);
-            DepartmentUtil.findDep(deps, depList);
+            depList =  DepartmentUtil.findDeps(upid,deps);
+
         }
 
         return hrMapper.getHrsByKeywords(page,size,keywords,nationId,departmentId,nameZh,depList);

@@ -86,7 +86,7 @@ public class StudentController {
         Map<String, Object> map = new HashMap<>();
         List<Student> employeeByPage = studentService.getStudentByPage(page, size,
                 keywords, nationId, departmentId,upid);
-        Long count = studentService.getCountByKeywords(keywords, politicId, nationId);
+        Long count = studentService.getCountByKeywords(keywords,nationId, departmentId,upid);
         map.put("emps", employeeByPage);
         map.put("count", count);
         return map;

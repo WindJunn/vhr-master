@@ -75,7 +75,7 @@ export default {
     loadTableData() {
       var _this = this;
       this.loading = true;
-      this.getRequest("/system/name/").then(resp => {
+      this.getRequest("/systems/name/").then(resp => {
         _this.loading = false;
         if (resp && resp.status == 200) {
           _this.sys = resp.data[0];

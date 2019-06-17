@@ -1,7 +1,7 @@
 <template>
   <div>
     <hr>
-    <div style="text-align: left">
+    <!-- <div style="text-align: left">
       <el-input
         :placeholder="'添加文章分类...'"
         size="mini"
@@ -12,7 +12,7 @@
       ></el-input>
 
       <el-button type="primary" icon="el-icon-plus" size="mini" @click="addPosition">添加</el-button>
-    </div>
+    </div> -->
     <div style="margin-top: 10px">
       <el-table
         v-loading="loading"
@@ -27,9 +27,9 @@
         <!-- <el-table-column prop="id" label="编号" width="80" align="left"></el-table-column> -->
         <el-table-column prop="cateName" :label="'文章分类名称'" width="180" align="left"></el-table-column>
 
-        <el-table-column width="180" label="创建时间" align="left">
+        <!-- <el-table-column width="180" label="创建时间" align="left">
           <template slot-scope="scope">{{ scope.row.date | formatDate}}</template>
-        </el-table-column>
+        </el-table-column> -->
         <el-table-column label="操作" align="left">
           <template slot-scope="scope">
             <el-button type="primary" size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>

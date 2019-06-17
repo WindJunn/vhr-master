@@ -14,7 +14,7 @@ import java.util.List;
  * 超级管理员专属Controller
  */
 @RestController
-@RequestMapping("/system/name")
+@RequestMapping("/systems/name")
 public class SystemNameController {
     @Autowired
     SystemnameService systemnameService;

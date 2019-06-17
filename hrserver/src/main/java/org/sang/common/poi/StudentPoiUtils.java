@@ -221,6 +221,7 @@ public class StudentPoiUtils {
                             break;
                         }
                     }
+                    employee.setPoints(0L);
                     emps.add(employee);
                 }
             }

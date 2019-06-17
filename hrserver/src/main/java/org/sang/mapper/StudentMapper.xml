@@ -78,8 +78,16 @@
         <if test="nationId!=null and nationId!=''">
             AND e.nationId=#{nationId}
         </if>
+
+        <if test="depList!=null and depList.size()>0">
+            AND e.departmentId in
+            <foreach collection="depList" index="index" item="did" separator="," open="(" close=")" >
+                #{did}
+            </foreach>
+        </if>
+
         <if test="departmentId!=null and departmentId!=''">
-            AND e.departmentId=#{departmentId}
+            AND e.departmentId = #{departmentId}
         </if>
     </select>
     <update id="updateStudent">

@@ -92,8 +92,13 @@ public class SystemHrController {
                                                 @RequestParam(defaultValue = "") String keywords,
                                                 Long nationId,Long departmentId,Long upid,String nameZh) {
         List<Hr> hrs = hrService.getHrsByKeywords(page,size,keywords,nationId,departmentId,upid,nameZh);
+
+        List<Hr> hr = hrService.getHrsByKeywords(null,null,keywords,nationId,departmentId,upid,nameZh);
+
         Map<String, Object> map = new HashMap<>();
-        int count = hrs.size();
+
+
+        int count = hr.size();
         map.put("hrs",hrs);
         map.put("count",count);
         return map;

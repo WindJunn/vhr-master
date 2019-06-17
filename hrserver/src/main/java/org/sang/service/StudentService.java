@@ -50,21 +50,24 @@ public class StudentService {
 
     public List<Student> getStudentByPage(Integer page, Integer size, String keywords, Long nationId, Long departmentId,Long upid) {
         int start = (page - 1) * size;
-        List<Long> depList = null;
 
+        List<Long> depList = null;
         if (upid != null && upid != 0) {
             List<Department> deps = departmentMapper.getDepByPid(upid);
-            depList = new ArrayList<>();
-            depList.add(upid);
-            DepartmentUtil.findDep(deps, depList);
+            depList =  DepartmentUtil.findDeps(upid,deps);
         }
         return studentMapper.getStudentByPage(start, size, keywords, nationId, departmentId, depList);
     }
 
 
-    public Long getCountByKeywords(String keywords, Long nationId, Long departmentId) {
+    public Long getCountByKeywords(String keywords, Long nationId, Long departmentId,Long upid) {
+        List<Long> depList = null;
+        if (upid != null && upid != 0) {
+            List<Department> deps = departmentMapper.getDepByPid(upid);
 
-        return studentMapper.getCountByKeywords(keywords, nationId, departmentId);
+            depList =  DepartmentUtil.findDeps(upid,deps);
+        }
+        return studentMapper.getCountByKeywords(keywords,nationId, departmentId,depList);
     }
 
     public int updateStudent(Student student) {

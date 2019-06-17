@@ -47,7 +47,7 @@ export default {
     loadTableData() {
       var _this = this;
       this.loading = true;
-      this.getRequest("/system/name/").then(resp => {
+      this.getRequest("/systemsname/").then(resp => {
         _this.loading = false;
         if (resp && resp.status == 200) {
           _this.sys = resp.data[0];
@@ -57,7 +57,7 @@ export default {
     updatePassword() {
       var _this = this;
       // debugger;
-      this.putRequest("/system/name/", {
+      this.putRequest("/systems/name/", {
         title: this.sys.title,
         leftname: this.sys.leftname
       }).then(resp => {
