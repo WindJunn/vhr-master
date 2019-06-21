@@ -3,7 +3,6 @@ package org.sang.controller.noLogin;
 import org.apache.commons.io.IOUtils;
 import org.sang.bean.Article;
 import org.sang.bean.RespBean;
-import org.sang.common.Util;
 import org.sang.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -32,9 +31,9 @@ public class ArtController {
     public RespBean addNewArticle(Article article) {
         int result = articleService.addNewArticle(article);
         if (result == 1) {
-            return  RespBean.ok( article.getId() + "");
+            return RespBean.ok("操作成功"+article.getId() + "");
         } else {
-            return  RespBean.error( article.getState() == 0 ? "文章保存失败!" : "文章发表失败!");
+            return RespBean.error(article.getState() == 0 ? "文章保存失败!" : "文章发表失败!");
         }
     }
 
@@ -63,20 +62,40 @@ public class ArtController {
         try {
             IOUtils.write(image.getBytes(), new FileOutputStream(new File(imgFolder, imgName)));
             url.append("/").append(imgName);
-            return  RespBean.ok( url.toString());
+            return RespBean.ok(url.toString());
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return  RespBean.error("上传失败!");
+        return RespBean.error("上传失败!");
     }
 
+
     @RequestMapping(value = "/all", method = RequestMethod.GET)
-    public Map<String, Object> getArticleByState(@RequestParam(value = "state", defaultValue = "-1") Integer state, @RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "count", defaultValue = "6") Integer count, String keywords) {
-        int totalCount = articleService.getArticleCountByState(state, Util.getCurrentUser().getId(),keywords);
-        List<Article> articles = articleService.getArticleByState(state, page, count,keywords);
+    public Map<String, Object> getArticleByState(@RequestParam(value = "page", defaultValue = "1") Integer page,
+                                                 @RequestParam(value = "count", defaultValue = "6") Integer count,
+                                                 @RequestParam(value = "cid") Long cid,
+                                                 String keywords) {
+        int totalCount = articleService.getArticleCount( cid, keywords);
+        List<Article> articles = articleService.getAllArticle(page, count,cid, keywords);
         Map<String, Object> map = new HashMap<>();
-        map.put("totalCount", totalCount);
         map.put("articles", articles);
+        map.put("totalCount", totalCount);
+        return map;
+    }
+
+    @RequestMapping(value = "/home", method = RequestMethod.GET)
+    public Map<String, Object> getArticleByCid() {
+        List<Article> art1 = articleService.getAllArticle(1, 5,1L, "");
+        List<Article> art2 = articleService.getAllArticle(1, 5,2L, "");
+        List<Article> art3 = articleService.getAllArticle(1, 5,3L, "");
+        List<Article> art4 = articleService.getAllArticle(1, 5,4L, "");
+        List<Article> art5 = articleService.getAllArticle(1, 5,5L, "");
+        Map<String, Object> map = new HashMap<>(5);
+        map.put("art1", art1);
+        map.put("art2", art2);
+        map.put("art3", art3);
+        map.put("art4", art4);
+        map.put("art5", art5);
         return map;
     }
 
@@ -88,13 +107,13 @@ public class ArtController {
     @RequestMapping(value = "/dustbin", method = RequestMethod.PUT)
     public RespBean updateArticleState(Long[] aids, Integer state) {
         if (articleService.updateArticleState(aids, state) == aids.length) {
-            return  RespBean.ok("删除成功!");
+            return RespBean.ok("删除成功!");
         }
-        return  RespBean.error("删除失败!");
+        return RespBean.error("删除失败!");
     }
 
     @RequestMapping("/dataStatistics")
-    public Map<String,Object> dataStatistics() {
+    public Map<String, Object> dataStatistics() {
         Map<String, Object> map = new HashMap<>();
         List<String> categories = articleService.getCategories();
         List<Integer> dataStatistics = articleService.getDataStatistics();

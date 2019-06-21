@@ -7,12 +7,34 @@
     <link rel="stylesheet" href="css/public.css">
     <link rel="stylesheet" href="css/swiper.min.css">
     <link rel="stylesheet" href="css/index.css">
+
+    <script src="./plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script src="./plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="./plugins/angularjs/angular.min.js"></script>
+
+    <!-- 分页组件开始 -->
+    <script src="./plugins/angularjs/pagination.js"></script>
+    <link rel="stylesheet" href="./plugins/angularjs/pagination.css">
+    <!-- 分页组件结束 -->
+
+    <script type="text/javascript" src="./js/base_pagination.js"></script>
+    <script type="text/javascript" src="./js/service/itemCatService.js"></script>
+    <script type="text/javascript" src="./js/service/uploadService.js"></script>
+    <script type="text/javascript" src="./js/service/typeTemplateService.js"></script>
+    <script type="text/javascript" src="./js/service/articleService.js"></script>
+
+    <script type="text/javascript" src="./js/controller/baseController.js"></script>
+    <script type="text/javascript" src="./js/controller/articleController.js"></script>
+
 </head>
-<body>
+<body ng-app="jxs" ng-controller="articleController" ng-init="findHomeArt()">
+
 <header>
     <div class="section">
         <div class="head-logo">
-            <div class="bg"></div>
+            <div class="bg">
+                <img src="images/logo.png" alt="">
+            </div>
         </div>
         <ul class="login">
             <li class="log-item">
@@ -34,75 +56,78 @@
                 </ul>
             </li>
             <li class="search gy-flex">
-                <input type="text" placeholder="请输入关键字">
-                <i class="iconfont icon-iconfontzhizuobiaozhun22"></i>
-                <a href="##">登录</a>
+                <div class="gy-denglu">
+                    <input type="text" placeholder="请输入关键字">
+                    <i class="iconfont icon-iconfontzhizuobiaozhun22"></i>
+                </div>
+                <a href="##" class="dengl">登录</a>
+                <div class="user-name" style="display: none">
+                    <p class="gy-sm-tit text-ell">糖糖趟唐唐唐糖</p>
+                    <p class="gy-sm-tit">欢迎学习！</p>
+                </div>
             </li>
         </ul>
     </div>
 </header>
 
-
-<div class="section">
 <!--头条-->
+<div class="section">
     <div class="toutiao">
         <h1 class="gy-big-tit">习近平：奋力开创中部地区崛起新局面</h1>
         <div class="gy-flex toutiao-txt">
-            <p class="gy-flex text-ell">
-                <a href="##">习近平在江西考察并主持召开推动中部地区崛起工作座谈会</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-                <a href="##">提出8点意见</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-                <a href="##">总书记为何这个时候来到干部</a>&nbsp;&nbsp;
-            </p>
-            <a href="##" class="more">更多头条</a>
+            <!--            <p class="gy-flex text-ell">-->
+            <!--                <a href="##">习近平在江西考察并主持召开推动中部地区崛起工作座谈会</a>&nbsp;&nbsp;|&nbsp;&nbsp;-->
+            <!--                <a href="##">提出8点意见</a>&nbsp;&nbsp;|&nbsp;&nbsp;-->
+            <!--                <a href="##">总书记为何这个时候来到干部</a>&nbsp;&nbsp;-->
+            <!--            </p>-->
+            <!--            <a href="##" class="more">更多头条</a>-->
         </div>
         <div class="toutiao-img">
             <img src="images/tou01.jpg" alt="">
             <p class="img-title">习近平：奋力开创中部地区崛起新局面</p>
         </div>
         <div class="gy-flex notice">
-            <i class="icon icon-gg"></i>
+            <i class="iconfont icon-gonggao"></i>
             <marquee align="middle" onMouseOut="this.start()" onMouseOver="this.stop()" behavior="scroll">
                 <ul class="notice-list gy-flex">
-                    <li><a href="##" class="gy-flex"><span class="span-dian"></span>2019年视频课堂预算公开<span class="time">2019-05-22</span></a></li>
-                    <li><a href="##" class="gy-flex"><span class="span-dian"></span>2019年视频课堂预算公开<span class="time">2019-05-22</span></a></li>
-                    <li><a href="##" class="gy-flex"><span class="span-dian"></span>2019年视频课堂预算公开<span class="time">2019-05-22</span></a></li>
-                    <li><a href="##" class="gy-flex"><span class="span-dian"></span>2019年视频课堂预算公开<span class="time">2019-05-22</span></a></li>
+                    <li ng-repeat="entity in art2"><a href="##" class="gy-flex">
+                        <span class="span-dian"></span>{{entity.title}}<span
+                            class="time">{{entity.editTime | date:'yyyy-MM-dd'}}</span></a></li>
                 </ul>
             </marquee>
+            <!--            <a href="notice.html"><i class="iconfont icon-shuangyoujiantou-"></i></a>-->
+            <a href="notice.html" class="more" ng-click="changeCate()"><i class="icon icon-jt"></i></a>
 
-            <a href="notice.html" class="more"><i class="icon icon-jt"></i></a>
         </div>
     </div>
-
 </div>
 
 <!--政治解读-->
-
 <div class="political">
     <div class="section">
         <div class="political-sec  gy-flex">
 
             <ul class="political-list">
-                <li><h1 class="gy-tit gy-flex">每日要闻 <a href="##" class="more">进入</a></h1></li>
-                <li class="political-item">
-                    <a href="##">
-                        <h1 class="gy-sm-tit gy-flex"><span class="span-dian"></span>习近平向印尼当选总统佐科致贺电</h1>
-                        <p class="text-2-hidden gy-text">新华社北京5月21日电，
-                            国家主席习近平向印尼总统佐科·维多多致贺电，代表中国政府和中国人民，
-                            并个人的中国人民，并个人的
+                <li><h1 class="gy-tit gy-flex">要闻 <a href="##" class="more">进入</a></h1></li>
+                <li class="political-item" ng-repeat="entity in art1">
+                    <a href="detail.html?id={{entity.id}}" ng-cloak>
+                        <h1 class="gy-sm-tit gy-flex">
+                            <span class="span-dian"></span>{{entity.title}}
+                        </h1>
+                        <p class="text-2-hidden gy-text">{{entity.summary}}
                             <span class="xiang gy-text">[详情]</span>
                         </p>
                     </a>
                 </li>
+
             </ul>
+
             <ul class="political-list">
-                <li><h1 class="gy-tit gy-flex">政策解读 <a href="##" class="more">进入</a></h1></li>
-                <li class="political-item">
+                <li><h1 class="gy-tit gy-flex">政策 <a href="##" class="more">进入</a></h1></li>
+                <li class="political-item" ng-repeat="entity in art3">
                     <a href="##">
-                        <h1 class="gy-sm-tit gy-flex"><span class="span-dian"></span>习近平向印尼当选总统佐科致贺电</h1>
-                        <p class="text-2-hidden gy-text">新华社北京5月21日电，
-                            国家主席习近平向印尼总统佐科·维多多致贺电，代表中国政府和中国人民，
-                            并个人的中国人民，并个人的
+                        <h1 class="gy-sm-tit gy-flex"><span class="span-dian"></span>{{entity.title}}</h1>
+                        <p class="text-2-hidden gy-text">{{entity.summary}}
                             <span class="xiang gy-text">[详情]</span>
                         </p>
                     </a>
@@ -113,23 +138,83 @@
 </div>
 
 
+<!--政治解读-->
+<div class="political">
+    <div class="section">
+        <div class="political-sec  gy-flex">
+
+            <ul class="political-list">
+                <li><h1 class="gy-tit gy-flex">学习 <a href="##" class="more">进入</a></h1></li>
+                <li class="political-item" ng-repeat="entity in art4">
+                    <a href="##" ng-click="">
+                        <h1 class="gy-sm-tit gy-flex">
+                            <span class="span-dian"></span>{{entity.title}}
+                        </h1>
+                        <p class="text-2-hidden gy-text">{{entity.summary}}
+                            <span class="xiang gy-text">[详情]</span>
+                        </p>
+                    </a>
+                </li>
+
+            </ul>
+
+            <ul class="political-list">
+                <li><h1 class="gy-tit gy-flex">课堂 <a href="##" class="more">进入</a></h1></li>
+                <li class="political-item" ng-repeat="entity in art5">
+                    <a href="##">
+                        <h1 class="gy-sm-tit gy-flex"><span class="span-dian"></span>{{entity.title}}</h1>
+                        <p class="text-2-hidden gy-text">{{entity.summary}}
+                            <span class="xiang gy-text">[详情]</span>
+                        </p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!--在线课堂-->
+<!--
 <div class="section">
-    <!--在线课堂-->
     <h1 class="gy-big-tit line-class">在线课堂 <a href="##" class="more">进入</a></h1>
 
     <div class="swiper-container pc-banner">
         <div class="swiper-wrapper">
-            <div class="swiper-slide"><a href="##"><img src="images/banner001.jpg" alt=""></a></div>
-            <div class="swiper-slide"><a href="##"><img src="images/banner002.jpg" alt=""></a></div>
-            <div class="swiper-slide"><a href="##"><img src="images/banner003.jpg" alt=""></a></div>
-            <div class="swiper-slide"><a href="##"><img src="images/banner004.jpg" alt=""></a></div>
-            <div class="swiper-slide"><a href="##"><img src="images/banner005.jpg" alt=""></a></div>
+            <div class="swiper-slide"><a href="##">
+                <img src="images/banner001.jpg" alt="">
+                <i class="icon icon-bf"></i>
+            </a>
+            </div>
+            <div class="swiper-slide">
+                <a href="##">
+                    <img src="images/banner002.jpg" alt="">
+                    <i class="icon icon-bf"></i>
+                </a>
+            </div>
+            <div class="swiper-slide">
+                <a href="##">
+                    <img src="images/banner003.jpg" alt="">
+                    <i class="icon icon-bf"></i>
+                </a>
+            </div>
+            <div class="swiper-slide">
+                <a href="##">
+                    <img src="images/banner004.jpg" alt="">
+                    <i class="icon icon-bf"></i>
+                </a>
+            </div>
+            <div class="swiper-slide">
+                <a href="##">
+                    <img src="images/banner005.jpg" alt="">
+                    <i class="icon icon-bf"></i>
+                </a>
+            </div>
         </div>
     </div>
 
-    <!--学习交流-->
+    &lt;!&ndash;学习交流&ndash;&gt;
     <div class="study-change">
-        <h1 class="gy-tit gy-flex">学习交流  <a href="##" class="more"><i class="icon icon-jt"></i></a></h1>
+        <h1 class="gy-tit gy-flex">学习交流  <a href="##"><i class="iconfont icon-shuangyoujiantou-"></i></a></h1>
         <ul class="gy-flex study-list">
             <li>
                 <a href="##">
@@ -199,8 +284,8 @@
         </ul>
     </div>
 
-<!--    活动中心-->
-    <div class="active-center">
+&lt;!&ndash;    活动中心&ndash;&gt;
+   &lt;!&ndash; <div class="active-center">
         <h1 class="gy-tit gy-flex">活动中心  <a href="##" class="more">进入</a></h1>
         <ul class="active-list gy-flex">
             <li class="active-item">
@@ -238,11 +323,11 @@
             </li>
         </ul>
     </div>
+&ndash;&gt;
+&lt;!&ndash;    知识园地&ndash;&gt;
 
-<!--    知识园地-->
-
-    <div class="konw-field gy-flex">
-<!--        <div class="banner">-->
+   &lt;!&ndash; <div class="konw-field gy-flex">
+&lt;!&ndash;        <div class="banner">&ndash;&gt;
             <div class="swiper-container banner">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide">
@@ -273,14 +358,14 @@
                         </a>
                     </div>
                 </div>
-                <!-- 如果需要分页器 -->
+                &lt;!&ndash; 如果需要分页器 &ndash;&gt;
                 <div class="swiper-pagination"></div>
             </div>
 
             <div class="konw-cont">
 
             </div>
-<!--        </div>-->
+&lt;!&ndash;        </div>&ndash;&gt;
         <div class="konw-right">
             <h1 class="gy-tit">知识园地</h1>
             <ul class="konw-list">
@@ -311,16 +396,21 @@
             </ul>
         </div>
     </div>
+    &ndash;&gt;
+
 </div>
 
+-->
 
 <footer>
     <div class="fo-top">
-        <div class="section pad-left bianm">便民服务：</div>
+        <div class="section pad-left bianm" style="color: #0f0f0f">便民服务：</div>
         <div class="section gy-flex pad-left fo-sec">
             <ul class="foot-list">
-                <li><img src="images/logo.jpg" alt=""></li>
-                <li class="banquan"><p>版权所有：</p><sapn>宁夏固原市宣传部</sapn></li>
+                <li><img src="images/logo2.png" alt=""></li>
+                <li class="banquan"><p>版权所有：</p>
+                    <sapn>宁夏固原市宣传部</sapn>
+                </li>
                 <li><p>联系电话：</p><span>(0954)2088900</span></li>
                 <li><p>电子邮箱：</p><span>gydzzw@126.com</span></li>
                 <li><p>网站标识码：</p><span>6404000021|Copyright@ all rights reserved 宁 ICP 备 05001237号</span></li>
@@ -328,9 +418,12 @@
             <div class="right-line"></div>
             <ul class="foot-right">
                 <li>网站导航</li>
-                <li><a href="##">固原市人民政府官网</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="##">固原党建网</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="##">固原市人民信息网</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="##">固原市人民信息网</a></li>
-                <li><a href="##">固原市人民政府官网</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="##">固原市人民信息网</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="##">固原市人民信息网</a></li>
-                <li><a href="##">固原市人民政府官网</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="##">固原党建网</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="##">固原市人民信息网</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="##">固原市人民信息网</a></li>
+                <li><a href="##">固原市人民政府官网</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="##">固原党建网</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a
+                        href="##">固原市人民信息网</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="##">固原市人民信息网</a></li>
+                <li><a href="##">固原市人民政府官网</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="##">固原市人民信息网</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a
+                        href="##">固原市人民信息网</a></li>
+                <li><a href="##">固原市人民政府官网</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="##">固原党建网</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a
+                        href="##">固原市人民信息网</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="##">固原市人民信息网</a></li>
                 <li><a href="##">固原市人民政府官网</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="##">固原党建网</a>
                 <li>
                     <img class="zf" src="images/zf.jpg" alt="">
@@ -340,45 +433,52 @@
         </div>
     </div>
 </footer>
+
+
+<!-- 登录 -->
+<div class="xxjl_model">
+    <div class="xxjl_model-body">
+        <i class="icon icon-gb"></i>
+        <h1 class="dl">登录</h1>
+        <form class="dl-form" action="">
+            <p class="dl-input">
+                <i class="iconfont icon-dianhua"></i>
+                <input class="tel" type="text" placeholder="手机号码">
+            </p>
+            <p class="dl-input">
+                <i class="iconfont icon-mima"></i>
+                <input class="tel" type="text" placeholder="手机号码">
+            </p>
+            <p class="dl-input jz-input"><input type="checkbox" name="rem-pw" checked>记住密码</p>
+            <p class="dl-sub"><input type="submit" class="dl-input" placeholder="登录"/></p>
+        </form>
+    </div>
+</div>
+
 </body>
 </html>
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/swiper.min.js"></script>
+<script src="js/personal.js"></script>
 <script>
     $(function () {
-        $('.swiper-slide').mouseenter(function () {
-            mySwiper.autoplay.stop();
-        })
-        $('.swiper-slide').mouseleave(function () {
-            mySwiper.autoplay.start();
-        })
+        pcBanner();
+        banner();
+    })
 
-        var mySwiper = new Swiper ('.pc-banner', {
-            direction: 'horizontal',
-            loop: true, // 循环模式选项
-            slideActiveClass: 'swiper-slide-active',
-            centeredSlides: true,
-            slidesPerView: '2',
-            spaceBetween: -200,//每个滑块距右边的距离
-            autoplay: {
-                delay: 3000,
-                stopOnLastSlide: false,
-                disableOnInteraction: false,
-            },
-            pagination: {
-                el: '.swiper-pagination'
-            },
-
+    // 登录
+    $(function () {
+        $(".dengl").click(function () {
+            $(".xxjl_model").show();
         })
-
-        var mySwiper = new Swiper ('.banner', {
-            direction: 'horizontal',
-            loop: true, // 循环模式选项
-            autoplay:true,
-            // 如果需要分页器
-            pagination: {
-                el: '.swiper-pagination'
-            },
+        $(".icon-gb").click(function () {
+            $(".xxjl_model").hide();
+        })
+    })
+    /* 打开个人中心 */
+    $(function () {
+        $(".user-name").click(function () {
+            window.open("personal.html");
         })
     })
 </script>

@@ -23,19 +23,24 @@
             <a class="gy-sm-tit active" href="classRoom.html">课堂</a>
         </nav>
         <div class="search gy-flex">
-            <input type="text" placeholder="请输入关键字">
-            <i class="iconfont icon-iconfontzhizuobiaozhun22"></i>
-            <a href="##">登录</a>
+            <div class="gy-denglu">
+                <input type="text" placeholder="请输入关键字">
+                <i class="iconfont icon-iconfontzhizuobiaozhun22"></i>
+            </div>
+            <div class="user-name">
+                <p class="gy-sm-tit text-ell">糖糖趟唐唐唐</p>
+                <p class="gy-sm-tit">欢迎学习！</p>
+            </div>
         </div>
     </header>
 
     <div class="swiper-container swiper-container3">
         <div class="swiper-wrapper">
-            <div class="swiper-slide"><a href="##"><img src="images/banner001.jpg" alt=""></a></div>
-            <div class="swiper-slide"><a href="##"><img src="images/banner002.jpg" alt=""></a></div>
-            <div class="swiper-slide"><a href="##"><img src="images/banner003.jpg" alt=""></a></div>
-            <div class="swiper-slide"><a href="##"><img src="images/banner004.jpg" alt=""></a></div>
-            <div class="swiper-slide"><a href="##"><img src="images/banner005.jpg" alt=""></a></div>
+            <div class="swiper-slide"><a href="##"><img src="images/banner001.jpg" alt=""><i class="icon icon-bf"></i></a></div>
+            <div class="swiper-slide"><a href="##"><img src="images/banner002.jpg" alt=""><i class="icon icon-bf"></i></a></div>
+            <div class="swiper-slide"><a href="##"><img src="images/banner003.jpg" alt=""><i class="icon icon-bf"></i></a></div>
+            <div class="swiper-slide"><a href="##"><img src="images/banner004.jpg" alt=""><i class="icon icon-bf"></i></a></div>
+            <div class="swiper-slide"><a href="##"><img src="images/banner005.jpg" alt=""><i class="icon icon-bf"></i></a></div>
         </div>
     </div>
 
@@ -60,7 +65,7 @@
                     <a href="##">
                         <div class="nj-img">
                             <img src="images/kt.jpg" alt="">
-                            <i class="iconfont icon-bofang"></i>
+                            <i class="icon icon-bf"></i>
                         </div>
                         <p class="gy-sm-tit text-2-hidden">
                             有能力有信心保障重要农产品供给有能力有信心保障重要农产品供给有能力有信心保障重要农产品供给有能力有信心保障重要农产品供给
@@ -78,7 +83,7 @@
                     <a href="##">
                         <div class="nj-img">
                             <img src="images/study01.jpg" alt="">
-                            <i class="iconfont icon-bofang"></i>
+                            <i class="icon icon-bf"></i>
                         </div>
                         <p class="gy-sm-tit text-2-hidden">
                             有能力有信心保障重要农产品供给有能力有信心保障重要农产品供给有能力有信心保障重要农产品供给有能力有信心保障重要农产品供给
@@ -96,7 +101,7 @@
                     <a href="##">
                         <div class="nj-img">
                             <img src="images/kt.jpg" alt="">
-                            <i class="iconfont icon-bofang"></i>
+                            <i class="icon icon-bf"></i>
                         </div>
                         <p class="gy-sm-tit text-2-hidden">
                             有能力有信心保障重要农产品供给有能力有信心保障重要农产品供给有能力有信心保障重要农产品供给有能力有信心保障重要农产品供给
@@ -115,7 +120,7 @@
                     <a href="##">
                         <div class="nj-img">
                             <img src="images/kt02.jpg" alt="">
-                            <i class="iconfont icon-bofang"></i>
+                            <i class="icon icon-bf"></i>
                         </div>
                         <p class="gy-sm-tit text-2-hidden">
                             有能力有信心保障重要农产品供给有能力有信心保障重要农产品供给有能力有信心保障重要农产品供给有能力有信心保障重要农产品供给
@@ -134,7 +139,7 @@
                     <a href="##">
                         <div class="nj-img">
                             <img src="images/kt.jpg" alt="">
-                            <i class="iconfont icon-bofang"></i>
+                            <i class="icon icon-bf"></i>
                         </div>
                         <p class="gy-sm-tit text-2-hidden">
                             有能力有信心保障重要农产品供给有能力有信心保障重要农产品供给有能力有信心保障重要农产品供给有能力有信心保障重要农产品供给
@@ -153,7 +158,7 @@
                     <a href="##">
                         <div class="nj-img">
                             <img src="images/kt.jpg" alt="">
-                            <i class="iconfont icon-bofang"></i>
+                            <i class="icon icon-bf"></i>
                         </div>
                         <p class="gy-sm-tit text-2-hidden">
                             有能力有信心保障重要农产品供给有能力有信心保障重要农产品供给有能力有信心保障重要农产品供给有能力有信心保障重要农产品供给
@@ -198,38 +203,24 @@
 </html>
 <script src="js/jquery.min.js"></script>
 <script src="js/swiper.min.js"></script>
+<script src="js/personal.js"></script>
 <script>
-    /*轮播图*/
     $(function () {
-        var mySwiper = new Swiper('.swiper-container3', {
-            direction: 'horizontal',
-            loop: true, // 循环模式选项
-            slideActiveClass: 'swiper-slide-active',
-            centeredSlides: true,
-            slidesPerView: '2',
-            spaceBetween: -200,//每个滑块距右边的距离
-            autoplay: {
-                delay: 3000,
-                stopOnLastSlide: false,
-                disableOnInteraction: false,
-            },
-            pagination: {
-                el: '.swiper-pagination'
-            },
-
-        })
+        swiper3();
+        tab();
+       
     })
-    //tab切换
-    $(function(){
-        $('.tab-nav a').click(function(){
-            $(this).addClass('tab-active').siblings().removeClass('tab-active');
-            $('.aui-nav-list-tab>div:eq('+$(this).index()+')').show().siblings().hide();
-        })
-    });
 
     /*查看视频详情*/
     $(".nongji-item").click(function () {
         window.open("videoDel.html");
+    })
+    
+    /* 打开个人中心 */
+    $(function(){
+       $(".user-name").click(function(){
+            window.open("personal.html");
+        })
     })
 </script>
 

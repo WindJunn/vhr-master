@@ -38,12 +38,37 @@
         ORDER BY a.editTime DESC limit #{start},#{count};
     </select>
     <select id="getArticleByStateByAdmin" resultType="org.sang.bean.Article">
-        SELECT a.id,a.`title`,a.`editTime`,a.`pageView`,a.`state`,u.`nickname`,c.`cateName`,a.uid FROM article a,hr
+        SELECT a.id,a.`title`,a.`editTime`,a.`pageView`,a.`state`,u.`name`,c.`cateName`,a.uid FROM article a,hr
         u,category c WHERE a.`cid`=c.`id` AND a.`uid`=u.`id` and a.state=1
         <if test="keywords!=null">
             AND title LIKE concat('%',#{keywords},'%')
         </if>
         ORDER BY a.editTime DESC limit #{start},#{count};
+    </select>
+
+    <select id="getAllArticle" resultType="org.sang.bean.Article">
+        SELECT a.*,a.id,a.`title`,a.`editTime`,a.`pageView`,a.`state`,c.`cateName` FROM article a
+        ,category c WHERE a.`cid`=c.`id` and a.state=1
+        <if test="keywords!=null">
+            AND title LIKE concat('%',#{keywords},'%')
+        </if>
+        <if test="cid!=null">
+            AND cid=#{cid}
+        </if>
+        ORDER BY a.editTime DESC limit #{start},#{count};
+    </select>
+    <select id="getArticleCount" resultType="int">
+        SELECT count(*) FROM article
+        <where>
+            state=1
+
+            <if test="cid!=null">
+                AND cid=#{cid}
+            </if>
+            <if test="keywords!=null">
+                AND title LIKE concat('%',#{keywords},'%')
+            </if>
+        </where>
     </select>
     <select id="getArticleCountByState" resultType="int">
         SELECT count(*) FROM article

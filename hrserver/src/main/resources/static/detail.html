@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>详情页</title>
+    <link rel="stylesheet" href="css/iconfont.css">
+    <link rel="stylesheet" href="css/public.css">
+    <link rel="stylesheet" href="css/videoDel.css">
+
+
+    <script type="text/javascript" src="./plugins/angular-1.2.0/angular.min.js"></script>
+    <script src="./plugins/angular-1.2.0/angular-sanitize.js"></script>
+    <!-- 分页组件开始 -->
+    <script src="./plugins/angularjs/pagination.js"></script>
+    <link rel="stylesheet" href="./plugins/angularjs/pagination.css">
+    <!-- 分页组件结束 -->
+
+    <script type="text/javascript" src="./js/base.js"></script>
+
+    <script type="text/javascript" src="./js/service/itemCatService.js"></script>
+    <script type="text/javascript" src="./js/service/uploadService.js"></script>
+    <script type="text/javascript" src="./js/service/typeTemplateService.js"></script>
+    <script type="text/javascript" src="./js/service/articleService.js"></script>
+
+    <script type="text/javascript" src="./js/controller/baseController.js"></script>
+    <script type="text/javascript" src="./js/controller/articleController.js"></script>
+
+
+
+</head>
+<body ng-app="jxs" ng-controller="articleController" ng-init="getArticleById(aid)">
+<div class="section">
+    <header class="gongao">
+        <div class="logo"><img src="images/logo.jpg" alt=""></div>
+
+    </header>
+
+    <div style="text-align: left;">
+        <button type="text"  ng-click="goBack" style="padding-bottom: 0px;">返回</button>
+    </div>
+    <div>
+        <div><h3 style="align-content: center">{{article.title}}</h3></div>
+        <div style="width: 100%;margin-top: 5px;display: flex;justify-content: flex-end;align-items: center">
+            <div style="display: inline; color: #20a0ff;margin-left: 50px;margin-right:20px;font-size: 12px;">
+                {{article.name}}
+            </div>
+            <span style="color: #20a0ff;margin-right:20px;font-size: 20px;">浏览 {{article.pageView==null?0:article.pageView}}</span>
+            <span style="color: #20a0ff;margin-right:20px;font-size: 20px;"> {{article.editTime | date:'yyyy-MM-dd'}}</span>
+
+        </div>
+    </div>
+
+    <div style="text-align: center;width: 60%;" ng-bind-html="htmlContents">
+    </div>
+
+</div>
+
+<footer>
+    <div class="fo-top">
+        <div class="section pad-left bianm">1</div>
+
+        <div class="section gy-flex pad-left fo-sec">
+            <ul class="foot-list">
+                <li><img src="images/logo.jpg" alt=""></li>
+                <li class="banquan"><p>版权所有：</p>
+                    <sapn>宁夏固原市宣传部</sapn>
+                </li>
+                <li><p>联系电话：</p><span>(0954)2088900</span></li>
+                <li><p>电子邮箱：</p><span>gydzzw@126.com</span></li>
+                <li><p>网站标识码：</p><span>6404000021|Copyright@ all rights reserved 宁 ICP 备 05001237号</span></li>
+            </ul>
+            <div class="right-line"></div>
+            <ul class="foot-right">
+                <li>网站导航</li>
+                <li><a href="##">固原市人民政府官网</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="##">固原党建网</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a
+                        href="##">固原市人民信息网</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="##">固原市人民信息网</a></li>
+                <li><a href="##">固原市人民政府官网</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="##">固原市人民信息网</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a
+                        href="##">固原市人民信息网</a></li>
+                <li><a href="##">固原市人民政府官网</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="##">固原党建网</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a
+                        href="##">固原市人民信息网</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="##">固原市人民信息网</a></li>
+                <li><a href="##">固原市人民政府官网</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="##">固原党建网</a>
+                <li>
+                    <img class="zf" src="images/zf.jpg" alt="">
+                    <img class="jg" src="images/jg.jpg" alt="">
+                </li>
+            </ul>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
+<script src="js/jquery.min.js"></script>
+<script>
+    $(".guand").click(function () {
+        $(".xxjl_model").show()
+    })
+    $(".guanbi").click(function () {
+        $(".xxjl_model").hide()
+    })
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -8,9 +8,11 @@
     width: 755px;
     margin: 56px auto 40px;
     height: 60px;
-    background: #fff;
 }
-
+.bg img{
+    width:100%;
+    height: 100%;
+}
 .login{
     display: flex;
     justify-content: space-around;
@@ -22,7 +24,90 @@
     font-style: italic;
     line-height: 32px;
 }
-
+/* 登录 */
+.xxjl_model-body{
+    width: 630px;
+    background: #fff;
+    height: 400px;
+    position: absolute;
+    top: 26%;
+    left: 25%;
+    border-radius: 10px;
+    padding: 70px 0 40px 70px;
+}
+.icon-gb{
+    width: 28px;
+    height:28px;
+    background: url(../images/gb.png);
+    background-size: 100% 100%;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+}
+.dl{
+    font-size: 30px;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 60px;
+}
+.dl-form{
+    padding-left: 60px;
+}
+.dl-input{
+    width: 438px;
+    height: 42px;
+    border: 1px solid #c00;
+    border-radius: 10px;
+    margin-bottom: 30px;
+}
+.icon-dianhua,.icon-mima{
+    line-height: 42px;
+    margin-left:20px;
+    margin-right: 10px;
+    font-size: 24px;
+    color: #999; 
+    vertical-align: middle;
+}
+.tel{
+    width:80%;
+    height: 40px;
+    line-height: 40px;
+    border: none;
+    outline: none;
+    vertical-align: middle;
+}
+.jz-input{
+    font-size: 14px;
+    color: #c00;
+    text-align: center;
+    line-height: 40px;
+    vertical-align: middle;
+    border: none;
+}
+.jz-input input[type=checkbox]{
+    width: 14px;
+    height: 14px;
+    outline: none;
+    border: none;
+    vertical-align: middle;
+    margin-right: 10px;
+    -webkit-appearance:none;
+    background: transparent;
+    background-image:url(../images/false.png);
+    -webkit-background-size:100% 100%;
+    background-size: 100% 100%;
+}
+.jz-input input[type=checkbox]:checked{
+    background: url(../images/true.png);
+    -webkit-background-size:100% 100%;
+    background-size: 100% 100%;
+}
+.dl-sub input{
+    border:none;
+    outline: none;
+    background: #c00;
+    color: #fff;
+}
 /*头条*/
 .toutiao-txt{
     justify-content: center;
@@ -66,9 +151,20 @@
     align-items: center;
     margin-right: 80px;
     color: #333;
+    line-height: 32px;
 }
 .time{
     margin-left: 38px;
+}
+.icon-gonggao{
+    font-size: 28px;
+    color: #c00;
+}
+.icon-shuangyoujiantou-{
+   font-size: 20px;
+   color: #c00;
+   margin-left: 5px;
+   line-height: 32px;
 }
 /*政治解读*/
 .political{
@@ -128,6 +224,7 @@
     transition:all 300ms;
 }
 .pc-banner .swiper-slide a{
+    position: relative;
     width: 100%;
     height: 100%;
 }

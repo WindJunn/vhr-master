@@ -7,23 +7,47 @@
     <link rel="stylesheet" href="css/swiper.min.css">
     <link rel="stylesheet" href="css/public.css">
     <link rel="stylesheet" href="css/notice.css">
+    <script src="./plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script src="./plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="./plugins/angularjs/angular.min.js"></script>
+
+    <!-- 分页组件开始 -->
+    <script src="./plugins/angularjs/pagination.js"></script>
+    <link rel="stylesheet" href="./plugins/angularjs/pagination.css">
+    <!-- 分页组件结束 -->
+
+    <script type="text/javascript" src="./js/base_pagination.js"></script>
+
+    <script type="text/javascript" src="./js/service/itemCatService.js"></script>
+    <script type="text/javascript" src="./js/service/uploadService.js"></script>
+    <script type="text/javascript" src="./js/service/typeTemplateService.js"></script>
+    <script type="text/javascript" src="./js/service/articleService.js"></script>
+
+    <script type="text/javascript" src="./js/controller/baseController.js"></script>
+    <script type="text/javascript" src="./js/controller/articleController.js"></script>
+
 </head>
-<body>
+<body ng-app="jxs" ng-controller="articleController" ng-init="change(cid)">
 <div class="section">
     <header class="gongao">
-        <div class="logo"><img src="images/logo.jpg" alt=""></div>
+        <div class="logo"><img src="images/logo2.png" alt=""></div>
         <nav class="gy-flex nav">
             <a class="gy-sm-tit" href="index1.html" target="_blank">首页</a>
-            <a class="gy-sm-tit" href="##">要闻</a>
-            <a class="gy-sm-tit active" href="notice.html">公告</a>
-            <a class="gy-sm-tit" href="##">政策</a>
-            <a class="gy-sm-tit" href="##">学习</a>
+            <a class="gy-sm-tit {{cid==1?'active':''}}" href="##" ng-click="change(1)">要闻</a>
+            <a class="gy-sm-tit {{cid==2?'active':''}}" href="notice.html" ng-click="change(2)">公告</a>
+            <a class="gy-sm-tit {{cid==3?'active':''}}" href="##" ng-click="change(3)">政策</a>
+            <a class="gy-sm-tit {{cid==4?'active':''}}" href="##" ng-click="change(4)">学习</a>
             <a class="gy-sm-tit" href="classRoom.html">课堂</a>
         </nav>
         <div class="search gy-flex">
-            <input type="text" placeholder="请输入关键字">
-            <i class="iconfont icon-iconfontzhizuobiaozhun22"></i>
-            <a href="##">登录</a>
+            <div class="gy-denglu">
+                <input type="text" placeholder="请输入关键字">
+                <i class="iconfont icon-iconfontzhizuobiaozhun22"></i>
+            </div>
+            <div class="user-name">
+                <p class="gy-sm-tit text-ell">糖糖趟唐唐唐糖</p>
+                <p class="gy-sm-tit">欢迎学习！</p>
+            </div>
         </div>
     </header>
 
@@ -102,13 +126,13 @@
     </div>
 
     <!--公告列表-->
-    <ul class="notice-list">
+    <ul class="notice-list" ng-repeat="entity in art">
         <li class="notice-item">
             <a href="##">
                 <div class="gy-sm-tit gy-flex">
                     <span class="span-dian"></span>
-                    <p class="text-ell">习近平向印尼当选总统佐科致贺电习近平向印尼当选总统佐科致贺电习近平向印尼当选总统佐科致贺电习近平向印尼当选总统佐科致贺电习近平向印尼当选总统佐科致贺电习近平向印尼当选总统佐科致贺电习近平向印尼当选总统佐科致贺电</p>
-                    <span class="time">2019-05-25</span>
+                    <p class="text-ell" >{{entity.title}}</p>
+                    <span class="time">{{entity.editTime | date:'yyyy-MM-dd'}}</span>
                 </div>
 
             </a>
@@ -119,10 +143,9 @@
 
 <footer>
     <div class="fo-top">
-        <div class="section pad-left bianm">便民服务：</div>
         <div class="section gy-flex pad-left fo-sec">
             <ul class="foot-list">
-                <li><img src="images/logo.jpg" alt=""></li>
+                <li><img src="images/logo2.png" alt=""></li>
                 <li class="banquan"><p>版权所有：</p><sapn>宁夏固原市宣传部</sapn></li>
                 <li><p>联系电话：</p><span>(0954)2088900</span></li>
                 <li><p>电子邮箱：</p><span>gydzzw@126.com</span></li>
@@ -143,20 +166,20 @@
         </div>
     </div>
 </footer>
+
 </body>
 </html>
 <script src="js/jquery.min.js"></script>
 <script src="js/swiper.min.js"></script>
+<script src= js/personal.js></script>
 <script>
     $(function () {
-        var mySwiper = new Swiper ('.swiper-container2', {
-            direction: 'horizontal',
-            loop: true, // 循环模式选项
-            // autoplay:true,
-            // 如果需要分页器
-            pagination: {
-                el: '.swiper-pagination'
-            },
+        swiper2();
+    })
+
+    $(function(){
+       $(".user-name").click(function(){
+            window.open("personal.html");
         })
     })
 </script>

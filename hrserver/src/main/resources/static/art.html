@@ -6,9 +6,49 @@
 </head>
 <body>
 
-<p>视频测试<br /> <embed src='http://player.youku.com/player.php/sid/XNDE2Njg3MTI2OA==/v.swf' allowFullScreen='true' quality='high' width='480' height='400' align='middle' allowScriptAccess='always' type='application/x-shockwave-flash'></embed></p> <p><strong>粗体</strong></p>
+<div style="align-content: center">
 
+    <p>视频测试<br/>
+        <div>
 
+</div>
+        <embed src='http://player.youku.com/player.php/sid/XNDE2Njg3MTI2OA==/v.swf'
+               allowFullScreen='true' quality='high' width='480' height='400'
+               align='middle' allowScriptAccess='always'
+               type='application/x-shockwave-flash'></embed>
+    </p>
+</div>
 
+<p><strong>粗体</strong></p>
+<hr>
+<!--static/03.mp4-->
+<!--<video width="320" height="240" controls="controls" autoplay>-->
+<!--    &lt;!&ndash;    <source src="03.mp4" type="video/mp4" />&ndash;&gt;-->
+<!--    <object data="03.mp4" width="320" height="240">-->
+<!--        <embed src="03.mp4" width="320" height="240"/>-->
+<!--    </object>-->
+<!--</video>-->
+<!--/Users/feng/Downloads/03.mp4-->
+<!--<video width="320" height="240" controls="controls" autoplay>-->
+<!--    <source src="./03.mp4" type="video/mp4"/>-->
+<!--    您的浏览器不支持播放该视频！-->
+<!--</video>-->
+<!--<video width="320" height="240" controls="controls" autoplay>-->
+<!--    <source src="../../Users/feng/Downloads/03.mp4" type="video/mp4"/>-->
+<!--    您的浏览器不支持播放该视频！-->
+<!--</video>-->
+
+<video controls="true" width="320" height="240"></video>
 </body>
+
+<script type="text/javascript">
+    //禁用掉video的右键菜单
+    var video=document.getElementsByTagName("video")[0];
+    video.oncontextmenu=function(){
+        return false;
+    };
+    var url="/Users/feng/Downloads/03.mp4";  //电脑上视频文件的绝对路径
+    video.src="showVideo?fileName="+url;
+    //告诉服务器要播放视频文件的路径
+</script>
 </html>

@@ -1,0 +1,193 @@
+
+.nongji-list{
+    display: none;
+}
+.per-imgs{
+    width: 100%;
+    height: 360px;
+    margin: 60px 0 30px 0;
+}
+.per-from{
+    margin: 50px 0 50px 25px;
+    flex-wrap: wrap;
+    justify-content: left;
+}
+.per-name{
+    width: 33%;
+    justify-content: left;
+    vertical-align: middle;
+    line-height: 30px;
+    margin: 0 60px;
+}
+.per-text{
+    display: inline-block;
+    width: 100px;
+    text-align: right;
+}
+.ps-name{
+    position: relative;
+    margin-bottom: 40px;
+}
+.icon-bianji1,.icon-rili,.icon-dianhua{
+    font-size: 14px;
+    color: #ccc;
+    vertical-align: middle;
+    line-height: 30px;
+    margin-left: 10px;
+    position: absolute;
+    left: 20px;
+    top: 4px;
+}
+.ps-name input[type=text]{
+    width: 260px;
+    height: 32px;
+    border-radius: 5px;
+    border: none;
+    margin-left: 20px;
+    border: 1px solid #ccc;
+    text-indent: 30px;
+}
+.ps-name input[type=radio]{
+    width: 16px;
+    height: 16px;
+    border: none;
+    outline: none;
+    -webkit-appearance: none;
+    background: transparent;
+    background-image: url(../images/check_false.png);
+    background-size: 100% 100%;
+    margin: 0 20px 0 16px;
+    vertical-align: middle;
+    line-height: 32px;
+}
+.ps-name input[type=radio]:checked{
+    background-image: url(../images/check_true.png);
+    background-size: 100% 100%;
+}
+.ps-name select{
+    width:260px;
+    height:32px;
+    border-radius: 5px;
+    border: none;
+    margin-left: 20px;
+    border: 1px solid #ccc;
+    -webkit-appearance: none; 
+　　-moz-appearance: none;
+    background: url(../images/youjtou.png) no-repeat;
+    background-position:  240px 10px;
+    text-indent: 10px;
+}
+.ps-name option{
+    border: 1px solid #ccc;
+}
+.class-table{
+    margin: 30px auto 0;
+}
+.class-table tr:nth-child(1) td{
+    padding: 15px 62px;
+    background: #f8e1e1;
+}
+.class-list td{
+    color: #666;
+    padding: 30px 60px;
+    border-bottom: 1px solid #ccc;
+}
+.class-list .yes{
+    color: #c00;
+}
+.sxtj{
+    justify-content: left;
+    margin: 0 75px;
+}
+.sxtj .per-name{
+    margin-left: 90px;
+}
+.per-name2{
+    opacity: 0;
+}
+
+.zlsc{
+    justify-content: space-between;
+    margin: 0 90px;
+}
+.zlsc .per-name{
+    margin: 0;
+}
+.shangc{
+    width: 100px;
+    height: 34px;
+    color: #fff;
+    border: none;
+    outline: none;
+    background: #c00;
+    border-radius: 5px;
+}
+.zl-item{
+    margin-bottom: 40px;
+}
+.zl-item .gy-flex{
+    position: relative;
+}
+.zl-item .time{
+    position: absolute;
+    right: 10px;
+    top: 0px;
+}
+.zl-class{
+    color: #c00;
+}
+.zlsc-list{
+    flex-wrap: wrap;
+}
+.zlsc-list .per-name{
+    width: 39%;
+}
+.zlsc-list .neir{
+    width: 80%;
+}
+.neir textarea{
+    width: 790px;
+    height: 180px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-left: 20px;
+    text-indent: 20px;
+    padding: 10px;
+    resize: none;
+}
+.sc-imgs{
+    width: 200px;
+    height: 240px;
+    background: #f4f4f4;
+    border-radius: 5px;
+    position: relative;
+    margin-left: 20px;
+}
+.sc-imgs span{
+    position: absolute;
+    top: 15%;
+    left: 35%;
+}
+.sc-imgs .shangc{
+    position: absolute;
+    bottom: 20%;
+    left: 25%;
+}
+#image{
+    position: absolute;
+    top:40%;
+    left: 40%;
+}
+.geshi{
+    margin-top: 180px;
+    margin-left: 30px;
+}
+
+.zlsc-list .sc{
+    width: 90%;
+    justify-content: center;
+    margin-top: 45px;
+}
+.shangc-list{
+    display: none;
+}

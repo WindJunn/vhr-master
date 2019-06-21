@@ -95,6 +95,15 @@ public class ArticleService {
         return articleMapper.getArticleByState(state, start, count, uid,keywords);
     }
 
+    public List<Article> getAllArticle(Integer page, Integer count,Long cid, String keywords) {
+        int start = (page - 1) * count;
+        return articleMapper.getAllArticle( start, count, cid,keywords);
+    }
+
+    public int getArticleCount( Long cid,String keywords) {
+        return articleMapper.getArticleCount( cid,keywords);
+    }
+
 //    public List<Article> getArticleByStateByAdmin(Integer page, Integer count,String keywords) {
 //        int start = (page - 1) * count;
 //        return articleMapper.getArticleByStateByAdmin(start, count,keywords);

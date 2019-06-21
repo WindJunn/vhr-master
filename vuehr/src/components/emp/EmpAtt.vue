@@ -147,12 +147,12 @@
                   size="mini"
                 >编辑</el-button>
 
-                <el-button
+                <!-- <el-button
                   style="padding: 3px 4px 3px 4px;margin: 2px"
                   type="primary"
                   size="mini"
                   @click="showAttendanceView(scope.row)"
-                >查看考勤</el-button>
+                >查看考勤</el-button> -->
                 <el-button
                   type="danger"
                   style="padding: 3px 4px 3px 4px;margin: 2px"
