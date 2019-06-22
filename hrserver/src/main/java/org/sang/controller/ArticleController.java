@@ -1,11 +1,15 @@
 package org.sang.controller;
 
+import com.alibaba.druid.util.StringUtils;
+import com.sun.imageio.plugins.common.ImageUtil;
 import org.apache.commons.io.IOUtils;
 import org.sang.bean.Article;
 import org.sang.bean.RespBean;
+import org.sang.common.FileUtil;
 import org.sang.common.Util;
 import org.sang.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -13,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -25,6 +30,8 @@ public class ArticleController {
 
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 
+    @Value("${dir}")
+    private String dir;
     @Autowired
     ArticleService articleService;
 
@@ -32,9 +39,9 @@ public class ArticleController {
     public RespBean addNewArticle(Article article) {
         int result = articleService.addNewArticle(article);
         if (result == 1) {
-            return  RespBean.ok( article.getId() + "");
+            return RespBean.ok(article.getId() + "");
         } else {
-            return  RespBean.error( article.getState() == 0 ? "文章保存失败!" : "文章发表失败!");
+            return RespBean.error(article.getState() == 0 ? "文章保存失败!" : "文章发表失败!");
         }
     }
 
@@ -63,17 +70,38 @@ public class ArticleController {
         try {
             IOUtils.write(image.getBytes(), new FileOutputStream(new File(imgFolder, imgName)));
             url.append("/").append(imgName);
-            return  RespBean.ok( url.toString());
+            return RespBean.ok(url.toString());
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return  RespBean.error("上传失败!");
+        return RespBean.error("上传失败!");
+    }
+
+    /**
+     * 图片上传
+     *
+     * @param img
+     * @return
+     */
+    @PostMapping(value = "/upload")
+    public RespBean uploadImgs(HttpServletRequest req, @RequestParam("image") MultipartFile img) {
+        //图片上传调用工具类
+        try {
+            //保存图片
+            StringBuffer url = new StringBuffer();
+            String path = FileUtil.saveImg(img);
+            url.append("showImage?fileName=")
+                    .append(path);
+            return RespBean.ok(url.toString());
+        } catch (Exception e) {
+            return RespBean.error("上传文件失败");
+        }
     }
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public Map<String, Object> getArticleByState(@RequestParam(value = "state", defaultValue = "-1") Integer state, @RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "count", defaultValue = "6") Integer count, String keywords) {
-        int totalCount = articleService.getArticleCountByState(state, Util.getCurrentUser().getId(),keywords);
-        List<Article> articles = articleService.getArticleByState(state, page, count,keywords);
+        int totalCount = articleService.getArticleCountByState(state, Util.getCurrentUser().getId(), keywords);
+        List<Article> articles = articleService.getArticleByState(state, page, count, keywords);
         Map<String, Object> map = new HashMap<>();
         map.put("totalCount", totalCount);
         map.put("articles", articles);
@@ -88,13 +116,13 @@ public class ArticleController {
     @RequestMapping(value = "/dustbin", method = RequestMethod.PUT)
     public RespBean updateArticleState(Long[] aids, Integer state) {
         if (articleService.updateArticleState(aids, state) == aids.length) {
-            return  RespBean.ok("删除成功!");
+            return RespBean.ok("删除成功!");
         }
-        return  RespBean.error("删除失败!");
+        return RespBean.error("删除失败!");
     }
 
     @RequestMapping("/dataStatistics")
-    public Map<String,Object> dataStatistics() {
+    public Map<String, Object> dataStatistics() {
         Map<String, Object> map = new HashMap<>();
         List<String> categories = articleService.getCategories();
         List<Integer> dataStatistics = articleService.getDataStatistics();

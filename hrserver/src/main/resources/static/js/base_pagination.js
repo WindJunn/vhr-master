@@ -1,1 +1,1 @@
-var app=angular.module('jxs',['pagination']);
+var app=angular.module('jxs',['pagination1.css']);

@@ -4,17 +4,20 @@ public class Test {
 
     public static void main(String[] args) {
 
-        // 外层循环
-        tag:
-        for (int i = 1; i <= 5; i++) {
-            // 内层循环
-            for (int j = 1; j <= 3; j++) {
-                System.out.println("i的值为:" + i + " j的值为:" + j);
-                if (j == 2) {
-                    break tag;
-                }
-            }
+        String htmlContent = "<p>12</p>\n" +
+                "<p><img src=\"http://localhost:8082/img/virtual/2a4721a6a3f8479f82ea8314065a7bd4.png\" alt=\"炉石.png\" /></p>\n" +
+                "<p>12</p>\n";
+//<div align="center">
+        if (htmlContent.contains("<img")){
         }
+        int width= 400;
+        int height= 300;
 
+        String img = "<div align=\"center\"><img width=\""+width+"\" height=\""+height+"\"";
+        String replace = htmlContent.replace("<img", img);
+         replace = replace.replace("/>", "/></div>");
+
+
+        System.out.println(replace);
     }
 }

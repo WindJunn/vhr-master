@@ -14,11 +14,20 @@ app.service('articleService',function($http){
 		return $http.get('art/all?page='+page+'&count=10&cid='+cid+'&keywords='+keywords);
 	};
 
+	//搜索
+	this.search=function(page,count,cid,keywords){
+		return $http.get('art/all?page='+page+'&count='+count+'&cid='+cid+'&keywords='+keywords);
+	}
+
 	this.findHomeArt=function(){
 		return $http.get('art/home');
 	};
 	this.getArticleById=function(aid){
 		return $http.get('art/'+aid);
+	};
+
+	this.submitClick=function (username, password) {
+		return $http.post('/login?username='+username+'&password'+password);
 	};
 	//查询实体
 	this.findOne=function(id){
@@ -36,10 +45,7 @@ app.service('articleService',function($http){
 	this.dele=function(ids){
 		return $http.get('../goods/delete.do?ids='+ids);
 	}
-	//搜索
-	this.search=function(page,rows,searchEntity){
-		return $http.post('../goods/search.do?page='+page+"&rows="+rows, searchEntity);
-	}
+
 
 	this.updateStatus=function (ids,status) {
 		return $http.get('../goods/updateStatus.do?ids='+ids+'&status='+status);

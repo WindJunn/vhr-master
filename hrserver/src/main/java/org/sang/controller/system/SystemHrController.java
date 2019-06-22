@@ -78,6 +78,8 @@ public class SystemHrController {
         return RespBean.error("更新失败!");
     }
 
+
+
     @RequestMapping(value = "/roles", method = RequestMethod.PUT)
     public RespBean updateHrRoles(Long hrId, Long[] rids) {
         if (hrService.updateHrRoles(hrId, rids) == rids.length) {
@@ -125,6 +127,17 @@ public class SystemHrController {
         }
         return RespBean.error("修改失败!");
     }
+
+    @RequestMapping(value = "/password", method = RequestMethod.POST)
+    public RespBean resetHrPassword(String username, String password) {
+        int i = hrService.updateHrPassword(username, password);
+        if (i == 1) {
+            return RespBean.ok("重置成功!");
+        }
+        return RespBean.error("重置失败!");
+    }
+
+
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public RespBean addHr(Hr hr) {

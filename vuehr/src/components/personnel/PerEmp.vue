@@ -14,9 +14,9 @@
         <el-tab-pane label="回收站" name="dustbin">
           <blog_table state="2" :showEdit="false" :showDelete="true" :activeName="activeName"></blog_table>
         </el-tab-pane>
-        <el-tab-pane label="博客管理" name="blogmana" v-if="isAdmin">
+        <!-- <el-tab-pane label="博客管理" name="blogmana" v-if="isAdmin">
           <blog_table state="-2" :showEdit="false" :showDelete="true" :activeName="activeName"></blog_table>
-        </el-tab-pane>
+        </el-tab-pane> -->
         <el-tab-pane label="文章详情" name="blogcfg" v-if="show">
           <blog_cfg></blog_cfg>
         </el-tab-pane>

@@ -495,7 +495,7 @@
               </div>
             </el-col>
             <el-col style="width:10%">
-              <div>
+              <div style="margin-top: 6px; margin-left: 10px;">
                 <el-button
                   type="primary"
                   @click="addPoint('add')"
@@ -510,10 +510,10 @@
               </div>
             </el-col>
           </el-row>
-          <el-form-item style="left"></el-form-item>
-          <div v-if="pointss.length>0">
-            <hr>
 
+          <el-form-item style="left"></el-form-item>
+          <div v-if="pointss.length>0" style="height:400px;overflow-y: scroll;">
+            <hr>
             <div v-for="(item,index) in pointss">
               <el-row>
                 <el-col style="width:20%">
@@ -560,7 +560,7 @@
                   </div>
                 </el-col>-->
                 <el-col style="width:8%">
-                  <div>
+                  <div style="margin-top: 6px; margin-left: 10px;">
                     <el-button
                       type="danger"
                       style="width: 60%"
@@ -959,9 +959,9 @@ export default {
       this.getRequest(
         "/student/basic/emp?page=" +
           this.currentPage +
-          "&size="+
-          this.pageSize
-          +"&keywords=" +
+          "&size=" +
+          this.pageSize +
+          "&keywords=" +
           this.keywords +
           "&nationId=" +
           this.emp.nationId +

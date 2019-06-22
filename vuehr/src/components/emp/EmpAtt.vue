@@ -107,8 +107,7 @@
                     >{{emp.departmentName}}</div>
                   </el-popover>
                 </el-col>
-              </el-row>
-              <el-row style="margin-top: 10px">
+
                 <el-col :span="5" :offset="4">
                   <el-button size="mini" @click="cancelSearch">取消</el-button>
                   <el-button icon="el-icon-search" type="primary" size="mini" @click="searchEmp">搜索</el-button>
@@ -152,7 +151,7 @@
                   type="primary"
                   size="mini"
                   @click="showAttendanceView(scope.row)"
-                >查看考勤</el-button> -->
+                >查看考勤</el-button>-->
                 <el-button
                   type="danger"
                   style="padding: 3px 4px 3px 4px;margin: 2px"
@@ -629,8 +628,8 @@ export default {
       this.getRequest(
         "/attendance/att?page=" +
           this.currentPage +
-          "&size="+
-          this.pageSize+ 
+          "&size=" +
+          this.pageSize +
           "&keywords=" +
           this.keywords +
           "&atime=" +

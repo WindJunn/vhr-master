@@ -27,17 +27,9 @@ app.controller('articleController', function ($scope, $controller, $location, ar
     $scope.findByCate = function (page, cid, keywords) {
         articleService.findByCate(page, cid, keywords).success(
             function (response) {
-                debugger
                 $scope.art = response.articles;
                 $scope.paginationConf.totalItems = response.totalCount;//更新总记录数
-                if (response.success) {
-                    /*alert("保存成功");
-                    $scope.entity = {};
-                    editor.html("");*/
-                    // location.href="notice.html";
-                } else {
-                    alert(response.message);
-                }
+
             }
         );
     };
@@ -55,24 +47,29 @@ app.controller('articleController', function ($scope, $controller, $location, ar
     }
 
     $scope.cid = '';
-    $scope.change = function (cid) {
-        $scope.cid = cid;
-        alert(cid);
+    $scope.cids = '';
+    $scope.changes = function (cids) {
+        var cid = $location.search()['cid'];
+        if (cid == null) {
+            return;
+        }
+        if (cids != null) {
+             cid = cids;
+        }
         $scope.findByCate(1, cid, '');
-        // location.href="notice.html"
 
     };
 
 
     $scope.htmlContents = '111';
-    // $scope.aid ;
 
-    $scope.aid = "";
-    if ($location.search().id) {
-        aid = $location.search().id;
-    }
     //查询实体
-    $scope.getArticleById = function (aid) {
+    $scope.getArticleById = function () {
+        var aid = $location.search()['id'];
+        if (aid == null) {
+            return;
+        }
+
         articleService.getArticleById(aid).success(
             function (response) {
                 $scope.article = response;
@@ -84,6 +81,19 @@ app.controller('articleController', function ($scope, $controller, $location, ar
             }
         );
     };
+
+    $scope.submitClick = function (username, password) {
+        articleService.submitClick(username, password).success(
+            function (response) {
+                $scope.user = response.obj;
+                if (response.success) {
+                    location.href = "personal.html";
+                } else {
+                    alert(response.message);
+                }
+            }
+        )
+    }
 
     // $scope.showDetails = function (id) {
     //        $scope.aid = id ;
@@ -99,69 +109,20 @@ app.controller('articleController', function ($scope, $controller, $location, ar
         );
     }
 
-    //保存
-    $scope.add = function () {
-        $scope.entity.goodsDesc.introduction = editor.html();
-        goodsService.add($scope.entity).success(
-            function (response) {
-                if (response.success) {
-                    //重新查询
-                    alert("新增成功");
-                    $scope.entity = {};
-                    editor.html("");
-                } else {
-                    alert(response.message);
-                }
-            }
-        );
-    };
-
-    $scope.save = function () {
-        $scope.entity.goodsDesc.introduction = editor.html();
-
-        var serviceObject;
-        if ($scope.entity.goods.id != null) {
-            serviceObject = goodsService.update($scope.entity);
-        } else {
-            serviceObject = goodsService.add($scope.entity);
-        }
-        serviceObject.success(
-            function (response) {
-                if (response.success) {
-                    //重新查询
-                    /*alert("保存成功");
-                    $scope.entity = {};
-                    editor.html("");*/
-                    location.href = "goods.html";
-                } else {
-                    alert(response.message);
-                }
-            }
-        );
-    };
-
-
-    //批量删除
-    $scope.dele = function () {
-        //获取选中的复选框
-        goodsService.dele($scope.selectIds).success(
-            function (response) {
-                if (response.success) {
-                    $scope.reloadList();//刷新列表
-                    $scope.selectIds = [];
-                }
-            }
-        );
-    }
 
     $scope.searchEntity = {};//定义搜索对象
+    $scope.keywords = '';//定义搜索对象
 
     //搜索
-    $scope.search = function (page, rows) {
-        goodsService.search(page, rows, $scope.searchEntity).success(
+    $scope.search = function (page, count) {
+        var cid = $location.search()['cid'];
+        if (cid == null) {
+            return;
+        }
+        articleService.search(page, count, cid, keywords).success(
             function (response) {
-                $scope.list = response.rows;
-                $scope.paginationConf.totalItems = response.total;//更新总记录数
+                // $scope.list = response.rows;
+                $scope.paginationConf.totalItems = response.totalCount;//更新总记录数
             }
         );
     }

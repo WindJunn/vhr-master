@@ -13,8 +13,8 @@
     <script type="text/javascript" src="./plugins/angularjs/angular.min.js"></script>
 
     <!-- 分页组件开始 -->
-    <script src="./plugins/angularjs/pagination.js"></script>
-    <link rel="stylesheet" href="./plugins/angularjs/pagination.css">
+<!--    <script src="./plugins/angularjs/pagination.js"></script>-->
+<!--    <link rel="stylesheet" href="plugins/angularjs/pagination1.css">-->
     <!-- 分页组件结束 -->
 
     <script type="text/javascript" src="./js/base_pagination.js"></script>
@@ -90,27 +90,28 @@
             <i class="iconfont icon-gonggao"></i>
             <marquee align="middle" onMouseOut="this.start()" onMouseOver="this.stop()" behavior="scroll">
                 <ul class="notice-list gy-flex">
-                    <li ng-repeat="entity in art2"><a href="##" class="gy-flex">
-                        <span class="span-dian"></span>{{entity.title}}<span
-                            class="time">{{entity.editTime | date:'yyyy-MM-dd'}}</span></a></li>
+                    <li ng-repeat="entity in art2">
+                        <a href="detail.html#?id={{entity.id}}" target="_blank" class="gy-flex">
+                            <span class="span-dian"></span>{{entity.title}}<span
+                                class="time">{{entity.editTime | date:'yyyy-MM-dd'}}</span></a></li>
                 </ul>
             </marquee>
             <!--            <a href="notice.html"><i class="iconfont icon-shuangyoujiantou-"></i></a>-->
-            <a href="notice.html" class="more" ng-click="changeCate()"><i class="icon icon-jt"></i></a>
+            <a href="notice.html#?cid=2" class="more" ><i class="icon icon-jt"></i></a>
 
         </div>
     </div>
 </div>
-
+<hr>
 <!--政治解读-->
 <div class="political">
     <div class="section">
         <div class="political-sec  gy-flex">
 
             <ul class="political-list">
-                <li><h1 class="gy-tit gy-flex">要闻 <a href="##" class="more">进入</a></h1></li>
+                <li><h1 class="gy-tit gy-flex">要闻 <a href="notice.html#?cid=1" target="_blank" class="more">进入</a></h1></li>
                 <li class="political-item" ng-repeat="entity in art1">
-                    <a href="detail.html?id={{entity.id}}" ng-cloak>
+                    <a href="detail.html#?id={{entity.id}}" target="_blank">
                         <h1 class="gy-sm-tit gy-flex">
                             <span class="span-dian"></span>{{entity.title}}
                         </h1>
@@ -123,9 +124,9 @@
             </ul>
 
             <ul class="political-list">
-                <li><h1 class="gy-tit gy-flex">政策 <a href="##" class="more">进入</a></h1></li>
+                <li><h1 class="gy-tit gy-flex">政策 <a href="notice.html#?cid=3" target="_blank" class="more">进入</a></h1></li>
                 <li class="political-item" ng-repeat="entity in art3">
-                    <a href="##">
+                    <a href="detail.html#?id={{entity.id}}" target="_blank">
                         <h1 class="gy-sm-tit gy-flex"><span class="span-dian"></span>{{entity.title}}</h1>
                         <p class="text-2-hidden gy-text">{{entity.summary}}
                             <span class="xiang gy-text">[详情]</span>
@@ -144,9 +145,9 @@
         <div class="political-sec  gy-flex">
 
             <ul class="political-list">
-                <li><h1 class="gy-tit gy-flex">学习 <a href="##" class="more">进入</a></h1></li>
+                <li><h1 class="gy-tit gy-flex">学习 <a href="notice.html#?cid=4" target="_blank" class="more">进入</a></h1></li>
                 <li class="political-item" ng-repeat="entity in art4">
-                    <a href="##" ng-click="">
+                    <a href="detail.html#?id={{entity.id}}" target="_blank">
                         <h1 class="gy-sm-tit gy-flex">
                             <span class="span-dian"></span>{{entity.title}}
                         </h1>
@@ -159,9 +160,9 @@
             </ul>
 
             <ul class="political-list">
-                <li><h1 class="gy-tit gy-flex">课堂 <a href="##" class="more">进入</a></h1></li>
+                <li><h1 class="gy-tit gy-flex">课堂 <a href="notice.html#?cid=5" target="_blank" class="more">进入</a></h1></li>
                 <li class="political-item" ng-repeat="entity in art5">
-                    <a href="##">
+                    <a href="detail.html#?id={{entity.id}}" target="_blank">
                         <h1 class="gy-sm-tit gy-flex"><span class="span-dian"></span>{{entity.title}}</h1>
                         <p class="text-2-hidden gy-text">{{entity.summary}}
                             <span class="xiang gy-text">[详情]</span>
@@ -440,17 +441,18 @@
     <div class="xxjl_model-body">
         <i class="icon icon-gb"></i>
         <h1 class="dl">登录</h1>
-        <form class="dl-form" action="">
+        <form class="dl-form" action="/login" method="post" id="loginform">
             <p class="dl-input">
                 <i class="iconfont icon-dianhua"></i>
-                <input class="tel" type="text" placeholder="手机号码">
+                <input class="tel" name="username" type="text" placeholder="手机号码">
             </p>
             <p class="dl-input">
                 <i class="iconfont icon-mima"></i>
-                <input class="tel" type="text" placeholder="手机号码">
+                <input class="tel" name="password" type="password" placeholder="密码">
             </p>
             <p class="dl-input jz-input"><input type="checkbox" name="rem-pw" checked>记住密码</p>
-            <p class="dl-sub"><input type="submit" class="dl-input" placeholder="登录"/></p>
+            <p class="dl-sub" ><input type="submit" ng-click="submitClick(username,password)" class="dl-input"  placeholder="登录"/></p>
+
         </form>
     </div>
 </div>

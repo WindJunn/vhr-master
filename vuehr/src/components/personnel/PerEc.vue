@@ -74,12 +74,23 @@
         @click="deleteMany"
       >批量删除</el-button>
       <span></span>
-      <el-pagination
+      <!-- <el-pagination
         background
         :page-size="pageSize"
         layout="prev, pager, next"
         :total="totalCount"
         @current-change="currentChange"
+        v-show="this.articles.length>0"
+      ></el-pagination> -->
+      <el-pagination
+        background
+        @size-change="handleSizeChange"
+        @current-change="currentChange"
+        :current-page="currentPage"
+        :page-sizes="[10, 15, 20, 30, 50]"
+        :page-size="pageSize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="totalCount"
         v-show="this.articles.length>0"
       ></el-pagination>
     </div>
@@ -177,6 +188,10 @@ export default {
     },
     handleSelectionChange(val) {
       this.selItems = val;
+    },
+    handleSizeChange(pageSize) {
+      this.pageSize = pageSize;
+      this.loadBlogs(_this.currentPage, _this.pageSize);
     },
     handleEdit(index, row) {
       this.$router.push({

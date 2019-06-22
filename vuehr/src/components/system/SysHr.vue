@@ -145,7 +145,7 @@
             <el-table-column prop="address" width="220" align="left" label="联系地址"></el-table-column>
             <el-table-column prop="email" width="180" align="left" label="电子邮件"></el-table-column>
 
-            <el-table-column fixed="right" label="操作" width="195">
+            <el-table-column fixed="right" label="操作" width="300">
               <template slot-scope="scope">
                 <el-button
                   @click="showEditEmpView(scope.row)"
@@ -164,6 +164,12 @@
                   size="mini"
                   @click="deleteEmp(scope.row)"
                 >删除</el-button>
+                <el-button
+                  type="danger"
+                  style="padding: 3px 4px 3px 4px;margin: 2px"
+                  size="mini"
+                  @click="resetPassword(scope.row)"
+                >重置密码</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -175,7 +181,7 @@
               :disabled="multipleSelection.length==0"
               @click="deleteManyEmps"
             >批量删除</el-button>
-          <el-pagination
+            <el-pagination
               background
               @size-change="handleSizeChange"
               @current-change="currentChange"
@@ -877,14 +883,13 @@ export default {
           _this.hrs = data.hrs;
           _this.roles = data.roles;
 
-         
           _this.nation = data.nation;
           _this.totalCount = data.count;
           //            _this.emptyEmpData();
-           for (i = 0; i < _this.roles.length; i++) {
+          for (i = 0; i < _this.roles.length; i++) {
             _this.rolelist += _this.roles[i].nameZh;
           }
-          console.log(_this.rolelist)
+          console.log(_this.rolelist);
 
           console.log(data);
         }
@@ -939,6 +944,16 @@ export default {
           _this.dialogVisible1 = false;
           _this.emptyEmpData();
           _this.loadEmps();
+        }
+      });
+    },
+    resetPassword(row) {
+      this.postRequest("/system/hr/password", 
+      {username:row.username,
+      password:'123'
+      }).then(resp => {
+        if (resp && resp.status == 200) {
+          var data = resp.data;
         }
       });
     },

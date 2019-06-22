@@ -12,7 +12,7 @@
     <script src="./plugins/angular-1.2.0/angular-sanitize.js"></script>
     <!-- 分页组件开始 -->
     <script src="./plugins/angularjs/pagination.js"></script>
-    <link rel="stylesheet" href="./plugins/angularjs/pagination.css">
+    <link rel="stylesheet" href="plugins/angularjs/pagination1.css">
     <!-- 分页组件结束 -->
 
     <script type="text/javascript" src="./js/base.js"></script>
@@ -26,9 +26,12 @@
     <script type="text/javascript" src="./js/controller/articleController.js"></script>
 
 
+    <script>
+
+    </script>
 
 </head>
-<body ng-app="jxs" ng-controller="articleController" ng-init="getArticleById(aid)">
+<body ng-app="jxs" ng-controller="articleController" ng-init="getArticleById()">
 <div class="section">
     <header class="gongao">
         <div class="logo"><img src="images/logo.jpg" alt=""></div>
@@ -36,28 +39,31 @@
     </header>
 
     <div style="text-align: left;">
-        <button type="text"  ng-click="goBack" style="padding-bottom: 0px;">返回</button>
+        <button type="text" ng-click="goBack" style="padding-bottom: 0px;">返回</button>
     </div>
     <div>
-        <div><h3 style="align-content: center">{{article.title}}</h3></div>
+        <div style="text-align:center;"><h3>{{article.title}}</h3></div>
         <div style="width: 100%;margin-top: 5px;display: flex;justify-content: flex-end;align-items: center">
-            <div style="display: inline; color: #20a0ff;margin-left: 50px;margin-right:20px;font-size: 12px;">
+            <div style="display: inline; color: #20a0ff;margin-left: 50px;margin-right:20px;font-size: 16px;">
                 {{article.name}}
             </div>
-            <span style="color: #20a0ff;margin-right:20px;font-size: 20px;">浏览 {{article.pageView==null?0:article.pageView}}</span>
-            <span style="color: #20a0ff;margin-right:20px;font-size: 20px;"> {{article.editTime | date:'yyyy-MM-dd'}}</span>
+            <span style="color: #20a0ff;margin-right:20px;font-size: 16px;">浏览 {{article.pageView==null?0:article.pageView}}</span>
+            <span style="color: #20a0ff;margin-right:20px;font-size: 16px;"> {{article.editTime | date:'yyyy-MM-dd'}}</span>
 
         </div>
     </div>
 
-    <div style="text-align: center;width: 60%;" ng-bind-html="htmlContents">
+    <div class="section1" ng-bind-html="htmlContents | to_trusted">
     </div>
+
+<!--    <div class="section1"  [innerHTML]="htmlContents">-->
+<!--    </div>-->
 
 </div>
 
 <footer>
     <div class="fo-top">
-        <div class="section pad-left bianm">1</div>
+        <div class="section pad-left bianm">.</div>
 
         <div class="section gy-flex pad-left fo-sec">
             <ul class="foot-list">

@@ -39,6 +39,10 @@ public class ArticleService {
             article.setEditTime(timestamp);
             //设置当前用户
             article.setUid(Util.getCurrentUser().getId());
+
+            String htmlContent = article.getHtmlContent();
+            article.setHtmlContent(editPhoto(htmlContent));
+
             int i = articleMapper.addNewArticle(article);
             //打标签
             String[] dynamicTags = article.getDynamicTags();
@@ -57,6 +61,8 @@ public class ArticleService {
             }
             //更新
             article.setEditTime(new Timestamp(System.currentTimeMillis()));
+            String htmlContent = article.getHtmlContent();
+            article.setHtmlContent(editPhoto(htmlContent));
             int i = articleMapper.updateArticle(article);
             //修改标签
             String[] dynamicTags = article.getDynamicTags();
@@ -68,6 +74,16 @@ public class ArticleService {
             }
             return i;
         }
+    }
+
+    private String editPhoto(String htmlContent) {
+        int width= 400;
+        int height= 300;
+        String img = "<div align=\"center\"><img width=\""+width+"\" height=\""+height+"\"";
+        String replace = htmlContent.replace("<img", img);
+        replace = replace.replace("/>", "/></div>");
+        return replace;
+
     }
 
     private int addTagsToArticle(String[] dynamicTags, Long aid) {

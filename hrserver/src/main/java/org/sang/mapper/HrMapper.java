@@ -24,6 +24,7 @@ public interface HrMapper {
 
     int updateHr(@Param("hr") Hr hr);
 
+
     int deleteRoleByHrId(Long hrId);
 
     int addRolesForHr(@Param("hrId") Long hrId, @Param("rids") Long[] rids);
