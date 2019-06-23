@@ -61,7 +61,7 @@ app.controller('articleController', function ($scope, $controller, $location, ar
     };
 
 
-    $scope.htmlContents = '111';
+    $scope.htmlContents = '';
 
     //查询实体
     $scope.getArticleById = function () {
@@ -119,7 +119,7 @@ app.controller('articleController', function ($scope, $controller, $location, ar
         if (cid == null) {
             return;
         }
-        articleService.search(page, count, cid, keywords).success(
+        articleService.search(page, count, cid, '').success(
             function (response) {
                 // $scope.list = response.rows;
                 $scope.paginationConf.totalItems = response.totalCount;//更新总记录数

@@ -84,13 +84,28 @@ public class ArticleController {
      * @return
      */
     @PostMapping(value = "/upload")
-    public RespBean uploadImgs(HttpServletRequest req, @RequestParam("image") MultipartFile img) {
+        public RespBean uploadImgs( @RequestParam("image") MultipartFile img) {
         //图片上传调用工具类
         try {
             //保存图片
             StringBuffer url = new StringBuffer();
             String path = FileUtil.saveImg(img);
             url.append("showImage?fileName=")
+                    .append(path);
+            return RespBean.ok(url.toString());
+        } catch (Exception e) {
+            return RespBean.error("上传文件失败");
+        }
+    }
+
+    @PostMapping(value = "/uploadVideo")
+    public RespBean uploadVideo( @RequestParam("image") MultipartFile img) {
+        //图片上传调用工具类
+        try {
+            //保存图片
+            StringBuffer url = new StringBuffer();
+            String path = FileUtil.saveImg(img);
+            url.append("showVideo?fileName=")
                     .append(path);
             return RespBean.ok(url.toString());
         } catch (Exception e) {
