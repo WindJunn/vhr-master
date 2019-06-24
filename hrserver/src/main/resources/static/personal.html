@@ -7,13 +7,31 @@
     <link rel="stylesheet" href="css/swiper.min.css">
     <link rel="stylesheet" href="css/public.css">
     <link rel="stylesheet" href="css/personal.css">
+
+    <script src="./plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script type="text/javascript" src="./plugins/angular-1.2.0/angular.min.js"></script>
+
+    <!-- 分页组件开始 -->
+    <script src="./plugins/angularjs/pagination.js"></script>
+    <link rel="stylesheet" href="plugins/angularjs/pagination.css">
+    <!-- 分页组件结束 -->
+
+    <script type="text/javascript" src="./js/base_pagination.js"></script>
+    <script type="text/javascript" src="./js/service/itemCatService.js"></script>
+    <script type="text/javascript" src="./js/service/uploadService.js"></script>
+    <script type="text/javascript" src="./js/service/typeTemplateService.js"></script>
+    <script type="text/javascript" src="./js/service/articleService.js"></script>
+
+    <script type="text/javascript" src="./js/controller/baseController.js"></script>
+    <script type="text/javascript" src="./js/controller/articleController.js"></script>
+
 </head>
-<body>
+<body ng-app="jxs" ng-controller="articleController" ng-init="findHrById()">
 <div class="section">
     <header class="gongao">
         <div class="logo"><img src="images/logo2.png" alt=""></div>
         <nav class="gy-flex nav">
-            <a class="gy-sm-tit" href="index.html" target="_blank">首页</a>
+            <a class="gy-sm-tit" href="index1.html" target="_blank">首页</a>
             <a class="gy-sm-tit" href="##">要闻</a>
             <a class="gy-sm-tit" href="notice.html">公告</a>
             <a class="gy-sm-tit" href="##">政策</a>
@@ -26,7 +44,7 @@
                 <i class="iconfont icon-iconfontzhizuobiaozhun22"></i>
             </div>
             <div class="user-name">
-                <p class="gy-sm-tit text-ell">糖糖趟唐唐唐糖</p>
+                <p class="gy-sm-tit text-ell">{{hr.name}}</p>
                 <p class="gy-sm-tit">欢迎学习！</p>
             </div>
         </div>
@@ -45,7 +63,7 @@
 
     <nav class="tab-nav gy-flex">
         <a class="tab-item gy-sm-tit tab-active" href="##">个人资料</a>
-<!--        <a class="tab-item gy-sm-tit" href="##">我的排课</a>-->
+        <a class="tab-item gy-sm-tit" href="##">我的排课</a>
         <a class="tab-item gy-sm-tit" href="##">资料上传</a>
     </nav>
 
@@ -58,67 +76,64 @@
                     <label class="per-text"><span class="red-tit">*</span>&nbsp;&nbsp;姓名&nbsp;&nbsp;:</label> 
                     <p class="ps-name">
                         <i class="iconfont icon-bianji1"></i>
-                        <input type="text">
+                        <input type="text" ng-model="hr.name">
                     </p>
                 </div>
                 <div class="per-name gy-flex">
                     <label class="per-text"><span class="red-tit">*</span>&nbsp;&nbsp;性别&nbsp;&nbsp;:</label> 
                     <p class="ps-name">
-                        <input type="radio" checked name="sex">男
-                        <input type="radio" name="sex">女
+                        <input type="radio" hr.gender == '男'?checked:'' name="sex">男
+                        <input type="radio" name="sex" {{$scope.cids==1?'active':''}}>女
                     </p>
                 </div>
                 <div class="per-name gy-flex">
                     <label class="per-text"><span class="red-tit">*</span>&nbsp;&nbsp;出生日期&nbsp;&nbsp;:</label> 
                     <p class="ps-name">
                         <i class="iconfont icon-rili"></i>
-                        <input type="text">
+                        <input type="text" value="{{hr.birthday | date:'yyyy-MM-dd'}}">
                     </p>
                 </div>
                 <div class="per-name gy-flex">
                     <label class="per-text">民族&nbsp;&nbsp;:</label>
                     <p class="ps-name">
-                        <select name="" id="">
-                            <option value="回族">回族</option>
-                            <option value="回族">汉族</option>
-                        </select>
+
+                        <input type="text" ng-model="hr.nation.name">
+
                     </p>
                 </div>
                 <div class="per-name gy-flex">
                     <label class="per-text"><span class="red-tit">*</span>&nbsp;&nbsp;住址&nbsp;&nbsp;:</label> 
                     <p class="ps-name">
                         <i class="iconfont icon-bianji1"></i>
-                        <input type="text">
+                        <input type="text" ng-model="hr.address">
                     </p>
                 </div>
-                <div class="per-name gy-flex">
+                <div class="per-name gy-flex" disabled="true">
                     <label class="per-text">所属部门&nbsp;&nbsp;:</label>
                     <p class="ps-name">
-                        <select name="" id="">
-                            <option value="">党支部</option>
-                            <option value=""></option>
-                        </select>
+                        <input type="text" ng-model="hr.department.name">
+
                     </p>
                 </div>
                 <div class="per-name gy-flex">
                     <label class="per-text"><span class="red-tit">*</span>&nbsp;&nbsp;联系方式&nbsp;&nbsp;:</label> 
                     <p class="ps-name">
                         <i class="iconfont icon-dianhua"></i>
-                        <input type="text">
+                        <input type="text" ng-model="hr.phone">
                     </p>
                 </div>
                 <div class="per-name gy-flex">
                     <label class="per-text"><span class="red-tit">*</span>&nbsp;&nbsp;身份证号&nbsp;&nbsp;:</label> 
                     <p class="ps-name">
                         <i class="iconfont icon-bianji1"></i>
-                        <input type="text">
+                        <input type="text" ng-model="hr.idCard">
                     </p>
                 </div>
                 <div class="per-name gy-flex">
                     <label class="per-text"><span class="red-tit">*</span>&nbsp;&nbsp;邮箱&nbsp;&nbsp;:</label> 
                     <p class="ps-name">
                         <i class="iconfont icon-bianji1"></i>
-                        <input type="text">
+                        <input type="text" ng-model="hr.email">
                     </p>
                 </div>
             </form>
@@ -135,7 +150,7 @@
                                 <option value="地点">地点</option>
                                 <option value="主题">主题</option>
                                 <option value="时间">时间</option>
-                                <option value="状态">状态</option>
+<!--                                <option value="状态">状态</option>-->
                             </select>
                         </p>
                     </div>
@@ -153,19 +168,19 @@
                         <td>课程主题</td>
                         <td>授课时间</td>
                         <td>授课地点</td>
-                        <td>授课状态</td>
+<!--                        <td>授课状态</td>-->
                     </tr>
                     <tr class="class-list">
                         <td>汉语言文化</td>
                         <td>2019-05-20&nbsp;&nbsp;12:00</td>
                         <td>固原市</td>
-                        <td>未授课</td>
+<!--                        <td>未授课</td>-->
                     </tr>
                     <tr class="class-list">
                         <td>汉语言文化</td>
                         <td>2019-05-20&nbsp;&nbsp;12:00</td>
                         <td>固原市</td>
-                        <td class="yes">已授课</td>
+<!--                        <td class="yes">已授课</td>-->
                     </tr>
                 </table>
             </div>

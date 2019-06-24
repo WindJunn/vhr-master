@@ -51,7 +51,6 @@ public class HrController {
     }
 
 
-
     @RequestMapping("/id/{hrId}")
     public Hr getHrById(@PathVariable Long hrId) {
         return hrService.getHrById(hrId);
@@ -60,6 +59,16 @@ public class HrController {
     @RequestMapping("/name/{username}")
     public Hr getHrByUsername(@PathVariable String username) {
         return hrService.getHrByUsername(username);
+    }
+
+    @RequestMapping("/logins")
+    public RespBean getHrByUsernameAndPassword(String username, String password) {
+        Hr hr = hrService.getHrByUsernameAndPassword(username, password);
+        if (hr != null) {
+            return RespBean.ok("登录成功!", hr);
+        }
+        return RespBean.error("账号或密码错误！");
+
     }
 
     @RequestMapping(value = "/{ids}", method = RequestMethod.DELETE)
@@ -86,14 +95,14 @@ public class HrController {
         return RespBean.error("更新失败!");
     }
 
-    @RequestMapping(value="/")
+    @RequestMapping(value = "/")
     public Map<String, Object> getHrsByKeywords(@RequestParam(defaultValue = "1") Integer page,
                                                 @RequestParam(defaultValue = "10") Integer size,
                                                 @RequestParam(defaultValue = "") String keywords,
-                                                Long nationId,Long departmentId,Long upid,String nameZh) {
-        List<Hr> hrs = hrService.getHrsByKeywords(page,size,keywords,nationId,departmentId,upid,nameZh);
+                                                Long nationId, Long departmentId, Long upid, String nameZh) {
+        List<Hr> hrs = hrService.getHrsByKeywords(page, size, keywords, nationId, departmentId, upid, nameZh);
         Map<String, Object> map = new HashMap<>();
-        map.put("hrs",hrs);
+        map.put("hrs", hrs);
         return map;
     }
 
@@ -121,12 +130,7 @@ public class HrController {
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public RespBean addHr(Hr hr) {
-        /*int i = hrService.hrReg(hr.getUsername(), hr.getPassword());
-        if (i == 1) {
-            return RespBean.ok("注册成功!");
-        } else if (i == -1) {
-            return RespBean.error("用户名重复，注册失败!");
-        }*/
+
         if (hrService.addHr(hr) == 1) {
             return RespBean.ok("添加成功!");
         }
@@ -138,8 +142,8 @@ public class HrController {
         Map<String, Object> map = getAllNations();
         List<Hr> hrs = hrService.getAllHr();
         List<Department> depss = departmentService.getAllDeps();
-        map.put("depss",depss);
-        map.put("hrs",hrs);
+        map.put("depss", depss);
+        map.put("hrs", hrs);
 
         return UserPoiUtils.exportUser2Excel(map);
     }

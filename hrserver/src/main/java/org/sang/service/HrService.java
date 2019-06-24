@@ -90,6 +90,17 @@ public class HrService implements UserDetailsService {
         return hrMapper.getHrByUsername(username);
     }
 
+    public Hr getHrByUsernameAndPassword(String username,String password) {
+        Hr hr = hrMapper.getHrByUsername(username);
+        BCryptPasswordEncoder bcryptPasswordEncoder = new BCryptPasswordEncoder();
+        boolean result = bcryptPasswordEncoder.matches(password,hr.getPassword());
+
+        if (result) {
+            return hr;
+        }
+        return null;
+    }
+
 
     public int deleteHr(Long hrId) {
         return hrMapper.deleteHr(hrId);

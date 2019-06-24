@@ -84,7 +84,7 @@ public class ArticleController {
      * @return
      */
     @PostMapping(value = "/upload")
-        public RespBean uploadImgs( @RequestParam("image") MultipartFile img) {
+    public RespBean uploadImgs(@RequestParam("image") MultipartFile img) {
         //图片上传调用工具类
         try {
             //保存图片
@@ -99,7 +99,7 @@ public class ArticleController {
     }
 
     @PostMapping(value = "/uploadVideo")
-    public RespBean uploadVideo( @RequestParam("image") MultipartFile img) {
+    public RespBean uploadVideo(@RequestParam("image") MultipartFile img) {
         //图片上传调用工具类
         try {
             //保存图片
@@ -123,6 +123,19 @@ public class ArticleController {
         return map;
     }
 
+    @RequestMapping(value = "/all/admin", method = RequestMethod.GET)
+    public Map<String, Object> getArticleByAdmin(@RequestParam(value = "page", defaultValue = "1") Integer page,
+                                                 @RequestParam(value = "count", defaultValue = "6") Integer count,
+                                                 @RequestParam(value = "cid") Long cid,
+                                                 String keywords) {
+        int totalCount = articleService.getArticleCount(null, keywords);
+        List<Article> articles = articleService.getArticleByStateByAdmin(page, count, cid, keywords);
+        Map<String, Object> map = new HashMap<>();
+        map.put("totalCount", totalCount);
+        map.put("articles", articles);
+        return map;
+    }
+
     @RequestMapping(value = "/{aid}", method = RequestMethod.GET)
     public Article getArticleById(@PathVariable Long aid) {
         return articleService.getArticleById(aid);
@@ -134,6 +147,23 @@ public class ArticleController {
             return RespBean.ok("删除成功!");
         }
         return RespBean.error("删除失败!");
+    }
+
+    @RequestMapping(value = "/shield", method = RequestMethod.PUT)
+    public RespBean shield(Long enable, Long aid) {
+        if (enable == 1L) {
+            if (articleService.shield(enable, aid) == 1) {
+                return RespBean.ok("取消屏蔽成功!");
+            }
+            return RespBean.error("取消屏蔽失败!");
+
+        } else {
+            if (articleService.shield(enable, aid) == 1) {
+                return RespBean.ok("屏蔽成功!");
+            }
+            return RespBean.error("屏蔽失败!");
+        }
+
     }
 
     @RequestMapping("/dataStatistics")

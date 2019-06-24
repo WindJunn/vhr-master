@@ -55,12 +55,14 @@
       <el-table-column prop="nickname" label="作者" width="120" align="left"></el-table-column>
       <el-table-column prop="cateName" label="所属分类" width="100" align="left"></el-table-column>
       <el-table-column prop="pageView" label="点击量" width="100" align="left"></el-table-column>
-      <el-table-column fixed="right" label="操作" width="290">
+      <el-table-column fixed="right" label="操作" width="400">
         <template slot-scope="scope">
           <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-          <el-button size="mini" type="primary" @click="handleEdit(scope.$index, scope.row)">置顶</el-button>
-          <el-button size="mini" type="danger" @click="handleEdit(scope.$index, scope.row)">屏蔽</el-button>
+          <el-button size="mini" type="primary" @click="updateTop(scope.row)">置顶</el-button>
           <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+
+          <el-button size="mini" type="danger" @click="shield(scope.row)" v-show="scope.row.enable==1">屏蔽</el-button>
+          <el-button size="mini" type="danger" @click="reshield(scope.row)" v-show="scope.row.enable==0">取消屏蔽</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -74,14 +76,7 @@
         @click="deleteMany"
       >批量删除</el-button>
       <span></span>
-      <!-- <el-pagination
-        background
-        :page-size="pageSize"
-        layout="prev, pager, next"
-        :total="totalCount"
-        @current-change="currentChange"
-        v-show="this.articles.length>0"
-      ></el-pagination> -->
+     
       <el-pagination
         background
         @size-change="handleSizeChange"
@@ -114,7 +109,7 @@ export default {
       pageSize: 10,
       keywords: "",
       dustbinData: [],
-      activeName: 'post',
+      activeName: "post"
     };
   },
   mounted: function() {
@@ -151,12 +146,12 @@ export default {
       var _this = this;
       var url = "";
       url =
-        "/article/all?state=" +
-        1 +
-        "&page=" +
+        "/article/all/admin?page=" +
         page +
         "&count=" +
         count +
+        "&cid=" +
+        '' +
         "&keywords=" +
         this.keywords;
 
@@ -191,12 +186,44 @@ export default {
     },
     handleSizeChange(pageSize) {
       this.pageSize = pageSize;
-      this.loadBlogs(_this.currentPage, _this.pageSize);
+      this.loadBlogs(this.currentPage, this.pageSize);
     },
     handleEdit(index, row) {
       this.$router.push({
         path: "/per/train",
         query: { from: this.activeName, id: row.id }
+      });
+    },
+
+    updateTop(row) {
+      var _this = this;
+      this.putRequest("/top/aid", {
+        aid: row.id
+      }).then(resp => {
+        if (resp && resp.status == 200) {
+        }
+      });
+    },
+    shield(row) {
+      var _this = this;
+      this.putRequest("/article/shield", {
+        enable:0,
+        aid: row.id
+      }).then(resp => {
+        if (resp && resp.status == 200) {
+          this.loadBlogs(this.currentPage, this.pageSize);
+        }
+      });
+    },
+    reshield(row) {
+      var _this = this;
+      this.putRequest("/article/shield", {
+        enable:1,
+        aid: row.id
+      }).then(resp => {
+        if (resp && resp.status == 200) {
+          this.loadBlogs(this.currentPage, this.pageSize);
+        }
       });
     },
     handleDelete(index, row) {

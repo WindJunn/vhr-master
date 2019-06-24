@@ -12,6 +12,7 @@ public class Test {
         }
         int width= 400;
         int height= 300;
+        htmlContent += htmlContent;
 
         String img = "<div align=\"center\"><img width=\""+width+"\" height=\""+height+"\"";
         String replace = htmlContent.replace("<img", img);

@@ -19,7 +19,7 @@ public interface HrMapper {
     List<Hr> getHrsByKeywords(@Param("start") Integer start, @Param("size") Integer size,
                               @Param("keywords") String keywords, @Param("nationId") Long nationId,
                               @Param("departmentId") Long departmentId, @Param("nameZh") String nameZh
-    ,@Param("depList") List depList);
+            , @Param("depList") List depList);
 
 
     int updateHr(@Param("hr") Hr hr);
@@ -44,6 +44,8 @@ public interface HrMapper {
     int updateHreg(@Param("hr") Hr hr);
 
     Hr getHrByUsername(String username);
+
+    Hr getHrByUsernameAndPassword(@Param("username") String username, @Param("password") String password);
 
     int updateHrPassword(@Param("username") String username, @Param("password") String password);
 }

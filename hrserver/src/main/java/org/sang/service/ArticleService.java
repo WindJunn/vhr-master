@@ -77,9 +77,10 @@ public class ArticleService {
     }
 
     private String editPhoto(String htmlContent) {
-        int width= 400;
-        int height= 300;
-        String img = "<div align=\"center\"><img width=\""+width+"\" height=\""+height+"\"";
+        int width = 400;
+        int height = 300;
+//        String img = "<div align=\"center\"><img width=\""+width+"\" height=\""+height+"\"";
+        String img = "<div align=\"center\"><img ";
         String replace = htmlContent.replace("<img", img);
         replace = replace.replace("/>", "/></div>");
         return replace;
@@ -108,32 +109,33 @@ public class ArticleService {
     public List<Article> getArticleByState(Integer state, Integer page, Integer count, String keywords) {
         int start = (page - 1) * count;
         Long uid = Util.getCurrentUser().getId();
-        return articleMapper.getArticleByState(state, start, count, uid,keywords);
+        return articleMapper.getArticleByState(state, start, count, uid, keywords);
     }
 
-    public List<Article> getAllArticle(Integer page, Integer count,Long cid, String keywords) {
+    public List<Article> getAllArticle(Integer page, Integer count, Long cid, String keywords) {
         int start = (page - 1) * count;
-        return articleMapper.getAllArticle( start, count, cid,keywords);
+        return articleMapper.getAllArticle(start, count, cid, keywords);
     }
 
-    public int getArticleCount( Long cid,String keywords) {
-        return articleMapper.getArticleCount( cid,keywords);
+    public int getArticleCount(Long cid, String keywords) {
+        return articleMapper.getArticleCount(cid, keywords);
     }
 
-//    public List<Article> getArticleByStateByAdmin(Integer page, Integer count,String keywords) {
-//        int start = (page - 1) * count;
-//        return articleMapper.getArticleByStateByAdmin(start, count,keywords);
-//    }
+    public List<Article> getArticleByStateByAdmin(Integer page, Integer count, Long cid, String keywords) {
+        int start = (page - 1) * count;
+        return articleMapper.getArticleByStateByAdmin(start, count, cid, keywords);
+    }
 
-    public int getArticleCountByState(Integer state, Long uid,String keywords) {
-        return articleMapper.getArticleCountByState(state, uid,keywords);
+    public int getArticleCountByState(Integer state, Long uid, String keywords) {
+        return articleMapper.getArticleCountByState(state, uid, keywords);
     }
 
     public int updateArticleState(Long[] aids, Integer state) {
         if (state == 2) {
             return articleMapper.deleteArticleById(aids);
         } else {
-            return articleMapper.updateArticleState(aids, 2);//放入到回收站中
+            return articleMapper.updateArticleState(aids, 2);
+            //放入到回收站中
         }
     }
 
@@ -143,12 +145,22 @@ public class ArticleService {
         return article;
     }
 
+    public Article getArticletopById(Long aid) {
+        Article article = articleMapper.getArticleById(aid);
+        return article;
+    }
+
+    public int shield(Long enable, Long aid) {
+        return articleMapper.shield(enable, aid);
+    }
+
     public void pvStatisticsPerDay() {
         articleMapper.pvStatisticsPerDay();
     }
 
     /**
      * 获取最近七天的日期
+     *
      * @return
      */
     public List<String> getCategories() {
@@ -157,6 +169,7 @@ public class ArticleService {
 
     /**
      * 获取最近七天的数据
+     *
      * @return
      */
     public List<Integer> getDataStatistics() {

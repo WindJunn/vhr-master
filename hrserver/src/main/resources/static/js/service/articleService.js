@@ -27,7 +27,11 @@ app.service('articleService',function($http){
 	};
 
 	this.submitClick=function (username, password) {
-		return $http.post('/login?username='+username+'&password'+password);
+		return $http.post('hr/logins?username='+username+'&password='+password);
+	};
+
+	this.findHrById=function(id){
+		return $http.get('hr/id/'+id);
 	};
 	//查询实体
 	this.findOne=function(id){

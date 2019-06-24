@@ -23,6 +23,15 @@ public class Article {
     private String cateName;
     private List<Tags> tags;
     private String stateStr;
+    private Long enable;
+
+    public Long getEnable() {
+        return enable;
+    }
+
+    public void setEnable(Long enable) {
+        this.enable = enable;
+    }
 
     public String getStateStr() {
         return stateStr;

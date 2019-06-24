@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.sang.mapper.ArticletopMapper">
+
+
+    <update id="updateArticletop" parameterType="org.sang.bean.Articletop">
+        UPDATE articletop SET
+        name=#{name},picurl=#{picurl}
+        WHERE id=1
+    </update>
+
+    <update id="updateArticletopAid" >
+        UPDATE articletop SET
+        aid=#{aid}
+        WHERE id=1
+    </update>
+
+    <select id="getArticletop" resultType="org.sang.bean.Articletop">
+        SELECT * from articletop where id = 1
+    </select>
+
+</mapper>

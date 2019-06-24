@@ -2,8 +2,10 @@ package org.sang.controller.noLogin;
 
 import org.apache.commons.io.IOUtils;
 import org.sang.bean.Article;
+import org.sang.bean.Articletop;
 import org.sang.bean.RespBean;
 import org.sang.service.ArticleService;
+import org.sang.service.ArticletopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,6 +28,9 @@ public class ArtController {
 
     @Autowired
     ArticleService articleService;
+
+    @Autowired
+    ArticletopService articletopService;
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public RespBean addNewArticle(Article article) {
@@ -72,7 +77,7 @@ public class ArtController {
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public Map<String, Object> getArticleByState(@RequestParam(value = "page", defaultValue = "1") Integer page,
-                                                 @RequestParam(value = "count", defaultValue = "6") Integer count,
+                                                 @RequestParam(value = "count", defaultValue = "10") Integer count,
                                                  @RequestParam(value = "cid") Long cid,
                                                  String keywords) {
         int totalCount = articleService.getArticleCount( cid, keywords);
@@ -90,12 +95,17 @@ public class ArtController {
         List<Article> art3 = articleService.getAllArticle(1, 5,3L, "");
         List<Article> art4 = articleService.getAllArticle(1, 5,4L, "");
         List<Article> art5 = articleService.getAllArticle(1, 5,5L, "");
-        Map<String, Object> map = new HashMap<>(5);
+        Articletop articletop = articletopService.getArticletop();
+        Article articlehome = articleService.getArticletopById(articletop.getAid());
+
+        Map<String, Object> map = new HashMap<>(7);
         map.put("art1", art1);
         map.put("art2", art2);
         map.put("art3", art3);
         map.put("art4", art4);
         map.put("art5", art5);
+        map.put("articletop", articletop);
+        map.put("articlehome", articlehome);
         return map;
     }
 

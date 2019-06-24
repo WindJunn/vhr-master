@@ -82,9 +82,11 @@
         </if>
     </select>
     <select id="getHrById" resultMap="eagerLoadRoles">
-        select h.*, d.name as dname,`r`.`id` AS `rid`,`r`.`name` AS `rname`,`r`.`nameZh` AS `rnameZh` from
+        select h.*, d.name as dname,`r`.`id` AS `rid`,`r`.`name` AS `rname`,`r`.`nameZh` AS `rnameZh`,
+        n.id as nid, n.name as nname from
         `hr` `h` left join `hr_role` `h_r` on (`h`.`id` = `h_r`.`hrid`)
         left join `role` `r` on (`h_r`.`rid` = `r`.`id`) LEFT JOIN department d ON h.departmentId = d.id
+        LEFT JOIN nation n ON h.nationId = n.id
         where h.`id`=#{hrId}
     </select>
     <select id="getHrByUsername" resultMap="eagerLoadRoles">
@@ -94,6 +96,14 @@
         left join `role` `r` on (`h_r`.`rid` = `r`.`id`) LEFT JOIN department d ON h.departmentId = d.id
         LEFT JOIN nation n on h.nationId = n.id
         where h.`username`=#{username}
+    </select>
+    <select id="getHrByUsernameAndPassword" resultMap="eagerLoadRoles">
+        select h.*, d.name as dname,`r`.`id` AS `rid`,`r`.`name` AS `rname`,`r`.`nameZh` AS `rnameZh`,
+         n.id as nid, n.name as nname from
+        `hr` `h` left join `hr_role` `h_r` on (`h`.`id` = `h_r`.`hrid`)
+        left join `role` `r` on (`h_r`.`rid` = `r`.`id`) LEFT JOIN department d ON h.departmentId = d.id
+        LEFT JOIN nation n on h.nationId = n.id
+        where h.`username`=#{username} and h.`password`=#{password}
     </select>
     <update id="updateHr" parameterType="org.sang.bean.Hr">
         update hr

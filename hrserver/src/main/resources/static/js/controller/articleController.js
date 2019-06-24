@@ -27,6 +27,7 @@ app.controller('articleController', function ($scope, $controller, $location, ar
     $scope.findByCate = function (page, cid, keywords) {
         articleService.findByCate(page, cid, keywords).success(
             function (response) {
+                alert(response);
                 $scope.art = response.articles;
                 $scope.paginationConf.totalItems = response.totalCount;//更新总记录数
 
@@ -42,6 +43,8 @@ app.controller('articleController', function ($scope, $controller, $location, ar
                 $scope.art3 = response.art3;
                 $scope.art4 = response.art4;
                 $scope.art5 = response.art5;
+                $scope.articletop = response.articletop;
+                $scope.articlehome = response.articlehome;
             }
         )
     }
@@ -54,7 +57,7 @@ app.controller('articleController', function ($scope, $controller, $location, ar
             return;
         }
         if (cids != null) {
-             cid = cids;
+            cid = cids;
         }
         $scope.findByCate(1, cid, '');
 
@@ -82,14 +85,19 @@ app.controller('articleController', function ($scope, $controller, $location, ar
         );
     };
 
+    $scope.username = "";
+    $scope.password = "";
     $scope.submitClick = function (username, password) {
         articleService.submitClick(username, password).success(
             function (response) {
-                $scope.user = response.obj;
-                if (response.success) {
-                    location.href = "personal.html";
+                $scope.hr = response.obj;
+                console.log(response);
+                if ($scope.hr != null && response.status == 200) {
+                    location.href = "personal.html#?id="+$scope.hr.id;
+                    // $scope.user = response.obj;
+
                 } else {
-                    alert(response.message);
+                    alert(response.msg);
                 }
             }
         )
@@ -105,6 +113,18 @@ app.controller('articleController', function ($scope, $controller, $location, ar
         goodsService.findOne(id).success(
             function (response) {
                 $scope.article = response;
+            }
+        );
+    };
+    $scope.hrId="";
+    $scope.findHrById = function () {
+        var hrId = $location.search()['id'];
+        if (hrId == null) {
+            return;
+        }
+        articleService.findHrById(hrId).success(
+            function (response) {
+                $scope.hr = response;
             }
         );
     }

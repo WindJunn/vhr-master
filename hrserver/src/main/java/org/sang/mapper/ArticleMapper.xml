@@ -9,6 +9,9 @@
     <update id="pvIncrement" parameterType="Long">
         UPDATE article set pageView=pageView+1 WHERE id=#{aid}
     </update>
+    <update id="shield" parameterType="Long">
+        UPDATE article set enable=#{enable} WHERE id=#{aid}
+    </update>
     <update id="updateArticle" parameterType="org.sang.bean.Article">
         UPDATE article SET
         title=#{title},mdContent=#{mdContent},htmlContent=#{htmlContent},summary=#{summary},cid=#{cid},editTime=#{editTime}
@@ -38,8 +41,11 @@
         ORDER BY a.editTime DESC limit #{start},#{count};
     </select>
     <select id="getArticleByStateByAdmin" resultType="org.sang.bean.Article">
-        SELECT a.id,a.`title`,a.`editTime`,a.`pageView`,a.`state`,u.`name`,c.`cateName`,a.uid FROM article a,hr
-        u,category c WHERE a.`cid`=c.`id` AND a.`uid`=u.`id` and a.state=1
+        SELECT a.id,a.`title`,a.`editTime`,a.`pageView`,a.`state`,a.`enable`,c.`cateName`,a.uid FROM article a,
+        category c WHERE a.`cid`=c.`id`  and a.state=1
+        <if test="cid!=null">
+            and a.cid=#{cid}
+        </if>
         <if test="keywords!=null">
             AND title LIKE concat('%',#{keywords},'%')
         </if>
@@ -48,7 +54,7 @@
 
     <select id="getAllArticle" resultType="org.sang.bean.Article">
         SELECT a.*,a.id,a.`title`,a.`editTime`,a.`pageView`,a.`state`,c.`cateName` FROM article a
-        ,category c WHERE a.`cid`=c.`id` and a.state=1
+        ,category c WHERE a.`cid`=c.`id` and a.state=1 and enable = 1
         <if test="keywords!=null">
             AND title LIKE concat('%',#{keywords},'%')
         </if>
@@ -60,7 +66,7 @@
     <select id="getArticleCount" resultType="int">
         SELECT count(*) FROM article
         <where>
-            state=1
+            state=1 and enable = 1
 
             <if test="cid!=null">
                 AND cid=#{cid}
