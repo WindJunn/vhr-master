@@ -31,7 +31,9 @@ public class SchedulesController {
         Map<String, Object> map = new HashMap<>();
         List<Schedules> schedules = schedulesService.getSchedulesByPage(page, size,
                 keywords, userId, departmentId);
-        int count = schedules.size();
+        List<Schedules> schedule = schedulesService.getSchedulesByPage(1, 100000000,
+                keywords, userId, departmentId);
+        int count = schedule.size();
         map.put("schedules", schedules);
         map.put("count", count);
         return map;

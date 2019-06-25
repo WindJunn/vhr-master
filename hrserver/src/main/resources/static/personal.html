@@ -16,6 +16,12 @@
     <link rel="stylesheet" href="plugins/angularjs/pagination.css">
     <!-- 分页组件结束 -->
 
+    <!-- 富文本编辑器 -->
+    <link rel="stylesheet" href="plugins/kindeditor-4.1.10/themes/default/default.css"/>
+    <script charset="utf-8" src="plugins/kindeditor-4.1.10/kindeditor-min.js"></script>
+    <script charset="utf-8" src="plugins/kindeditor-4.1.10/lang/zh_CN.js"></script>
+
+
     <script type="text/javascript" src="./js/base_pagination.js"></script>
     <script type="text/javascript" src="./js/service/itemCatService.js"></script>
     <script type="text/javascript" src="./js/service/uploadService.js"></script>
@@ -26,7 +32,7 @@
     <script type="text/javascript" src="./js/controller/articleController.js"></script>
 
 </head>
-<body ng-app="jxs" ng-controller="articleController" ng-init="findHrById()">
+<body ng-app="jxs" ng-controller="articleController" ng-init="findHrById();findSchByUid();findArtByUser()">
 <div class="section">
     <header class="gongao">
         <div class="logo"><img src="images/logo2.png" alt=""></div>
@@ -62,9 +68,9 @@
     </ul>
 
     <nav class="tab-nav gy-flex">
-        <a class="tab-item gy-sm-tit tab-active" href="##">个人资料</a>
-        <a class="tab-item gy-sm-tit" href="##">我的排课</a>
-        <a class="tab-item gy-sm-tit" href="##">资料上传</a>
+        <a class="tab-item gy-sm-tit tab-active" href="">个人资料</a>
+        <a class="tab-item gy-sm-tit " href="">我的排课</a>
+        <a class="tab-item gy-sm-tit" href="">资料上传</a>
     </nav>
 
 
@@ -150,7 +156,6 @@
                                 <option value="地点">地点</option>
                                 <option value="主题">主题</option>
                                 <option value="时间">时间</option>
-<!--                                <option value="状态">状态</option>-->
                             </select>
                         </p>
                     </div>
@@ -164,23 +169,17 @@
                 </div>
                 
                 <table class="class-table" cellpadding="0" cellspacing="0">
+
                     <tr>
                         <td>课程主题</td>
                         <td>授课时间</td>
                         <td>授课地点</td>
 <!--                        <td>授课状态</td>-->
                     </tr>
-                    <tr class="class-list">
-                        <td>汉语言文化</td>
-                        <td>2019-05-20&nbsp;&nbsp;12:00</td>
-                        <td>固原市</td>
-<!--                        <td>未授课</td>-->
-                    </tr>
-                    <tr class="class-list">
-                        <td>汉语言文化</td>
-                        <td>2019-05-20&nbsp;&nbsp;12:00</td>
-                        <td>固原市</td>
-<!--                        <td class="yes">已授课</td>-->
+                    <tr class="class-list" ng-repeat="entity in sch">
+                        <td>{{entity.theme}}</td>
+                        <td>{{entity.time | date:'yyyy-MM-dd'}}</td>
+                        <td>{{entity.departmentId}}</td>
                     </tr>
                 </table>
             </div>
@@ -209,23 +208,16 @@
                                 </select>
                             </p>
                         </div>
-                        <input class="shangc" id="shangc" type="button" value="上传">
+                        <input class="shangc" id="shangc1" type="button" value="上传">
                     </div>
                     <!-- 资料列表 -->
-                    <ul class="zl-list">
-                        <li class="zl-item">
-                            <div class="gy-sm-tit gy-flex">
+                    <ul class="zl-list" >
+                        <li class="zl-item" ng-repeat="entity in artUser">
+                            <a class="gy-sm-tit gy-flex" href="detail.html#?id={{entity.id}}" target="_blank">
                                 <span class="span-dian"></span>
-                                <p class="text-ell"><span class="zl-class">【科技】</span>习近平向印尼当选总统佐科致贺电</p>
-                                <span class="time">2019-05-25</span>
-                            </div>
-                        </li>
-                        <li class="zl-item">
-                            <div class="gy-sm-tit gy-flex">
-                                <span class="span-dian"></span>
-                                <p class="text-ell"><span class="zl-class">【农业】</span>习近平向印尼当选总统佐科致贺电</p>
-                                <span class="time">2019-05-25</span>
-                            </div>
+                                <p class="text-ell"><span class="zl-class"></span>{{entity.title}}</p>
+                                <span class="time">{{entity.editTime | date:'yyyy-MM-dd'}}</span>
+                            </a>
                         </li>
                     </ul>
                 </div>
@@ -250,23 +242,26 @@
                 <div class="per-name gy-flex" >
                     <label class="per-text"><span class="red-tit">*</span>标题&nbsp;&nbsp;:</label>
                     <p class="ps-name shaix">
-                        <select name="" class="selector2">
-                            <option value="0">一周内</option>
-                        </select>
+                        <input>
                     </p>
+                    <label class="per-text"><span class="red-tit"></span>作者&nbsp;&nbsp;:</label>
+                    <p class="ps-name shaix">
+                        <input>
+                    </p>
+
                 </div>
                 <div class="per-name gy-flex neir">
                     <label class="per-text">内容&nbsp;&nbsp;:</label>
                     <p class="ps-name">
-                        <textarea name="neirong" id="neirong" onreset="null"></textarea>
+<!--                        <textarea name="neirong" id="neirong" onreset="null"></textarea>-->
+                        <textarea name="content" style="width:800px;height:400px;visibility:hidden;"></textarea>
+
                     </p>
                 </div>
                 <div class="per-name gy-flex neir">
                     <label class="per-text">封面&nbsp;&nbsp;:</label>
                     <p class="sc-imgs">
                         <span>添加图片</span>
-                        <input type="file" style="display: none"  id="uploadfile" accept="image/*" />
-                        <img src="images/gr-sc.png" id="image" />
                         <input class="shangc" id="sc-images" type="submit" value="上传">
                     </p>
                     <p class="geshi">.支持JPG、.JPEG、.PNG格式上传</p>
@@ -313,6 +308,15 @@
 <script src="js/swiper.min.js"></script>
 <script src="js/personal.js"></script>
 <script>
+
+    var editor;
+    KindEditor.ready(function (K) {
+        editor = K.create('textarea[name="content"]', {
+            allowFileManager: true
+        });
+    });
+
+
     $(function () {
         swiper2();
         tab();
@@ -338,7 +342,8 @@
         })
         
         /* 上传资料 */
-        $("#shangc").click(function(){
+        $("#shangc1").click(function(){
+            alert(1);
             $(".aui-nav-list-tab").hide();
             $(".shangc-list").show();
 

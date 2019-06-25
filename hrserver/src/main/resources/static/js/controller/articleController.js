@@ -35,6 +35,19 @@ app.controller('articleController', function ($scope, $controller, $location, ar
         );
     };
 
+    $scope.findArtByUser =function() {
+        var hrId = $location.search()['id'];
+        if (hrId == null) {
+            return;
+        }
+        articleService.findArtByUser(1, 100000, '', hrId, '').success(
+            function (response) {
+                $scope.artUser = response.articles;
+                $scope.paginationConf.totalItems = response.totalCount;//更新总记录数
+            }
+        );
+    };
+
     $scope.findHomeArt = function () {
         articleService.findHomeArt().success(
             function (response) {
@@ -116,7 +129,7 @@ app.controller('articleController', function ($scope, $controller, $location, ar
             }
         );
     };
-    $scope.hrId="";
+    $scope.hrId="0";
     $scope.findHrById = function () {
         var hrId = $location.search()['id'];
         if (hrId == null) {
@@ -125,6 +138,20 @@ app.controller('articleController', function ($scope, $controller, $location, ar
         articleService.findHrById(hrId).success(
             function (response) {
                 $scope.hr = response;
+                $scope.hrId = hrId;
+            }
+        );
+    };
+
+    $scope.findSchByUid = function() {
+        var hrId = $location.search()['id'];
+        if (hrId == null) {
+            return;
+        }
+        articleService.findSchByUid(hrId).success(
+            function (response) {
+                $scope.sch = response.schedules;
+                $scope.schCount = response.count;
             }
         );
     }

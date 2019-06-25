@@ -4,6 +4,7 @@ import org.apache.commons.io.IOUtils;
 import org.sang.bean.Article;
 import org.sang.bean.Articletop;
 import org.sang.bean.RespBean;
+import org.sang.common.Util;
 import org.sang.service.ArticleService;
 import org.sang.service.ArticletopService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,7 @@ public class ArtController {
     public RespBean addNewArticle(Article article) {
         int result = articleService.addNewArticle(article);
         if (result == 1) {
-            return RespBean.ok("操作成功"+article.getId() + "");
+            return RespBean.ok("操作成功" + article.getId() + "");
         } else {
             return RespBean.error(article.getState() == 0 ? "文章保存失败!" : "文章发表失败!");
         }
@@ -74,14 +75,26 @@ public class ArtController {
         return RespBean.error("上传失败!");
     }
 
+    @RequestMapping(value = "/all/user", method = RequestMethod.GET)
+    public Map<String, Object> getArticleByUser(@RequestParam(value = "page", defaultValue = "1") Integer page,
+                                                @RequestParam(value = "count", defaultValue = "100") Integer count,
+                                                @RequestParam(value = "cid") Long cid, Long hrId,
+                                                String keywords) {
+        int totalCount = articleService.getArticleCountByState(1, hrId, keywords);
+        List<Article> articles = articleService.getArticleByUser(1, page, count, hrId, keywords);
+        Map<String, Object> map = new HashMap<>();
+        map.put("totalCount", totalCount);
+        map.put("articles", articles);
+        return map;
+    }
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public Map<String, Object> getArticleByState(@RequestParam(value = "page", defaultValue = "1") Integer page,
                                                  @RequestParam(value = "count", defaultValue = "10") Integer count,
                                                  @RequestParam(value = "cid") Long cid,
                                                  String keywords) {
-        int totalCount = articleService.getArticleCount( cid, keywords);
-        List<Article> articles = articleService.getAllArticle(page, count,cid, keywords);
+        int totalCount = articleService.getArticleCount(cid, keywords);
+        List<Article> articles = articleService.getAllArticle(page, count, cid, keywords);
         Map<String, Object> map = new HashMap<>();
         map.put("articles", articles);
         map.put("totalCount", totalCount);
@@ -90,11 +103,11 @@ public class ArtController {
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)
     public Map<String, Object> getArticleByCid() {
-        List<Article> art1 = articleService.getAllArticle(1, 5,1L, "");
-        List<Article> art2 = articleService.getAllArticle(1, 5,2L, "");
-        List<Article> art3 = articleService.getAllArticle(1, 5,3L, "");
-        List<Article> art4 = articleService.getAllArticle(1, 5,4L, "");
-        List<Article> art5 = articleService.getAllArticle(1, 5,5L, "");
+        List<Article> art1 = articleService.getAllArticle(1, 5, 1L, "");
+        List<Article> art2 = articleService.getAllArticle(1, 5, 2L, "");
+        List<Article> art3 = articleService.getAllArticle(1, 5, 3L, "");
+        List<Article> art4 = articleService.getAllArticle(1, 5, 4L, "");
+        List<Article> art5 = articleService.getAllArticle(1, 5, 5L, "");
         Articletop articletop = articletopService.getArticletop();
         Article articlehome = articleService.getArticletopById(articletop.getAid());
 
