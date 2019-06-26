@@ -34,7 +34,7 @@ public class ArtController {
     ArticletopService articletopService;
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public RespBean addNewArticle(Article article) {
+    public RespBean addNewArticle(@RequestBody Article article) {
         int result = articleService.addNewArticle(article);
         if (result == 1) {
             return RespBean.ok("操作成功" + article.getId() + "");

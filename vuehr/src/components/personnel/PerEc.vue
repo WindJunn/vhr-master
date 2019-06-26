@@ -52,7 +52,7 @@
       <el-table-column label="最近编辑时间" width="140" align="left">
         <template slot-scope="scope">{{ scope.row.editTime | formatDateTime}}</template>
       </el-table-column>
-      <el-table-column prop="nickname" label="作者" width="120" align="left"></el-table-column>
+      <el-table-column prop="author" label="作者" width="120" align="left"></el-table-column>
       <el-table-column prop="cateName" label="所属分类" width="100" align="left"></el-table-column>
       <el-table-column prop="pageView" label="点击量" width="100" align="left"></el-table-column>
       <el-table-column fixed="right" label="操作" width="400">

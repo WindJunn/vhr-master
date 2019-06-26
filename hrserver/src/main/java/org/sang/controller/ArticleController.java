@@ -39,7 +39,7 @@ public class ArticleController {
     public RespBean addNewArticle(Article article) {
         int result = articleService.addNewArticle(article);
         if (result == 1) {
-            return RespBean.ok(article.getId() + "");
+            return RespBean.ok(article.getId() + "操作成功");
         } else {
             return RespBean.error(article.getState() == 0 ? "文章保存失败!" : "文章发表失败!");
         }

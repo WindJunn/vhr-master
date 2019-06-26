@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.sang.mapper.ArticleMapper">
     <insert id="addNewArticle" parameterType="org.sang.bean.Article" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO article SET title=#{title},mdContent=#{mdContent},htmlContent=#{htmlContent},summary=#{summary},cid=#{cid},uid=#{uid},publishDate=#{publishDate},state=#{state},editTime=#{editTime}
+        INSERT INTO article SET title=#{title},mdContent=#{mdContent},htmlContent=#{htmlContent},summary=#{summary},cid=#{cid},uid=#{uid},publishDate=#{publishDate},state=#{state},editTime=#{editTime},author=#{author}
     </insert>
     <update id="pvIncrement" parameterType="Long">
         UPDATE article set pageView=pageView+1 WHERE id=#{aid}
@@ -14,7 +14,7 @@
     </update>
     <update id="updateArticle" parameterType="org.sang.bean.Article">
         UPDATE article SET
-        title=#{title},mdContent=#{mdContent},htmlContent=#{htmlContent},summary=#{summary},cid=#{cid},editTime=#{editTime}
+        title=#{title},mdContent=#{mdContent},htmlContent=#{htmlContent},summary=#{summary},cid=#{cid},editTime=#{editTime},author=#{author}
         <if test="state==1">
             ,state=1
         </if>
@@ -24,7 +24,7 @@
         WHERE id=#{id}
     </update>
     <select id="getArticleByState" resultType="org.sang.bean.Article">
-        SELECT a.id,a.`title`,a.`editTime`,a.`pageView`,a.`state`,u.`name`,c.`cateName`,a.uid FROM article a,hr
+        SELECT a.id,a.`title`,a.`editTime`,a.`pageView`,a.`state`,a.author,u.`name`,c.`cateName`,a.uid FROM article a,hr
         u,category c WHERE a.`cid`=c.`id` AND a.`uid`=u.`id`
         <if test="state!=-2">
             and a.uid=#{uid}
@@ -41,7 +41,7 @@
         ORDER BY a.editTime DESC limit #{start},#{count};
     </select>
     <select id="getArticleByStateByAdmin" resultType="org.sang.bean.Article">
-        SELECT a.id,a.`title`,a.`editTime`,a.`pageView`,a.`state`,a.`enable`,c.`cateName`,a.uid FROM article a,
+        SELECT a.id,a.`title`,a.`editTime`,a.`pageView`,a.`state`,a.author,a.`enable`,c.`cateName`,a.uid FROM article a,
         category c WHERE a.`cid`=c.`id`  and a.state=1
         <if test="cid!=null">
             and a.cid=#{cid}
@@ -53,7 +53,7 @@
     </select>
 
     <select id="getAllArticle" resultType="org.sang.bean.Article">
-        SELECT a.*,a.id,a.`title`,a.`editTime`,a.`pageView`,a.`state`,c.`cateName` FROM article a
+        SELECT a.*,a.id,a.`title`,a.`editTime`,a.`pageView`,a.`state`,a.author,c.`cateName` FROM article a
         ,category c WHERE a.`cid`=c.`id` and a.state=1 and enable = 1
         <if test="keywords!=null">
             AND title LIKE concat('%',#{keywords},'%')
@@ -121,6 +121,7 @@
         <result column="summary" property="summary"/>
         <result column="nickname" property="nickname"/>
         <result column="cateName" property="cateName"/>
+        <result column="author" property="author"/>
         <collection property="tags" ofType="org.sang.bean.Tags" column="tagName">
             <id property="id" column="tid"/>
             <result property="tagName" column="tagName"/>

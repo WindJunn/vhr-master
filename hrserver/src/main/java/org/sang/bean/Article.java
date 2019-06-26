@@ -24,6 +24,15 @@ public class Article {
     private List<Tags> tags;
     private String stateStr;
     private Long enable;
+    private String author;
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
 
     public Long getEnable() {
         return enable;

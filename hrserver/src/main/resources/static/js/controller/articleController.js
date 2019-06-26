@@ -35,7 +35,7 @@ app.controller('articleController', function ($scope, $controller, $location, ar
         );
     };
 
-    $scope.findArtByUser =function() {
+    $scope.findArtByUser = function () {
         var hrId = $location.search()['id'];
         if (hrId == null) {
             return;
@@ -98,15 +98,15 @@ app.controller('articleController', function ($scope, $controller, $location, ar
         );
     };
 
-    $scope.username = "";
-    $scope.password = "";
+    // $scope.username = "";
+    // $scope.password = "";
     $scope.submitClick = function (username, password) {
         articleService.submitClick(username, password).success(
             function (response) {
                 $scope.hr = response.obj;
                 console.log(response);
                 if ($scope.hr != null && response.status == 200) {
-                    location.href = "personal.html#?id="+$scope.hr.id;
+                    location.href = "personal.html#?id=" + $scope.hr.id;
                     // $scope.user = response.obj;
 
                 } else {
@@ -116,20 +116,9 @@ app.controller('articleController', function ($scope, $controller, $location, ar
         )
     }
 
-    // $scope.showDetails = function (id) {
-    //        $scope.aid = id ;
-    //
-    // }
 
-    //查询实体
-    $scope.findOne = function (id) {
-        goodsService.findOne(id).success(
-            function (response) {
-                $scope.article = response;
-            }
-        );
-    };
-    $scope.hrId="0";
+
+    $scope.hrId = "0";
     $scope.findHrById = function () {
         var hrId = $location.search()['id'];
         if (hrId == null) {
@@ -143,7 +132,7 @@ app.controller('articleController', function ($scope, $controller, $location, ar
         );
     };
 
-    $scope.findSchByUid = function() {
+    $scope.findSchByUid = function () {
         var hrId = $location.search()['id'];
         if (hrId == null) {
             return;
@@ -172,7 +161,51 @@ app.controller('articleController', function ($scope, $controller, $location, ar
                 $scope.paginationConf.totalItems = response.totalCount;//更新总记录数
             }
         );
-    }
+    };
+
+    $scope.article = {
+        id: -1,
+        title: "",
+        htmlContent: "",
+        mdContent: "",
+
+        cid: "",
+        uid: "",
+        author: "",
+        state: 1
+    };
+
+    $scope.save = function () {
+        var hrId = $location.search()['id'];
+        if (hrId == null) {
+            return;
+        }
+        $scope.article.htmlContent = editor.html();
+        $scope.article.mdContent = editor.html();
+        $scope.article.uid = hrId;
+
+        var serviceObject;
+        /*if ($scope.arts.id != null) {
+            serviceObject = articleService.update($scope.arts);
+        } else {
+            serviceObject = articleService.add($scope.arts);
+        }*/
+        debugger;
+        articleService.addArt($scope.article).success(
+            function (response) {
+                if (response.success) {
+                    //重新查询
+                    /*alert("保存成功");
+                    $scope.entity = {};
+                    editor.html("");*/
+                    location.href = "personal.html#?id=" + hrId;
+                } else {
+                    alert(response.msg);
+                }
+            }
+        );
+    };
+
 
     $scope.uploadFile = function () {
         uploadService.uploadFile().success(function (response) {
@@ -200,172 +233,5 @@ app.controller('articleController', function ($scope, $controller, $location, ar
         $scope.entity.goodsDesc.itemImages.splice(index, 1);
     }
 
-    $scope.selectItemCat1List = function () {
-        itemCatService.findByParentId(0).success(
-            function (response) {
-                $scope.itemCat1List = response;
-            }
-        )
-    };
 
-    $scope.$watch('entity.goods.category1Id', function (newValue, oldValue) {
-        itemCatService.findByParentId(newValue).success(
-            function (response) {
-                $scope.itemCat2List = response;
-            }
-        )
-    });
-
-    $scope.$watch('entity.goods.category2Id', function (newValue, oldValue) {
-        itemCatService.findByParentId(newValue).success(
-            function (response) {
-                $scope.itemCat3List = response;
-            }
-        )
-    });
-
-    $scope.$watch('entity.goods.category3Id', function (newValue, oldValue) {
-        itemCatService.findOne(newValue).success(
-            function (response) {
-                $scope.entity.goods.typeTemplateId = response.typeId;
-            }
-        )
-    });
-
-    // 读取模板ID
-    $scope.$watch('entity.goods.typeTemplateId', function (newValue, oldValue) {
-        typeTemplateService.findOne(newValue).success(
-            function (response) {
-                $scope.typeTemplate = response;
-                $scope.typeTemplate.brandIds = JSON.parse($scope.typeTemplate.brandIds);
-
-                if ($location.search()['id'] == null) {
-                    $scope.entity.goodsDesc.customAttributeItems = JSON.parse($scope.typeTemplate.customAttributeItems);
-
-                }
-            }
-        );
-
-        typeTemplateService.findSpecList(newValue).success(
-            function (response) {
-                $scope.specList = response;
-            }
-        )
-    });
-
-
-    $scope.updateSpecAttribute = function ($event, name, value) {
-
-        // 1.判断是否规格选项是否有值
-        // 2.有值--
-        // 2.1 判断是否取消
-        // 2.2 判断选项是否全不选
-        // 3.无值
-
-        var object = $scope.searchObjectById(
-            $scope.entity.goodsDesc.specificationItems, "attributeName", name);
-        if (object != null) {
-
-            if ($event.target.checked) {
-                object.attributeValue.push(value);
-            } else {
-                object.attributeValue.splice(object.attributeValue.indexOf(value), 1);
-
-                if (object.attributeValue.length == 0) {
-                    $scope.entity.goodsDesc.specificationItems.splice($scope.entity.goodsDesc.specificationItems.indexOf(object), 1);
-                }
-            }
-        } else {
-            $scope.entity.goodsDesc.specificationItems.push({"attributeName": name, "attributeValue": [value]});
-        }
-    };
-
-
-    // 创建SKU列表
-    $scope.cteateItemList = function () {
-
-        $scope.entity.itemList = [{spec: {}, price: 0, num: 9999, status: '0', isDefault: '0'}];
-
-        var items = $scope.entity.goodsDesc.specificationItems;
-
-        for (var i = 0; i < items.length; i++) {
-            $scope.entity.itemList = addColumn($scope.entity.itemList, items[i].attributeName, items[i].attributeValue);
-        }
-    };
-
-    addColumn = function (list, columnName, columnValues) {
-        var newList = [];
-        for (var i = 0; i < list.length; i++) {
-
-            var oldRow = list[i];
-
-            for (var j = 0; j < columnValues.length; j++) {
-                var newRow = JSON.parse(JSON.stringify(oldRow));
-                newRow.spec[columnName] = columnValues[j];
-                newList.push(newRow);
-            }
-        }
-
-        return newList;
-    };
-
-
-    $scope.status = ['未审核', '已审核', '审核未通过', '关闭'];
-
-
-    $scope.itemCatList = [];
-    $scope.findItemCatList = function () {
-        itemCatService.findAll().success(
-            function (response) {
-                for (var i = 0; i < response.length; i++) {
-                    $scope.itemCatList[response[i].id] = response[i].name;
-
-                }
-            }
-        );
-    };
-
-    $scope.findOne = function () {
-        // 获取参数值
-        var id = $location.search()['id'];
-        if (id == null) {
-            return;
-        }
-        goodsService.findOne(id).success(
-            function (response) {
-                $scope.entity = response;
-                editor.html($scope.entity.goodsDesc.introduction);
-
-
-                $scope.entity.goodsDesc.itemImages = JSON.parse($scope.entity.goodsDesc.itemImages);
-                // 扩展属性
-                $scope.entity.goodsDesc.customAttributeItems = JSON.parse($scope.entity.goodsDesc.customAttributeItems);
-
-                // 规格
-                $scope.entity.goodsDesc.specificationItems = JSON.parse($scope.entity.goodsDesc.specificationItems);
-
-                // SKU列表
-
-                for (var i = 0; i < $scope.entity.itemList.length; i++) {
-                    $scope.entity.itemList[i].spec = JSON.parse($scope.entity.itemList[i].spec);
-                }
-
-            }
-        )
-    };
-
-    $scope.checkAttributeValue = function (specName, optionName) {
-        var items = $scope.entity.goodsDesc.specificationItems;
-        var object = $scope.searchObjectById(items, "attributeName", specName);
-
-        alert(object.attributeValue.indexOf(optionName) >= 0);
-        if (object == null) {
-            return false;
-        } else {
-            return (object.attributeValue.indexOf(optionName) >= 0) ? true : false;
-        }
-
-    }
-
-
-});	
+});

@@ -14,6 +14,11 @@
         placeholder="请输入标题..."
         style="width: 400px;margin-left: 10px"
       ></el-input>
+       <el-input
+        v-model="article.author"
+        placeholder="请输入作者..."
+        style="width: 400px;margin-left: 10px"
+      ></el-input>
     </el-header>
     <el-main class="main">
       <div id="editor">
@@ -112,8 +117,6 @@ export default {
         _this.files.name = response.msg;
         _this.files.url = response.msg;
         _this.fileLists.push(response.msg);
-        debugger;
-        // _this.fileLists = _this.fileLists.push(_this.files);
       }
     },
     cancelEdit() {
@@ -142,21 +145,23 @@ export default {
         htmlContent: _this.$refs.md.d_render,
         cid: _this.article.cid,
         state: state,
+        author: _this.article.author,
         dynamicTags: _this.article.dynamicTags
       }).then(
         resp => {
           _this.loading = false;
-          if (resp.status == 200 && resp.data.status == "success") {
+          if (resp.status == 200) {
             _this.article.id = resp.data.msg;
+
             _this.$message({
               type: "success",
               message: state == 0 ? "保存成功!" : "发布成功!"
             });
             //            if (_this.from != undefined) {
-            window.bus.$emit("blogTableReload");
+            // window.bus.$emit("blogTableReload");
             //            }
             if (state == 1) {
-              _this.$router.replace({ path: "/articleList" });
+              _this.$router.replace({ path: "/per/emp" });
             }
           }
         },
@@ -227,7 +232,8 @@ export default {
         dynamicTags: [],
         title: "",
         mdContent: "",
-        cid: ""
+        cid: "",
+        author:"",
       },
       files: {
         name: "",

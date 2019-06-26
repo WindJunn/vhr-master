@@ -373,7 +373,7 @@
               <div>
                 <el-form-item label="授课日期:" prop="time">
                   <el-date-picker
-                     v-model="sch.time"
+                    v-model="sch.time"
                     size="mini"
                     value-format="yyyy-MM-dd HH:mm:ss"
                     style="width: 65%"
@@ -411,7 +411,7 @@
                 </el-form-item>
               </div>
             </el-col>
-            <el-col :span="6">
+            <!-- <el-col :span="6">
               <div>
                 <el-form-item label="授课状态:" prop="state">
                   <el-input
@@ -423,7 +423,7 @@
                   ></el-input>
                 </el-form-item>
               </div>
-            </el-col>
+            </el-col> -->
           </el-row>
           <el-row>
             <el-col :span="9">
@@ -459,7 +459,7 @@
 export default {
   data() {
     return {
-       pickerOptions: {
+      pickerOptions: {
         shortcuts: [
           {
             text: "今天",
@@ -593,13 +593,20 @@ export default {
             trigger: "blur"
           }
         ],
-
         phone: [{ required: true, message: "必填:电话号码", trigger: "blur" }],
         address: [
           { required: true, message: "必填:联系地址", trigger: "blur" }
         ],
         departmentId: [
           { required: true, message: "必填:部门", trigger: "change" }
+        ]
+      },
+
+      rules1: {
+        time: [{ required: true, message: "必填:授课日期", trigger: "blur" }],
+        theme: [{ required: true, message: "必填:授课主题", trigger: "blur" }],
+        departmentId: [
+          { required: true, message: "必填:授课地点", trigger: "change" }
         ]
       }
     };
@@ -716,7 +723,7 @@ export default {
       }
       this.getRequest(
         "/system/hr/?page=" +
-          (this.currentPage-1) +
+          (this.currentPage - 1) +
           "&size=10&keywords=" +
           this.keywords +
           "&nationId=" +
@@ -725,7 +732,6 @@ export default {
           this.hr.departmentId +
           "&nameZh=" +
           "教员"
-          
       ).then(resp => {
         this.tableLoading = false;
         if (resp && resp.status == 200) {

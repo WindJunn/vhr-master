@@ -114,7 +114,7 @@
               <template slot-scope="scope">{{ scope.row.time | formatDateTime}}</template>
             </el-table-column>
             <el-table-column prop="department.name" label="授课地点" width="200" align="left"></el-table-column>
-            <el-table-column prop="state" label="授课状态" width="70" align="left"></el-table-column>
+            <!-- <el-table-column prop="state" label="授课状态" width="70" align="left"></el-table-column> -->
             <el-table-column prop="hr.phone" width="120" label="联系电话"></el-table-column>
             <el-table-column prop="department.name" align="left" width="100" label="所属部门"></el-table-column>
             <el-table-column prop="des" label="备注" width="150" align="left"></el-table-column>
@@ -264,7 +264,7 @@
                 </el-form-item>
               </div>
             </el-col>
-            <el-col :span="6">
+            <!-- <el-col :span="6">
               <div>
                 <el-form-item label="授课状态:" prop="state">
                   <el-input
@@ -276,7 +276,7 @@
                   ></el-input>
                 </el-form-item>
               </div>
-            </el-col>
+            </el-col> -->
           </el-row>
           <el-row>
             <el-col :span="9">

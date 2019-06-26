@@ -38,20 +38,23 @@ public class ArticleService {
             }
             article.setEditTime(timestamp);
             //设置当前用户
-            article.setUid(Util.getCurrentUser().getId());
+            if (article.getUid()==null) {
+                article.setUid(Util.getCurrentUser().getId());
+
+            }
 
             String htmlContent = article.getHtmlContent();
             article.setHtmlContent(editPhoto(htmlContent));
 
             int i = articleMapper.addNewArticle(article);
             //打标签
-            String[] dynamicTags = article.getDynamicTags();
+            /*String[] dynamicTags = article.getDynamicTags();
             if (dynamicTags != null && dynamicTags.length > 0) {
                 int tags = addTagsToArticle(dynamicTags, article.getId());
                 if (tags == -1) {
                     return tags;
                 }
-            }
+            }*/
             return i;
         } else {
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
@@ -65,13 +68,13 @@ public class ArticleService {
             article.setHtmlContent(editPhoto(htmlContent));
             int i = articleMapper.updateArticle(article);
             //修改标签
-            String[] dynamicTags = article.getDynamicTags();
+            /*String[] dynamicTags = article.getDynamicTags();
             if (dynamicTags != null && dynamicTags.length > 0) {
                 int tags = addTagsToArticle(dynamicTags, article.getId());
                 if (tags == -1) {
                     return tags;
                 }
-            }
+            }*/
             return i;
         }
     }
