@@ -1,18 +1,11 @@
-微人事是一个前后端分离的人力资源管理系统，项目采用SpringBoot+Vue开发。  
+此项目是一个前后端分离的人力资源管理系统，项目采用SpringBoot+Vue开发。  
 
 
-项目地址：[https://github.com/lenve/vhr](https://github.com/lenve/vhr)   
-
->原本计划把项目跑起来放到网上供小伙伴们查看，但是之前买服务器为了省钱，内存只有512M，两个应用跑不起来(已经有一个[V部落开源项目](https://github.com/lenve/VBlog)在运行)，因此小伙伴们只能将就看一下下面的截图了，文末有部署教程，部署到本地也可以查看完整效果。    
+感谢原作者，此项目帮助我很多，项目原地址：[https://github.com/lenve/vhr](https://github.com/lenve/vhr)   
 
 
-# tips 
 
-由于整个项目功能比较多，也比较复杂，因此分多期开发，目前权限管理模块已经开发完成，其他模块还在开发当中。考虑到权限管理模块相对独立，和其他模块的功能并不冲突，同时前后端分离之后的权限管理又是许多小伙伴的痛点，因此将本项目提前开源供小伙伴们研究。**但是小伙伴们需要注意的是，这个项目中你无法看到所有的功能，因为没有完工。权限管理相关的模块主要有两个，分别是  [系统管理->基础信息设置->权限组]  可以管理角色和资源的关系， [系统管理->操作员管理]  可以管理用户和角色的关系。另外，本项目也在不断的更新中，小伙伴们可以通过下方的更新记录查看最新完成的功能。**  
 
-# 英雄帖
-
-该项目还有一些功能尚未完成，非常欢迎小伙伴们提交pr，我会将大家所做的工作展示在README中！
 
 # 整体效果
 
@@ -230,25 +223,4 @@ npm run build
 
 33.[系统通知功能实现](https://github.com/lenve/vhr/wiki/33.%E7%B3%BB%E7%BB%9F%E9%80%9A%E7%9F%A5%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0)  
 
-# 其他资料
 
-关注公众号查看更多全栈资料：  
-
-![公众号二维码](https://mmbiz.qpic.cn/mmbiz_jpg/GvtDGKK4uYkO6VEW6XfkovAic6oA5LegzZKeRj0OwOZZQ8ic1tEoBOVBBOreAB9Dz32CN9MU19slrjn5qvxbR7pQ/0?wx_fmt=jpeg)  
-
-# License
-
-    Copyright 2018 王松
-
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-
-        http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
- 

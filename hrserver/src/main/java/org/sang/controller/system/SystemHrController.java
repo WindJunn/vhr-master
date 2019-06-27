@@ -50,8 +50,6 @@ public class SystemHrController {
         return map;
     }
 
-
-
     @RequestMapping("/id/{hrId}")
     public Hr getHrById(@PathVariable Long hrId) {
         return hrService.getHrById(hrId);

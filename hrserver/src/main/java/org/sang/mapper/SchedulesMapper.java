@@ -12,7 +12,8 @@ import java.util.List;
 public interface SchedulesMapper {
 
     List<Schedules> getSchedulesByPage(@Param("start") Integer start, @Param("size") Integer size,
-                                       @Param("keywords") String keywords, @Param("userId") Long userId, @Param("departmentId") Long departmentId);
+                                       @Param("keywords") String keywords, @Param("userId") Long userId,
+                                       @Param("departmentId") Long departmentId,@Param("depList") List depList);
 
     Long getCountByKeywords(@Param("keywords") String keywords,  @Param("userId") Long userId, @Param("departmentId") Long departmentId);
 

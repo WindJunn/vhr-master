@@ -23,17 +23,7 @@ app.controller('articleController', function ($scope, $controller, $location, ar
         );
     };
 
-    //分页
-    $scope.findByCate = function (page, cid, keywords) {
-        articleService.findByCate(page, cid, keywords).success(
-            function (response) {
-                alert(response);
-                $scope.art = response.articles;
-                $scope.paginationConf.totalItems = response.totalCount;//更新总记录数
 
-            }
-        );
-    };
 
     $scope.findArtByUser = function () {
         var hrId = $location.search()['id'];
@@ -60,19 +50,33 @@ app.controller('articleController', function ($scope, $controller, $location, ar
                 $scope.articlehome = response.articlehome;
             }
         )
-    }
+    };
+
+    //分页
+    $scope.findByCate = function (page, cid, keywords) {
+        articleService.findByCate(page, cid, keywords).success(
+            function (response) {
+                $scope.art = response.articles;
+                $scope.paginationConf.totalItems = response.totalCount;//更新总记录数
+                console.log(response);
+
+            }
+        );
+    };
 
     $scope.cid = '';
-    $scope.cids = '';
-    $scope.changes = function (cids) {
+    $scope.keywords = '';
+    $scope.changes = function (page,keywords) {
         var cid = $location.search()['cid'];
         if (cid == null) {
             return;
         }
-        if (cids != null) {
-            cid = cids;
+        if (page == null || page == '') {
+            page = 1;
         }
-        $scope.findByCate(1, cid, '');
+
+        $scope.findByCate(page, cid, keywords);
+
 
     };
 
@@ -117,7 +121,6 @@ app.controller('articleController', function ($scope, $controller, $location, ar
     }
 
 
-
     $scope.hrId = "0";
     $scope.findHrById = function () {
         var hrId = $location.search()['id'];
@@ -157,7 +160,7 @@ app.controller('articleController', function ($scope, $controller, $location, ar
         }
         articleService.search(page, count, cid, '').success(
             function (response) {
-                // $scope.list = response.rows;
+                art = response.articles;
                 $scope.paginationConf.totalItems = response.totalCount;//更新总记录数
             }
         );
@@ -222,15 +225,12 @@ app.controller('articleController', function ($scope, $controller, $location, ar
         })
     };
 
-    $scope.entity = {goods: {}, goodsDesc: {itemImages: [], specificationItems: []}};
-    // 将当前上传的图片实体存入图片列表
-    $scope.add_image_entity = function () {
-        $scope.entity.goodsDesc.itemImages.push($scope.image_entity);
-    }
+    $scope.findSysName = function () {
+        articleService.findSysName().success(
+            function (response) {
+                $scope.sys = response[0];
 
-
-    $scope.remove_image_entity = function (index) {
-        $scope.entity.goodsDesc.itemImages.splice(index, 1);
+            })
     }
 
 

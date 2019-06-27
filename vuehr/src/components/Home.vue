@@ -4,28 +4,30 @@
       <el-header class="home-header">
         <span class="home_title">{{sys.leftname}}</span>
         <div style="display: flex;align-items: center;margin-right: 7px">
-          <el-badge style="margin-right: 30px" :is-dot="this.$store.state.nfDot">
+          <!-- <el-badge style="margin-right: 30px" :is-dot="this.$store.state.nfDot">
             <i class="fa fa-bell-o" @click="goChat" style="cursor: pointer"></i>
-          </el-badge>
+          </el-badge>-->
           <el-dropdown @command="handleCommand">
             <span class="el-dropdown-link home_userinfo" style="display: flex;align-items: center">
-              {{user.phone}}
+              {{user.username}}
               {{user.name}}
-              <i>
+              <!-- <i>
                 <img
                   v-if="user.userface!=''"
                   :src="user.userface"
                   style="width: 40px;height: 40px;margin-right: 5px;margin-left: 5px;border-radius: 40px"
                 >
-              </i>
-            </span>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>个人中心</el-dropdown-item>
+              </i>-->
 
+              <el-button type="warning" round size="mini" @click="handleCommand('logout')" divided>注销</el-button>
+            </span>
+            <!-- <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item>个人中心</el-dropdown-item>
               <el-dropdown-item>设置</el-dropdown-item>
               <el-dropdown-item command="logout" divided>注销</el-dropdown-item>
-            </el-dropdown-menu>
+            </el-dropdown-menu>-->
           </el-dropdown>
+          
         </div>
       </el-header>
       <el-container>

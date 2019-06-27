@@ -54,7 +54,7 @@
       :file-list="fileList"
       :on-success="fileUploadSuccess"
       style
-      limit="6"
+      :limit="10"
       name="image"
     >
       <el-button size="small" type="primary">点击上传文件</el-button>

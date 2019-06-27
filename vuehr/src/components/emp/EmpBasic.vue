@@ -148,7 +148,6 @@
           >
             <el-table-column type="selection" align="left" width="30"></el-table-column>
             <el-table-column prop="name" align="left" fixed label="姓名" width="90"></el-table-column>
-            <!-- <el-table-column prop="workID" width="95" align="left" label="学号"></el-table-column> -->
             <el-table-column prop="gender" label="性别" width="50"></el-table-column>
 
             <el-table-column prop="idCard" width="150" align="left" label="身份证号码"></el-table-column>
@@ -208,14 +207,6 @@
               :disabled="multipleSelection.length==0"
               @click="deleteManyEmps"
             >批量删除</el-button>
-            <!-- <el-pagination
-              background
-              :page-size="10"
-              :current-page="currentPage"
-              @current-change="currentChange"
-              layout="prev, pager, next"
-              :total="totalCount"
-            ></el-pagination>-->
             <el-pagination
               background
               @size-change="handleSizeChange"
@@ -366,32 +357,7 @@
               </div>
             </el-col>
           </el-row>
-          <el-row>
-            <el-col :span="6">
-              <div>
-                <el-form-item label="学号:" prop="workID">
-                  <el-input
-                    v-model="emp.workID"
-                    size="mini"
-                    style="width: 150px"
-                    placeholder="学员学号..."
-                  ></el-input>
-                </el-form-item>
-              </div>
-            </el-col>
-            <el-col :span="7">
-              <div>
-                <el-form-item label="积分:" prop="points">
-                  <el-input
-                    v-model="emp.points"
-                    size="mini"
-                    style="width: 150px"
-                    placeholder="积分..."
-                  ></el-input>
-                </el-form-item>
-              </div>
-            </el-col>
-          </el-row>
+
           <el-row>
             <el-col :span="8">
               <div>
@@ -427,13 +393,7 @@
       </div>
     </el-form>
 
-    <el-form
-      :model="pointss"
-      :rules="rules1"
-      ref="ruleForm"
-      class="demo-ruleForm"
-      label-width="100px"
-    >
+    <el-form :model="emp" :rules="rules1" ref="ruleForm" class="demo-ruleForm" label-width="100px">
       <div style="text-align: left">
         <el-dialog
           :title="dialogTitle"
@@ -644,6 +604,7 @@
             </el-col>
           </el-row>
           <el-row>
+            <el-col>
             <template>
               <el-tag type="danger">考勤记录(次)：</el-tag>
             </template>
@@ -651,11 +612,49 @@
               <el-tag>{{index}}</el-tag>:
               <el-tag type="info">{{item}}</el-tag>&#12288;
             </template>
+            </el-col>
+          </el-row>
+<br>
+          <el-row>
+            <el-col :span="6">
+              <div>
+                <el-form-item label="考勤时间:" prop="atime">
+                  <el-date-picker
+                    v-model="attendance.atime"
+                    size="mini"
+                    value-format="yyyy-MM-dd"
+                    style="width: 150px"
+                    type="date"
+                    placeholder="请选择考勤时间"
+                  ></el-date-picker>
+                </el-form-item>
+              </div>
+            </el-col>
+
+            <el-col :span="8">
+              <div>
+                <el-form-item label="考勤状态:" prop="attendance.aname">
+                  <el-select
+                    v-model="attendance.stateId"
+                    style="width: 130px"
+                    size="mini"
+                    placeholder="请选择考勤状态"
+                  >
+                    <el-option
+                      v-for="item in attname"
+                      :key="item.id"
+                      :label="item.name"
+                      :value="item.id"
+                    ></el-option>
+                  </el-select>
+                </el-form-item>
+              </div>
+            </el-col>
           </el-row>
 
           <span slot="footer" class="dialog-footer">
             <el-button size="mini" @click="cancelEidt">取 消</el-button>
-            <el-button size="mini" type="primary" @click="a('attendance')">确 定</el-button>
+            <el-button size="mini" type="primary" @click="addAtt('attendance')">确 定</el-button>
           </span>
         </el-dialog>
       </div>
@@ -684,6 +683,14 @@ export default {
       pageSize: 10,
       deps: [],
       counts: [],
+      attname: [],
+      attendance: {
+        id: "",
+        atime: "",
+        stateId: "",
+        sid: "",
+        des: ""
+      },
       defaultProps: {
         label: "name",
         isLeaf: "leaf",
@@ -831,8 +838,7 @@ export default {
           { required: true, message: "必填:部门", trigger: "change" }
         ],
         posId: [{ required: true, message: "必填:职位", trigger: "change" }],
-        workID: [{ required: false, message: "必填:学号", trigger: "blur" }],
-        points: [{ required: true, message: "积分", trigger: "change" }]
+        workID: [{ required: false, message: "必填:学号", trigger: "blur" }]
       }
     };
   },
@@ -846,6 +852,28 @@ export default {
     this.loadEmps();
   },
   methods: {
+    addAtt(formName) {
+      var _this = this;
+      //添加
+      this.tableLoading = true;
+      this.postRequest("/attendance/att", {
+        sid: this.emp.id,
+        stateId: this.attendance.stateId,
+        atime: this.attendance.atime,
+        des: ""
+      }).then(resp => {
+        _this.tableLoading = false;
+        if (resp && resp.status == 200) {
+          var data = resp.data;
+
+          _this.dialogVisible2 = false;
+          _this.emptyEmpData();
+          this.attendance.stateId="";
+          this.attendance.atime="";
+          _this.loadEmps();
+        }
+      });
+    },
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
@@ -1121,6 +1149,7 @@ export default {
       this.getRequest("/point/all/" + this.emp.id).then(resp => {
         if (resp && resp.status == 200) {
           _this.pointss = resp.data.points;
+          console.log(_this.pointss);
         }
       });
     },
@@ -1196,6 +1225,12 @@ export default {
         if (resp && resp.status == 200) {
           _this.counts = resp.data.counts;
           console.log(_this.counts);
+        }
+      });
+      this.getRequest("/attendance/basicdata").then(resp => {
+        if (resp && resp.status == 200) {
+          var data = resp.data;
+          _this.attname = data.attname;
         }
       });
     },

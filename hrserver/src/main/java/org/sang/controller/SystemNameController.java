@@ -33,4 +33,14 @@ public class SystemNameController {
         }
         return RespBean.error("修改失败!");
     }
+
+
+    @RequestMapping(value = "/sys", method = RequestMethod.PUT)
+    public RespBean updateSysName(SystemName systemName) {
+        int i = systemnameService.updateSysName(systemName);
+        if (i == 1) {
+            return RespBean.ok("修改成功!");
+        }
+        return RespBean.error("修改失败!");
+    }
 }

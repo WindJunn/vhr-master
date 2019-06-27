@@ -127,7 +127,7 @@ export default {
       this.loadBlogs(1, this.pageSize);
     },
     itemClick(row) {
-      this.$router.push({ path: "/per/salary", query: { aid: row.id } });
+      this.$router.push({ path: "/blogDetail", query: { aid: row.id } });
     },
     deleteMany() {
       var selItems = this.selItems;

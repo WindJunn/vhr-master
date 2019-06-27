@@ -59,6 +59,16 @@ export default new Router({
             keepAlive: false,
             requireAuth: true
           }
+        },
+        {
+          path: '/blogDetail',
+          name: '文章详情',
+          component: BlogDetail,
+          hidden: true,
+          meta: {
+            keepAlive: false,
+            requireAuth: true
+          }
         }
       ]
     }

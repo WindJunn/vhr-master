@@ -187,7 +187,7 @@
               @current-change="currentChange"
               :current-page="currentPage"
               :page-sizes="[10, 15, 20, 30, 50]"
-              :page-size="10"
+              :page-size="pageSize"
               layout="total, sizes, prev, pager, next, jumper"
               :total="totalCount"
             ></el-pagination>
@@ -547,9 +547,9 @@
               icon="el-icon-more"
               style="color: #09c0f6;padding-top: 0px"
               slot="reference"
-              @click="loadSelRoles(role,userId)"
+              @click="loadSelRoles(roleAll,userId)"
               :disabled="moreBtnState"
-            ></el-button>
+            >角色修改</el-button>
           </el-popover>
         </div>
         <!-- <div>
@@ -594,7 +594,9 @@ export default {
       cardLoading: [],
       totalCount: -1,
       currentPage: 1,
+       pageSize: 10,
       obj: {},
+      roleAll:[],
 
       fullloading: false,
       cardLoading: [],
@@ -699,10 +701,14 @@ export default {
   mounted: function() {
     this.initData();
     this.loadEmps();
-    this.initCards();
+    // this.initCards();
     this.loadAllRoles();
   },
   methods: {
+     handleSizeChange(pageSize) {
+      this.pageSize = pageSize;
+      this.loadEmps();
+    },
     updateHrRoles(hrId) {
       this.moreBtnState = false;
       var _this = this;
@@ -726,8 +732,7 @@ export default {
         // _this.eploading.splice(index, 1, false);
         if (resp && resp.status == 200) {
           var data = resp.data;
-
-          if (data.status == "success") {
+          if (data.status == 200) {
             this.loadEmps();
           }
         }
@@ -748,6 +753,9 @@ export default {
       hrRoles.forEach(role => {
         this.selRoles.push(role.id);
         this.selRolesBak.push(role.id);
+        // console.log(this.selRoles)
+
+
       });
     },
     loadAllRoles() {
@@ -760,7 +768,7 @@ export default {
       });
     },
     searchClick() {
-      this.initCards();
+      // this.initCards();
       this.loadAllRoles();
     },
     fileUploadSuccess(response, file, fileList) {
@@ -865,7 +873,9 @@ export default {
       this.getRequest(
         "/system/hr/?page=" +
           (this.currentPage - 1) +
-          "&size=10&keywords=" +
+          "&size="+
+          this.pageSize +
+          "&keywords=" +
           this.keywords +
           "&nationId=" +
           this.hr.nationId +
@@ -881,17 +891,19 @@ export default {
         if (resp && resp.status == 200) {
           var data = resp.data;
           _this.hrs = data.hrs;
-          _this.roles = data.roles;
+          // _this.roles = data.hrs.roles;
+          // console.log(data.hrs.roles)
+
 
           _this.nation = data.nation;
           _this.totalCount = data.count;
           //            _this.emptyEmpData();
-          for (i = 0; i < _this.roles.length; i++) {
-            _this.rolelist += _this.roles[i].nameZh;
-          }
-          console.log(_this.rolelist);
+          // for (i = 0; i < _this.roles.length; i++) {
+          //   _this.rolelist += _this.roles[i].nameZh;
+          // }
+          // console.log(_this.rolelist);
 
-          console.log(data);
+          // console.log(data);
         }
       });
     },
@@ -992,7 +1004,7 @@ export default {
       _this.hrId = row.id;
       this.userId = row.id;
       this.roleAll = row.roles;
-      console.log(role);
+      console.log(this.roleAll);
 
       // _this.rids = []
 

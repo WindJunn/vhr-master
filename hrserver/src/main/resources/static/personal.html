@@ -32,26 +32,23 @@
     <script type="text/javascript" src="./js/controller/articleController.js"></script>
 
 </head>
-<body ng-app="jxs" ng-controller="articleController" ng-init="findHrById();findSchByUid();findArtByUser()">
+<body ng-app="jxs" ng-controller="articleController" ng-init="findHrById();findSchByUid();findArtByUser();findSysName()">
 <div class="section">
     <header class="gongao">
         <div class="logo"><img src="images/logo2.png" alt=""></div>
         <nav class="gy-flex nav">
             <a class="gy-sm-tit" href="index1.html" target="_blank">首页</a>
-            <a class="gy-sm-tit" href="">要闻</a>
-            <a class="gy-sm-tit" href="notice.html">公告</a>artUser
-            <a class="gy-sm-tit" href="##">政策</a>
-            <a class="gy-sm-tit" href="##">学习</a>
-            <a class="gy-sm-tit" href="classRoom.html">课堂</a>
+            <a class="gy-sm-tit" href="notice.html#?cid=1" target="_blank">要闻</a>
+            <a class="gy-sm-tit" href="notice.html#?cid=2" target="_blank">公告</a>
+            <a class="gy-sm-tit" href="notice.html#?cid=3" target="_blank">政策</a>
+            <a class="gy-sm-tit" href="notice.html#?cid=4" target="_blank">学习</a>
+            <a class="gy-sm-tit" href="notice.html#?cid=5" target="_blank">课堂</a>
         </nav>
         <div class="search gy-flex">
-            <!--<div class="gy-denglu">
-                <input type="text" placeholder="请输入关键字">
-                <i class="iconfont icon-iconfontzhizuobiaozhun22"></i>
-            </div>-->
+
             <div class="user-name">
                 <p class="gy-sm-tit text-ell">{{hr.name}}</p>
-                <p class="gy-sm-tit">欢迎学习！</p>
+                <p class="gy-sm-tit">欢迎使用！</p>
             </div>
         </div>
     </header>
@@ -62,7 +59,7 @@
 
     <!--面包屑导航-->
     <ul class="breadcrumbs gy-flex">
-        <li><a class="gy-text" href="index.html"><i class="iconfont icon-shouye2"></i>&nbsp;&nbsp;首页&nbsp;&nbsp;>&nbsp;&nbsp;</a>
+        <li><a class="gy-text" href="index1.html"><i class="iconfont icon-shouye2"></i>&nbsp;&nbsp;首页&nbsp;&nbsp;>&nbsp;&nbsp;</a>
         </li>
         <li><a class="gy-text" href="##">个人中心</a></li>
         <!-- <li><a class="gy-text" href="##">个人资料</a></li> -->
@@ -89,8 +86,10 @@
                 <div class="per-name gy-flex">
                     <label class="per-text"><span class="red-tit">*</span>&nbsp;&nbsp;性别&nbsp;&nbsp;:</label>
                     <p class="ps-name">
-                        <input type="radio" name="sex" {{hr.gender}}=='男'?'active':''>男
-                        <input type="radio" name="sex" {{hr.gender}}=='女'?'active':''>女
+                        <input type="text" ng-model="hr.gender">
+
+                        <!--                        <input type="radio" name="sex" {{hr.gender}}=='男'?'active':''>男-->
+<!--                        <input type="radio" name="sex" {{hr.gender}}=='女'?'active':''>女-->
                     </p>
                 </div>
                 <div class="per-name gy-flex">
@@ -136,13 +135,13 @@
                         <input type="text" ng-model="hr.idCard">
                     </p>
                 </div>
-                <div class="per-name gy-flex">
+               <!-- <div class="per-name gy-flex">
                     <label class="per-text"><span class="red-tit">*</span>&nbsp;&nbsp;邮箱&nbsp;&nbsp;:</label>
                     <p class="ps-name">
                         <i class="iconfont icon-bianji1"></i>
                         <input type="text" ng-model="hr.email">
                     </p>
-                </div>
+                </div>-->
             </form>
         </div>
 
@@ -151,7 +150,7 @@
         <div class="nongji-list">
             <div class="per-from">
                 <div class="gy-flex zlsc">
-                    <div class="per-name gy-flex">
+                    <!--<div class="per-name gy-flex">
                         <label class="per-text">分类&nbsp;&nbsp;:</label>
                         <p class="ps-name shaix">
                             <select name="" class="selector1">
@@ -170,7 +169,7 @@
                                 <option value="0">一周内</option>
                             </select>
                         </p>
-                    </div>
+                    </div>-->
                     <input class="shangc" id="shangc1" type="button" value="上传">
                 </div>
                 <!-- 资料列表 -->
@@ -286,30 +285,29 @@
         </div>
     </div>
 </div>
-
 <footer>
     <div class="fo-top">
-        <div class="section pad-left bianm">.</div>
+        <div class="section pad-left bianm" style="color: #0f0f0f">.</div>
         <div class="section gy-flex pad-left fo-sec">
             <ul class="foot-list">
                 <li><img src="images/logo2.png" alt=""></li>
                 <li class="banquan"><p>版权所有：</p>
-                    <sapn>宁夏固原市宣传部</sapn>
+                    <sapn>{{sys.copyrighted}}</sapn>
                 </li>
-                <li><p>联系电话：</p><span>(0954)2088900</span></li>
-                <li><p>电子邮箱：</p><span>gydzzw@126.com</span></li>
-                <li><p>网站标识码：</p><span>6404000021|Copyright@ all rights reserved 宁 ICP 备 05001237号</span></li>
+                <li><p>联系电话：</p><span>{{sys.phone}}</span></li>
+                <li><p>电子邮箱：</p><span>{{sys.email}}</span></li>
+                <li><p>网站标识码：</p><span>{{sys.identificationcode}}</span></li>
             </ul>
             <div class="right-line"></div>
             <ul class="foot-right">
                 <li>网站导航</li>
-                <li><a href="##">固原市人民政府官网</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="##">固原党建网</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a
-                        href="##">固原市人民信息网</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="##">固原市人民信息网</a></li>
-                <li><a href="##">固原市人民政府官网</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="##">固原市人民信息网</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a
-                        href="##">固原市人民信息网</a></li>
-                <li><a href="##">固原市人民政府官网</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="##">固原党建网</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a
-                        href="##">固原市人民信息网</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="##">固原市人民信息网</a></li>
-                <li><a href="##">固原市人民政府官网</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="##">固原党建网</a>
+                <li><a href="http://www.nx.gov.cn/" target="_blank">宁夏回族自治区人民政府</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="http://www.nxdjw.gov.cn/" target="_blank">宁夏党建网</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a
+                        href="http://www.nxrd.gov.cn/" target="_blank">宁夏人大网</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="http://www.nxzx.gov.cn/" target="_blank">宁夏政协网</a></li>
+                <li><a href="http://www.nxnews.net/" target="_blank">宁夏新闻网</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="http://www.nxjjjc.gov.cn/" target="_blank">宁夏纪委监委网站</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a
+                        href="http://www.nxtv.com.cn/" target="_blank">宁夏广播电视台官方网站</a></li>
+                <li><a href="http://www.nxtour.com.cn/index.do" target="_blank">宁夏旅游资讯网</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="http://zrzyt.nx.gov.cn/" target="_blank">宁夏回族自治区自然资源厅</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a
+                        href="http://www.nxgydj.gov.cn/" target="_blank">固原党建网</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="http://www.yzqdj.com.cn/" target="_blank">原州区党建网</a></li>
+                <li><a href="http://www.12371.cn/" target="_blank">共产党员网_中共中央组织部</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="http://cpc.people.com.cn/" target="_blank">中国共产党新闻网首页</a>
                 <li>
                     <img class="zf" src="images/zf.jpg" alt="">
                     <img class="jg" src="images/jg.jpg" alt="">
@@ -318,7 +316,6 @@
         </div>
     </div>
 </footer>
-
 </body>
 </html>
 <script src="js/jquery.min.js"></script>

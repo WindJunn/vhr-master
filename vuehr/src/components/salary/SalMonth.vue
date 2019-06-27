@@ -49,22 +49,7 @@
               v-show="advanceSearchViewVisible"
             >
               <el-row>
-                <el-col :span="4">
-                  民族:
-                  <el-select
-                    v-model="emp.nationId"
-                    style="width: 130px"
-                    size="mini"
-                    placeholder="请选择民族"
-                  >
-                    <el-option
-                      v-for="item in nations"
-                      :key="item.id"
-                      :label="item.name"
-                      :value="item.id"
-                    ></el-option>
-                  </el-select>
-                </el-col>
+                
 
                 <el-col :span="5">
                   所属部门:
@@ -86,7 +71,7 @@
                       style="width: 130px;height: 26px;display: inline-flex;font-size:13px;border: 1px;border-radius: 5px;border-style: solid;padding-left: 13px;box-sizing:border-box;border-color: #dcdfe6;cursor: pointer;align-items: center"
                       @click="showDepTree2"
                       v-bind:style="{color: depTextColor}"
-                    >{{emp.departmentName}}</div>
+                    >{{sch.departmentName}}</div>
                   </el-popover>
                 </el-col>
               </el-row>
@@ -149,7 +134,7 @@
               @current-change="currentChange"
               :current-page="currentPage"
               :page-sizes="[10, 15, 20, 30, 50]"
-              :page-size="10"
+              :page-size="pageSize"
               layout="total, sizes, prev, pager, next, jumper"
               :total="totalCount"
             ></el-pagination>
@@ -351,6 +336,7 @@ export default {
       positions: [],
       totalCount: -1,
       currentPage: 1,
+      pageSize: 10,
       hr: {
         id: "",
         name: "",
@@ -420,6 +406,10 @@ export default {
     this.loadEmps();
   },
   methods: {
+    handleSizeChange(pageSize) {
+      this.pageSize = pageSize;
+      this.loadEmps();
+    },
     cancelSearch() {
       this.advanceSearchViewVisible = false;
       this.emptyEmpData();
@@ -496,13 +486,26 @@ export default {
       this.currentPage = currentChange;
       this.loadEmps();
     },
+     initData() {
+      var _this = this;
+      this.getRequest("/system/hr/basicdata").then(resp => {
+        if (resp && resp.status == 200) {
+          var data = resp.data;
+          _this.nations = data.nations;
+          _this.deps = data.deps;
+          _this.role = data.roles;
+        }
+      });
+    },
     loadEmps() {
       var _this = this;
       this.tableLoading = true;
       this.getRequest(
         "/schedules/sch?page=" +
           this.currentPage +
-          "&size=10&keywords=" +
+          "&size="+
+          this.pageSize
+          +"&keywords=" +
           this.keywords +
           "&userId=" +
           this.sch.userId +
@@ -567,31 +570,19 @@ export default {
       this.showOrHidePop2 = !this.showOrHidePop2;
     },
     handleNodeClick(data) {
-      debugger;
       this.emp.departmentName = data.name;
       this.emp.departmentId = data.id;
       this.showOrHidePop = false;
       this.depTextColor = "#606266";
     },
     handleNodeClick2(data) {
-      debugger;
-      this.emp.departmentName = data.name;
-      this.emp.departmentId = data.id;
+      // debugger;
+      this.sch.departmentName = data.name;
+      this.sch.departmentId = data.id;
       this.showOrHidePop2 = false;
       this.depTextColor = "#606266";
     },
-    initData() {
-      var _this = this;
-      this.getRequest("/schedules/sch").then(resp => {
-        if (resp && resp.status == 200) {
-          var data = resp.data;
-
-          // _this.deps = data.deps;
-          // _this.positions = data.positions;
-        }
-        console.log(resp.data);
-      });
-    },
+   
     showEditEmpView(row) {
       console.log(row);
       var _this = this;
@@ -635,6 +626,16 @@ export default {
       this.schedule = {
         name: "",
         time: "",
+        phone: "",
+        address: "",
+        departmentId: "",
+        departmentName: "所属部门...",
+        theme: ""
+      };
+      this.sch = {
+        name: "",
+        time: "",
+        userId:"",
         phone: "",
         address: "",
         departmentId: "",

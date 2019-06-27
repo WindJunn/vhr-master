@@ -33,6 +33,13 @@
             AND s.userId=#{userId}
         </if>
 
+        <if test="depList!=null and depList.size()>0">
+            AND s.departmentId in
+            <foreach collection="depList" index="index" item="did" separator="," open="(" close=")" >
+                #{did}
+            </foreach>
+        </if>
+
         <if test="departmentId!=null and departmentId!=''">
             AND s.departmentId=#{departmentId}
         </if>

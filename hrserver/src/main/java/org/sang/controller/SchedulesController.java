@@ -18,7 +18,6 @@ import java.util.Map;
 @RequestMapping("/schedules")
 public class SchedulesController {
 
-    private SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 
     @Autowired
     SchedulesService schedulesService;
@@ -31,7 +30,7 @@ public class SchedulesController {
         Map<String, Object> map = new HashMap<>();
         List<Schedules> schedules = schedulesService.getSchedulesByPage(page, size,
                 keywords, userId, departmentId);
-        List<Schedules> schedule = schedulesService.getSchedulesByPage(1, 100000000,
+        List<Schedules> schedule = schedulesService.getSchedulesByPage(1, 1000000000,
                 keywords, userId, departmentId);
         int count = schedule.size();
         map.put("schedules", schedules);
@@ -41,7 +40,7 @@ public class SchedulesController {
 
     @RequestMapping(value = "/sch", method = RequestMethod.POST)
     public RespBean addSchedules(Schedules schedules) {
-        if (schedulesService.addStudents(schedules) == 1) {
+        if (schedulesService.addSchedules(schedules) == 1) {
             return RespBean.ok("添加成功!");
         }
         return RespBean.error("添加失败!");

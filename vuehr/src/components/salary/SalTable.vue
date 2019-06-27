@@ -2,10 +2,10 @@
   <div>
     <el-container>
       <el-header style="text-align: left;padding-left: 0px;margin-top: 10px">
-        <el-tag size="medium">请选择部门:</el-tag>
+        <!-- <el-tag size="medium">请选择部门:</el-tag>
         <el-select size="mini" v-model="depId" placeholder="请选择">
           <el-option v-for="item in deps" :key="item.id" :label="item.name" :value="item.id"></el-option>
-        </el-select>
+        </el-select> -->
 
         <div style="display: inline">
           <el-input
@@ -146,7 +146,7 @@
               @current-change="currentChange"
               :current-page="currentPage"
               :page-sizes="[10, 15, 20, 30, 50]"
-              :page-size="10"
+              :page-size="pageSize"
               layout="total, sizes, prev, pager, next, jumper"
               :total="totalCount"
             ></el-pagination>
@@ -423,7 +423,7 @@
                   ></el-input>
                 </el-form-item>
               </div>
-            </el-col> -->
+            </el-col>-->
           </el-row>
           <el-row>
             <el-col :span="9">
@@ -503,7 +503,7 @@ export default {
       joblevels: [],
       totalCount: -1,
       currentPage: 1,
-
+      pageSize: 10,
       roles: [],
       defaultProps: {
         label: "name",
@@ -641,8 +641,8 @@ export default {
     },
     cancelSearch() {
       this.advanceSearchViewVisible = false;
-      this.emptyEmpData();
-      this.beginDateScope = "";
+      // this.emptyEmpData();
+      this.hr.departmentId="";
       this.loadEmps();
     },
     showAdvanceSearchView() {
@@ -707,6 +707,10 @@ export default {
     searchEmp() {
       this.loadEmps();
     },
+    handleSizeChange(pageSize) {
+      this.pageSize = pageSize;
+this.loadEmps();
+    },
     currentChange(currentChange) {
       this.currentPage = currentChange;
       this.loadEmps();
@@ -724,7 +728,9 @@ export default {
       this.getRequest(
         "/system/hr/?page=" +
           (this.currentPage - 1) +
-          "&size=10&keywords=" +
+          "&size="+
+          this.pageSize +
+          "&keywords=" +
           this.keywords +
           "&nationId=" +
           this.hr.nationId +
@@ -900,17 +906,7 @@ export default {
       this.sch.state = this.schedule.state;
       this.sch.des = this.schedule.des;
     },
-    showAddEmpView() {
-      this.dialogTitle = "添加管理员";
-      this.dialogVisible1 = true;
-      var _this = this;
 
-      _this.hr.enabled = true;
-      _this.hr.username = "1212";
-      _this.hr.password = "123";
-      _this.hr.remark = "1";
-      _this.hr.userface = "1";
-    },
     emptyEmpData() {
       this.hr = {
         id: "",

@@ -62,7 +62,7 @@ public class StudentPoiUtils {
             sheet.setColumnWidth(0, 5 * 256);
             sheet.setColumnWidth(1, 12 * 256);
             sheet.setColumnWidth(2, 10 * 256);
-            sheet.setColumnWidth(3, 5 * 256);
+            sheet.setColumnWidth(3, 10 * 256);
             sheet.setColumnWidth(4, 12 * 256);
             sheet.setColumnWidth(5, 20 * 256);
             sheet.setColumnWidth(6, 10 * 256);
@@ -81,34 +81,34 @@ public class StudentPoiUtils {
             HSSFCell cell1 = headerRow.createCell(1);
             cell1.setCellValue("姓名");
             cell1.setCellStyle(headerStyle);
-            HSSFCell cell2 = headerRow.createCell(2);
-            cell2.setCellValue("工号");
-            cell2.setCellStyle(headerStyle);
-            HSSFCell cell3 = headerRow.createCell(3);
+//            HSSFCell cell2 = headerRow.createCell(2);
+//            cell2.setCellValue("工号");
+//            cell2.setCellStyle(headerStyle);
+            HSSFCell cell3 = headerRow.createCell(2);
             cell3.setCellValue("性别");
             cell3.setCellStyle(headerStyle);
-            HSSFCell cell4 = headerRow.createCell(4);
+            HSSFCell cell4 = headerRow.createCell(3);
             cell4.setCellValue("出生日期");
             cell4.setCellStyle(headerStyle);
-            HSSFCell cell5 = headerRow.createCell(5);
+            HSSFCell cell5 = headerRow.createCell(4);
             cell5.setCellValue("身份证号码");
             cell5.setCellStyle(headerStyle);
-            HSSFCell cell6 = headerRow.createCell(6);
+            HSSFCell cell6 = headerRow.createCell(5);
             cell6.setCellValue("婚姻状况");
             cell6.setCellStyle(headerStyle);
-            HSSFCell cell7 = headerRow.createCell(7);
+            HSSFCell cell7 = headerRow.createCell(6);
             cell7.setCellValue("民族");
             cell7.setCellStyle(headerStyle);
-            HSSFCell cell8 = headerRow.createCell(8);
+            HSSFCell cell8 = headerRow.createCell(7);
             cell8.setCellValue("籍贯");
             cell8.setCellStyle(headerStyle);
-            HSSFCell cell10 = headerRow.createCell(9);
+            HSSFCell cell10 = headerRow.createCell(8);
             cell10.setCellValue("电话号码");
             cell10.setCellStyle(headerStyle);
-            HSSFCell cell11 = headerRow.createCell(10);
+            HSSFCell cell11 = headerRow.createCell(9);
             cell11.setCellValue("联系地址");
             cell11.setCellStyle(headerStyle);
-            HSSFCell cell12 = headerRow.createCell(11);
+            HSSFCell cell12 = headerRow.createCell(10);
             cell12.setCellValue("所属部门");
             cell12.setCellStyle(headerStyle);
 
@@ -119,18 +119,18 @@ public class StudentPoiUtils {
                 Student emp = emps.get(i);
                 row.createCell(0).setCellValue(emp.getId());
                 row.createCell(1).setCellValue(emp.getName());
-                row.createCell(2).setCellValue(emp.getWorkID());
-                row.createCell(3).setCellValue(emp.getGender());
-                HSSFCell birthdayCell = row.createCell(4);
+//                row.createCell(2).setCellValue(emp.getWorkID());
+                row.createCell(2).setCellValue(emp.getGender());
+                HSSFCell birthdayCell = row.createCell(3);
                 birthdayCell.setCellValue(emp.getBirthday());
                 birthdayCell.setCellStyle(dateCellStyle);
-                row.createCell(5).setCellValue(emp.getIdCard());
-                row.createCell(6).setCellValue(emp.getWedlock());
-                row.createCell(7).setCellValue(emp.getNation().getName());
-                row.createCell(8).setCellValue(emp.getNativePlace());
-                row.createCell(9).setCellValue(emp.getPhone());
-                row.createCell(10).setCellValue(emp.getAddress());
-                row.createCell(11).setCellValue(emp.getDepartment().getName());
+                row.createCell(4).setCellValue(emp.getIdCard());
+                row.createCell(5).setCellValue(emp.getWedlock());
+                row.createCell(6).setCellValue(emp.getNation().getName());
+                row.createCell(7).setCellValue(emp.getNativePlace());
+                row.createCell(8).setCellValue(emp.getPhone());
+                row.createCell(9).setCellValue(emp.getAddress());
+                row.createCell(10).setCellValue(emp.getDepartment().getName());
             }
             headers = new HttpHeaders();
             headers.setContentDispositionFormData("attachment",
@@ -178,32 +178,30 @@ public class StudentPoiUtils {
                                     case 1:
                                         employee.setName(cellValue);
                                         break;
+
                                     case 2:
-                                        employee.setWorkID(cellValue);
-                                        break;
-                                    case 3:
                                         employee.setGender(cellValue);
                                         break;
-                                    case 5:
+                                    case 4:
                                         employee.setIdCard(cellValue);
                                         break;
-                                    case 6:
+                                    case 5:
                                         employee.setWedlock(cellValue);
                                         break;
-                                    case 7:
+                                    case 6:
                                         int nationIndex = allNations.indexOf(new Nation(cellValue));
                                         employee.setNationId(allNations.get(nationIndex).getId());
                                         break;
-                                    case 8:
+                                    case 7:
                                         employee.setNativePlace(cellValue);
                                         break;
-                                    case 9:
+                                    case 8:
                                         employee.setPhone(cellValue);
                                         break;
-                                    case 10:
+                                    case 9:
                                         employee.setAddress(cellValue);
                                         break;
-                                    case 11:
+                                    case 10:
                                         int depIndex = allDeps.indexOf(new Department(cellValue));
                                         employee.setDepartmentId(allDeps.get(depIndex).getId());
                                         break;
@@ -213,7 +211,7 @@ public class StudentPoiUtils {
                             break;
                             default: {
                                 switch (k) {
-                                    case 4:
+                                    case 3:
                                         employee.setBirthday(cell.getDateCellValue());
                                         break;
                                 }

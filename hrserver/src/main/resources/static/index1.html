@@ -26,7 +26,7 @@
     <script type="text/javascript" src="./js/controller/articleController.js"></script>
 
 </head>
-<body ng-app="jxs" ng-controller="articleController" ng-init="findHomeArt()">
+<body ng-app="jxs" ng-controller="articleController" ng-init="findHomeArt();findSysName()">
 
 <header>
     <div class="section">
@@ -407,27 +407,27 @@
 
 <footer>
     <div class="fo-top">
-        <div class="section pad-left bianm" style="color: #0f0f0f">便民服务：</div>
+        <div class="section pad-left bianm" style="color: #0f0f0f">.</div>
         <div class="section gy-flex pad-left fo-sec">
             <ul class="foot-list">
                 <li><img src="images/logo2.png" alt=""></li>
                 <li class="banquan"><p>版权所有：</p>
-                    <sapn>宁夏固原市宣传部</sapn>
+                    <sapn>{{sys.copyrighted}}</sapn>
                 </li>
-                <li><p>联系电话：</p><span>(0954)2088900</span></li>
-                <li><p>电子邮箱：</p><span>gydzzw@126.com</span></li>
-                <li><p>网站标识码：</p><span>6404000021|Copyright@ all rights reserved 宁 ICP 备 05001237号</span></li>
+                <li><p>联系电话：</p><span>{{sys.phone}}</span></li>
+                <li><p>电子邮箱：</p><span>{{sys.email}}</span></li>
+                <li><p>网站标识码：</p><span>{{sys.identificationcode}}</span></li>
             </ul>
             <div class="right-line"></div>
             <ul class="foot-right">
                 <li>网站导航</li>
-                <li><a href="##">固原市人民政府官网</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="##">固原党建网</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a
-                        href="##">固原市人民信息网</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="##">固原市人民信息网</a></li>
-                <li><a href="##">固原市人民政府官网</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="##">固原市人民信息网</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a
-                        href="##">固原市人民信息网</a></li>
-                <li><a href="##">固原市人民政府官网</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="##">固原党建网</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a
-                        href="##">固原市人民信息网</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="##">固原市人民信息网</a></li>
-                <li><a href="##">固原市人民政府官网</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="##">固原党建网</a>
+                <li><a href="http://www.nx.gov.cn/" target="_blank">宁夏回族自治区人民政府</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="http://www.nxdjw.gov.cn/" target="_blank">宁夏党建网</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a
+                        href="http://www.nxrd.gov.cn/" target="_blank">宁夏人大网</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="http://www.nxzx.gov.cn/" target="_blank">宁夏政协网</a></li>
+                <li><a href="http://www.nxnews.net/" target="_blank">宁夏新闻网</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="http://www.nxjjjc.gov.cn/" target="_blank">宁夏纪委监委网站</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a
+                        href="http://www.nxtv.com.cn/" target="_blank">宁夏广播电视台官方网站</a></li>
+                <li><a href="http://www.nxtour.com.cn/index.do" target="_blank">宁夏旅游资讯网</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="http://zrzyt.nx.gov.cn/" target="_blank">宁夏回族自治区自然资源厅</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a
+                        href="http://www.nxgydj.gov.cn/" target="_blank">固原党建网</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="http://www.yzqdj.com.cn/" target="_blank">原州区党建网</a></li>
+                <li><a href="http://www.12371.cn/" target="_blank">共产党员网_中共中央组织部</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="http://cpc.people.com.cn/" target="_blank">中国共产党新闻网首页</a>
                 <li>
                     <img class="zf" src="images/zf.jpg" alt="">
                     <img class="jg" src="images/jg.jpg" alt="">

@@ -13,7 +13,48 @@ public class SystemName {
     private String path;
     private String image;
     private String des;
+    private Date updatetime;
+
     private Date cratedate;
+    private String copyrighted;
+    private String phone;
+    private String email;
+    private String identificationcode;
+
+
+    public String getCopyrighted() {
+        return copyrighted;
+    }
+
+    public void setCopyrighted(String copyrighted) {
+        this.copyrighted = copyrighted;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getIdentificationcode() {
+        return identificationcode;
+    }
+
+    public void setIdentificationcode(String identificationcode) {
+        this.identificationcode = identificationcode;
+    }
+
+
 
     public Long getId() {
         return id;
@@ -87,7 +128,6 @@ public class SystemName {
         this.updatetime = updatetime;
     }
 
-    private Date updatetime;
 
 
 }

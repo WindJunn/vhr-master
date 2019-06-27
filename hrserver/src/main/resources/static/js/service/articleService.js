@@ -34,6 +34,10 @@ app.service('articleService', function ($http) {
     this.findHrById = function (id) {
         return $http.get('hr/id/' + id);
     };
+
+    this.findSysName = function () {
+        return $http.get('systems/name/');
+    };
     this.findSchByUid = function (id) {
         return $http.get("schedules/sch?page=1&size=100000&keywords=&userId=" + id + "&departmentId=");
     };

@@ -13,4 +13,46 @@
         WHERE id=1
     </update>
 
+    <update id="updateSysName">
+        UPDATE systemname
+        <set>
+            <if test="emp.title != null">
+                title = #{emp.title,jdbcType=VARCHAR},
+            </if>
+            <if test="emp.leftname != null">
+                leftname = #{emp.leftname,jdbcType=VARCHAR},
+            </if>
+
+            <if test="emp.rightname != null">
+                rightname = #{emp.rightname,jdbcType=VARCHAR},
+            </if>
+            <if test="emp.path != null">
+                path = #{emp.path,jdbcType=VARCHAR},
+            </if>
+            <if test="emp.image != null">
+                image = #{emp.image,jdbcType=VARCHAR},
+            </if>
+            <if test="emp.des != null">
+                des = #{emp.des,jdbcType=VARCHAR},
+            </if>
+            <if test="emp.updatetime != null">
+                updatetime = #{emp.updatetime,jdbcType=DATE},
+            </if>
+            <if test="emp.copyrighted != null">
+                copyrighted = #{emp.copyrighted,jdbcType=VARCHAR},
+            </if>
+            <if test="emp.phone != null">
+                phone = #{emp.phone,jdbcType=VARCHAR},
+            </if>
+            <if test="emp.email != null">
+                email = #{emp.email,jdbcType=VARCHAR},
+            </if>
+            <if test="emp.identificationcode != null">
+                identificationcode = #{emp.identificationcode,jdbcType=VARCHAR},
+            </if>
+
+        </set>
+        where id = 1
+    </update>
+
 </mapper>

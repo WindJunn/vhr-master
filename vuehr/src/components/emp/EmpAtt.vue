@@ -53,9 +53,9 @@
               {{fileUploadBtnText}}
             </el-button>
           </el-upload>
-          <el-button type="success" size="mini" @click="exportAtt">
+          <!-- <el-button type="success" size="mini" @click="exportAtt">
             <i class="fa fa-lg fa-level-down" style="margin-right: 5px"></i>导出数据
-          </el-button>
+          </el-button> -->
           <!-- <el-button type="primary" size="mini" icon="el-icon-plus" @click="showAddEmpView">添加考勤</el-button> -->
         </div>
       </el-header>
@@ -67,23 +67,17 @@
               v-show="advanceSearchViewVisible"
             >
               <el-row>
-                <el-col :span="4">
-                  民族:
-                  <el-select
-                    v-model="emp.nationId"
-                    style="width: 130px"
+                 <el-col :span="10">
+                  考勤时间:
+                  <el-date-picker
+                    v-model="att.atime"
                     size="mini"
-                    placeholder="请选择民族"
-                  >
-                    <el-option
-                      v-for="item in nations"
-                      :key="item.id"
-                      :label="item.name"
-                      :value="item.id"
-                    ></el-option>
-                  </el-select>
+                    type="date"
+                    value-format="yyyy-MM-dd"
+                     placeholder="请选择考勤时间"
+                     style="width: 150px"
+                  ></el-date-picker>
                 </el-col>
-
                 <el-col :span="5">
                   所属部门:
                   <el-popover
@@ -104,7 +98,7 @@
                       style="width: 130px;height: 26px;display: inline-flex;font-size:13px;border: 1px;border-radius: 5px;border-style: solid;padding-left: 13px;box-sizing:border-box;border-color: #dcdfe6;cursor: pointer;align-items: center"
                       @click="showDepTree2"
                       v-bind:style="{color: depTextColor}"
-                    >{{emp.departmentName}}</div>
+                    >{{att.departmentName}}</div>
                   </el-popover>
                 </el-col>
 
@@ -146,12 +140,6 @@
                   size="mini"
                 >编辑</el-button>
 
-                <!-- <el-button
-                  style="padding: 3px 4px 3px 4px;margin: 2px"
-                  type="primary"
-                  size="mini"
-                  @click="showAttendanceView(scope.row)"
-                >查看考勤</el-button>-->
                 <el-button
                   type="danger"
                   style="padding: 3px 4px 3px 4px;margin: 2px"
@@ -705,8 +693,8 @@ export default {
       this.depTextColor = "#606266";
     },
     handleNodeClick2(data) {
-      this.emp.departmentName = data.name;
-      this.emp.departmentId = data.id;
+      this.att.departmentName = data.name;
+      this.att.departmentId = data.id;
       this.showOrHidePop2 = false;
       this.depTextColor = "#606266";
     },

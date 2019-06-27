@@ -13,4 +13,6 @@ public interface SystemnameMapper {
 
     int updateSysNameById(@Param("title") String title, @Param("leftname") String leftname);
 
+    int updateSysName(@Param("emp") SystemName systemName);
+
 }

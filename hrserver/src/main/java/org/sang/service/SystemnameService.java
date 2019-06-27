@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -23,6 +24,11 @@ public class SystemnameService {
 
     public int updateSysNameById(String title, String leftname) {
         return systemnameMapper.updateSysNameById(title, leftname);
+    }
+
+    public int updateSysName(SystemName systemName) {
+        systemName.setUpdatetime(new Date());
+        return systemnameMapper.updateSysName(systemName);
     }
 
 }

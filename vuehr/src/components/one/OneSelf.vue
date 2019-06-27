@@ -109,7 +109,6 @@
                       :default-expand-all="false"
                       :props="defaultProps"
                       :expand-on-click-node="false"
-                      @node-click="handleNodeClick"
                     ></el-tree>
                     <div
                       slot="reference"
@@ -289,10 +288,7 @@ export default {
       }
     },
 
-    currentChange(currentChange) {
-      this.currentPage = currentChange;
-      this.loadEmps();
-    },
+   
     loadEmps() {
       var _this = this;
       this.getRequest("/system/hr/name/" + this.users.username).then(resp => {
@@ -303,7 +299,6 @@ export default {
           _this.roles = data.roles;
           _this.nation = data.nation;
           //            _this.emptyEmpData();
-          console.log(data);
         }
       });
     },

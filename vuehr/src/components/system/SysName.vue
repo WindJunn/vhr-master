@@ -5,9 +5,21 @@
       <el-form :model="sys" status-icon ref="ruleForm" label-width="100px" class="demo-ruleForm">
         <!-- <el-form-item label="系统标题">
           <el-input v-model="sys.title"></el-input>
-        </el-form-item> -->
-        <el-form-item label="系统名称" prop="pass">
+        </el-form-item>-->
+        <el-form-item label="系统名称:" prop="pass">
           <el-input v-model="sys.leftname"></el-input>
+        </el-form-item>
+        <el-form-item label="版权所有:" prop="pass">
+          <el-input v-model="sys.copyrighted"></el-input>
+        </el-form-item>
+        <el-form-item label="联系电话:" prop="pass">
+          <el-input v-model="sys.phone"></el-input>
+        </el-form-item>
+        <el-form-item label="电子邮箱:" prop="pass">
+          <el-input v-model="sys.email"></el-input>
+        </el-form-item>
+        <el-form-item label="网站标识码:" prop="pass">
+          <el-input v-model="sys.identificationcode"></el-input>
         </el-form-item>
 
         <el-form-item>
@@ -28,7 +40,15 @@ export default {
       },
       sys: {
         title: "",
-        leftname: ""
+        leftname: "",
+        rightname: "",
+        path: "",
+        image: "",
+        des: "",
+        copyrighted: "",
+        phone: "",
+        email: "",
+        identificationcode: ""
       },
       id: "",
       name: "",
@@ -56,15 +76,12 @@ export default {
     },
     updatePassword() {
       var _this = this;
-      // debugger;
-      this.putRequest("/systems/name/", {
-        title: this.sys.title,
-        leftname: this.sys.leftname
-      }).then(resp => {
+      // debugger;  {
+      //   title: this.sys.title,
+      //   leftname: this.sys.leftname
+      // }
+      this.putRequest("/systems/name/sys", this.sys).then(resp => {
         if (resp && resp.status == 200) {
-          // alert("修改成功!");
-          // this.$refs["ruleForm"].resetFields();
-          //            _this.emptyEmpData();
         }
       });
     },

@@ -1,7 +1,11 @@
 package org.sang.service;
 
 
+import org.sang.bean.Department;
 import org.sang.bean.Schedules;
+import org.sang.common.DepartmentUtil;
+import org.sang.common.Util;
+import org.sang.mapper.DepartmentMapper;
 import org.sang.mapper.SchedulesMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,14 +22,20 @@ public class SchedulesService {
     @Autowired
     private SchedulesMapper schedulesMapper;
 
-    SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
-    SimpleDateFormat monthFormat = new SimpleDateFormat("MM");
-    SimpleDateFormat birthdayFormat = new SimpleDateFormat("yyyy-MM-dd");
-    DecimalFormat decimalFormat = new DecimalFormat("##.00");
+    @Autowired
+    DepartmentMapper departmentMapper;
 
     public List<Schedules> getSchedulesByPage(Integer page, Integer size, String keywords, Long userId, Long departmentId) {
         int start = (page - 1) * size;
-        return schedulesMapper.getSchedulesByPage(start, size, keywords, userId,departmentId);
+        List<Long> depList = null;
+        Long upid = Util.getCurrentUser().getDepartmentId();
+
+        if (upid != null && upid != 0) {
+            List<Department> deps = departmentMapper.getDepByPid(upid);
+            depList = DepartmentUtil.findDeps(upid, deps);
+        }
+
+        return schedulesMapper.getSchedulesByPage(start, size, keywords, userId,departmentId,depList);
     }
 
     public Long getCountByKeywords(String keywords,  Long userId, Long departmentId) {
@@ -33,7 +43,7 @@ public class SchedulesService {
         return schedulesMapper.getCountByKeywords(keywords, userId, departmentId);
     }
 
-    public int addStudents(Schedules schedules) {
+    public int addSchedules(Schedules schedules) {
         return schedulesMapper.addSchedules(schedules);
     }
 

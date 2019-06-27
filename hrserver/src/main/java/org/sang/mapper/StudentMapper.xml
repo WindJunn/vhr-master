@@ -137,6 +137,8 @@
         <foreach collection="ids" separator="," open="(" close=")" item="id">
             #{id}
         </foreach>
+
+
     </delete>
     <insert id="addStudents">
         insert into student (name, gender,

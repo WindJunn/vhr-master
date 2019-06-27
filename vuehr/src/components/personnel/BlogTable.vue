@@ -79,7 +79,7 @@
         @current-change="currentChange"
         :current-page="currentPage"
         :page-sizes="[10, 15, 20, 30, 50]"
-        :page-size="10"
+        :page-size="pageSize"
         layout="total, sizes, prev, pager, next, jumper"
         :total="totalCount"
       ></el-pagination>
@@ -117,11 +117,14 @@ export default {
     });
   },
   methods: {
+
+    
+
     searchClick() {
       this.loadBlogs(1, this.pageSize);
     },
     itemClick(row) {
-      this.$router.push({ path: "/per/salary", query: { aid: row.id } });
+      this.$router.push({ path: "/blogDetail", query: { aid: row.id } });
     },
     deleteMany() {
       var selItems = this.selItems;
@@ -130,6 +133,12 @@ export default {
       }
       this.deleteToDustBin(selItems[0].state);
     },
+
+    handleSizeChange(pageSize) {
+      this.pageSize = pageSize;
+      this.loadBlogs(this.currentPage, pageSize);
+    },
+    
     //翻页
     currentChange(currentPage) {
       this.currentPage = currentPage;

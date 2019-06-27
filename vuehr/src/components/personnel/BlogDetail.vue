@@ -10,7 +10,7 @@
         <div><h3 style="margin-top: 0px;margin-bottom: 0px">{{article.title}}</h3></div>
         <div style="width: 100%;margin-top: 5px;display: flex;justify-content: flex-end;align-items: center">
           <div style="display: inline; color: #20a0ff;margin-left: 50px;margin-right:20px;font-size: 12px;">
-            {{article.nickname}}
+            {{article.author}}
           </div>
           <span style="color: #20a0ff;margin-right:20px;font-size: 12px;">浏览 {{article.pageView==null?0:article.pageView}}</span>
           <span style="color: #20a0ff;margin-right:20px;font-size: 12px;"> {{article.editTime | formatDateTime}}</span>
@@ -21,7 +21,7 @@
         </div>
       </div>
     </el-col>
-    <el-col>
+    <el-col >
       <div style="text-align: left" v-html="article.htmlContent">
       </div>
     </el-col>

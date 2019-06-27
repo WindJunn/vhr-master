@@ -1,9 +1,11 @@
 package org.sang.service;
 
 import org.sang.bean.Department;
+import org.sang.bean.Hr;
 import org.sang.bean.Nation;
 import org.sang.bean.Student;
 import org.sang.common.DepartmentUtil;
+import org.sang.common.Util;
 import org.sang.mapper.DepartmentMapper;
 import org.sang.mapper.StudentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,26 +50,26 @@ public class StudentService {
         return maxWorkID == null ? 0 : maxWorkID;
     }
 
-    public List<Student> getStudentByPage(Integer page, Integer size, String keywords, Long nationId, Long departmentId,Long upid) {
+    public List<Student> getStudentByPage(Integer page, Integer size, String keywords, Long nationId, Long departmentId, Long upid) {
         int start = (page - 1) * size;
 
         List<Long> depList = null;
         if (upid != null && upid != 0) {
             List<Department> deps = departmentMapper.getDepByPid(upid);
-            depList =  DepartmentUtil.findDeps(upid,deps);
+            depList = DepartmentUtil.findDeps(upid, deps);
         }
         return studentMapper.getStudentByPage(start, size, keywords, nationId, departmentId, depList);
     }
 
 
-    public Long getCountByKeywords(String keywords, Long nationId, Long departmentId,Long upid) {
+    public Long getCountByKeywords(String keywords, Long nationId, Long departmentId, Long upid) {
         List<Long> depList = null;
         if (upid != null && upid != 0) {
             List<Department> deps = departmentMapper.getDepByPid(upid);
 
-            depList =  DepartmentUtil.findDeps(upid,deps);
+            depList = DepartmentUtil.findDeps(upid, deps);
         }
-        return studentMapper.getCountByKeywords(keywords,nationId, departmentId,depList);
+        return studentMapper.getCountByKeywords(keywords, nationId, departmentId, depList);
     }
 
     public int updateStudent(Student student) {
@@ -81,6 +83,18 @@ public class StudentService {
 
     public List<Student> getAllStudents() {
         return studentMapper.getStudentByPage(null, null, "", null, null, null);
+    }
+
+    public List<Student> getAllStudentsByDep() {
+        List<Long> depList = null;
+        Long upid = Util.getCurrentUser().getDepartmentId();
+
+        if (upid != null && upid != 0) {
+            List<Department> deps = departmentMapper.getDepByPid(upid);
+            depList = DepartmentUtil.findDeps(upid, deps);
+        }
+        return studentMapper.getStudentByPage(null, null, "", null, null, depList);
+
     }
 
     public int addStudents(List<Student> students) {

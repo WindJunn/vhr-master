@@ -94,7 +94,9 @@ public class StudentController {
 
     @RequestMapping(value = "/exportEmp", method = RequestMethod.GET)
     public ResponseEntity<byte[]> exportEmp() {
-        return StudentPoiUtils.exportEmp2Excel(studentService.getAllStudents());
+        List<Student> allStudentsByDep = studentService.getAllStudentsByDep();
+
+        return StudentPoiUtils.exportEmp2Excel(allStudentsByDep);
     }
 
     @RequestMapping(value = "/importEmp", method = RequestMethod.POST)
